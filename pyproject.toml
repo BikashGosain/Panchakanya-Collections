@@ -1,0 +1,17 @@
+[project]
+name = "panchakanya-collections"
+version = "0.1.0"
+description = "Panchakanya Collections — jewelry store web app"
+authors = [
+    { name = "Bikash Gosain", email = "bikashgosain@gmail.com" }
+]
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "django>=6.1",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.2",
+    "ruff>=0.16.3",
+]
