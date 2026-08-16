@@ -1,0 +1,11 @@
+<h2>Profile</h2>
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Phone: {{ user.phone_number }}</p>
+<p>Address: {{ user.address }}</p>
+<p>City: {{ user.city }}</p>
+<a href="{% url 'accounts:password_change' %}">Change Password</a>
+<form method="post" action="{% url 'accounts:logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
