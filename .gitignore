@@ -1,0 +1,17 @@
+day-wise-workflow/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Django
+*.sqlite3
+staticfiles/
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
