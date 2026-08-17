@@ -112,7 +112,11 @@ def verify_email_view(request):
         user.is_email_verified = True
         user.save()
 
-        login(request, user)
+        login(
+            request,
+            user,
+            backend="django.contrib.auth.backends.ModelBackend",
+        )
         del request.session["pending_user_id"]
         return redirect("accounts:profile")
 
