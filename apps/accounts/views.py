@@ -16,55 +16,113 @@ from .utils import (
 
 def register_view(request):
     if request.method == "POST":
-        email = request.POST.get("email")
+        email = request.POST.get("email", "").strip()
+
         existing_unverified = User.objects.filter(
-            email=email, is_email_verified=False
+            email=email,
+            is_email_verified=False,
         ).first()
 
+        # Existing unverified registration
         if existing_unverified:
-            existing_unverified.is_active = False
-            existing_unverified.is_email_verified = False
-            existing_unverified.save(update_fields=["is_active", "is_email_verified"])
-            request.session["pending_user_id"] = existing_unverified.id
+            form = RegisterForm(
+                request.POST,
+                instance=existing_unverified,
+            )
 
-            if has_exceeded_hourly_limit(existing_unverified, "verify_email"):
+            if not form.is_valid():
                 return render(
                     request,
-                    "accounts/verify_email.html",
+                    "accounts/register.html",
+                    {"form": form},
+                )
+
+            user = form.save()
+
+            user.is_active = False
+            user.is_email_verified = False
+            user.save(
+                update_fields=[
+                    "is_active",
+                    "is_email_verified",
+                ]
+            )
+
+            request.session["pending_user_id"] = user.id
+
+            if has_exceeded_hourly_limit(
+                user,
+                "verify_email",
+            ):
+                return render(
+                    request,
+                    "accounts/register.html",
                     {
-                        "error": "Too many code requests. Please try again after an hour."
+                        "form": form,
+                        "error": (
+                            "Too many code requests. Please try again after an hour."
+                        ),
                     },
                 )
 
-            wait = get_resend_wait_seconds(existing_unverified, "verify_email")
+            wait = get_resend_wait_seconds(
+                user,
+                "verify_email",
+            )
+
             if wait > 0:
                 return render(
                     request,
-                    "accounts/verify_email.html",
+                    "accounts/register.html",
                     {
-                        "error": f"A code was already sent. Please wait {wait} seconds before trying again."
+                        "form": form,
+                        "error": (
+                            f"A code was already sent. "
+                            f"Please wait {wait} seconds "
+                            f"before requesting another code."
+                        ),
                     },
                 )
 
-            create_and_send_otp(existing_unverified, "verify_email")
+            create_and_send_otp(
+                user,
+                "verify_email",
+            )
+
             return redirect("accounts:verify_email")
 
+        # New registration
         form = RegisterForm(request.POST)
+
         if form.is_valid():
             user = form.save()
 
             user.is_active = False
             user.is_email_verified = False
-            user.save(update_fields=["is_active", "is_email_verified"])
+            user.save(
+                update_fields=[
+                    "is_active",
+                    "is_email_verified",
+                ]
+            )
 
-            create_and_send_otp(user, "verify_email")
+            create_and_send_otp(
+                user,
+                "verify_email",
+            )
 
             request.session["pending_user_id"] = user.id
 
             return redirect("accounts:verify_email")
+
     else:
         form = RegisterForm()
-    return render(request, "accounts/register.html", {"form": form})
+
+    return render(
+        request,
+        "accounts/register.html",
+        {"form": form},
+    )
 
 
 def verify_email_view(request):
@@ -128,7 +186,7 @@ def verify_email_view(request):
             user,
             backend="django.contrib.auth.backends.ModelBackend",
         )
-        del request.session["pending_user_id"]
+        request.session.pop("pending_user_id", None)
         return redirect("accounts:profile")
 
     return render(request, "accounts/verify_email.html")

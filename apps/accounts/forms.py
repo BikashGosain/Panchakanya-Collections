@@ -23,8 +23,20 @@ class RegisterForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        if User.objects.filter(email=email).exists():
+
+        existing_user = User.objects.filter(email=email).first()
+
+        if existing_user:
+            # Allow the same pending/unverified account to be updated.
+            if (
+                self.instance.pk
+                and existing_user.pk == self.instance.pk
+                and not existing_user.is_email_verified
+            ):
+                return email
+
             raise forms.ValidationError("A user with this email already exists.")
+
         return email
 
 
