@@ -86,8 +86,21 @@ class RegistrationAndVerificationTests(TestCase):
         self.assertContains(response, "no longer valid")
 
 
+from allauth.socialaccount.models import SocialApp
+from django.contrib.sites.models import Site
+
+
 class PasswordResetTests(TestCase):
     def setUp(self):
+        site = Site.objects.get_current()
+        app = SocialApp.objects.create(
+            provider="google",
+            name="Test Google App",
+            client_id="test-client-id",
+            secret="test-secret",
+        )
+        app.sites.add(site)
+
         self.user = User.objects.create_user(
             username="resetuser",
             email="resetuser@example.com",
