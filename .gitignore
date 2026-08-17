@@ -1,4 +1,5 @@
 day-wise-workflow/
+.env
 
 # Python
 __pycache__/
