@@ -1,0 +1,12 @@
+<h2>Edit Profile</h2>
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label>Email:</label>
+        <input type="email" value="{{ user.email }}" readonly> <small>Email cannot be changed here.</small>
+    </p>
+
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'accounts:profile' %}">Cancel</a>
