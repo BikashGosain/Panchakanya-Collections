@@ -22,6 +22,9 @@ def register_view(request):
         ).first()
 
         if existing_unverified:
+            existing_unverified.is_active = False
+            existing_unverified.is_email_verified = False
+            existing_unverified.save(update_fields=["is_active", "is_email_verified"])
             request.session["pending_user_id"] = existing_unverified.id
 
             if has_exceeded_hourly_limit(existing_unverified, "verify_email"):
@@ -49,8 +52,15 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            user.is_active = False
+            user.is_email_verified = False
+            user.save(update_fields=["is_active", "is_email_verified"])
+
             create_and_send_otp(user, "verify_email")
+
             request.session["pending_user_id"] = user.id
+
             return redirect("accounts:verify_email")
     else:
         form = RegisterForm()
@@ -110,7 +120,8 @@ def verify_email_view(request):
         matched_otp.is_used = True
         matched_otp.save()
         user.is_email_verified = True
-        user.save()
+        user.is_active = True
+        user.save(update_fields=["is_email_verified", "is_active"])
 
         login(
             request,
