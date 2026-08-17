@@ -1,0 +1,19 @@
+<h2>Profile</h2>
+<p>Username: {{ user.username }}</p>
+<p>
+    Email: {{ user.email }}
+    <a href="">Change Email</a>
+</p>
+<p>First name: {{ user.first_name }}</p>
+<p>Last name: {{ user.last_name }}</p>
+<p>Phone: {{ user.phone_number }}</p>
+<p>Address: {{ user.address }}</p>
+<p>City: {{ user.city }}</p>
+
+<a href="{% url 'accounts:edit_profile' %}">Edit Profile</a>
+<a href="{% url 'accounts:password_change' %}">Change Password</a>
+
+<form method="post" action="{% url 'accounts:logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
