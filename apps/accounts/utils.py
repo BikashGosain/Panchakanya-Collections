@@ -31,6 +31,10 @@ def has_exceeded_hourly_limit(user, purpose):
 
 
 def create_and_send_otp(user, purpose):
+    EmailOTP.objects.filter(user=user, purpose=purpose, is_used=False).update(
+        is_invalidated=True
+    )
+
     code = EmailOTP.generate_code()
     EmailOTP.objects.create(user=user, code=code, purpose=purpose)
 

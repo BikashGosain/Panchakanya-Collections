@@ -1,5 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -90,6 +91,15 @@ def verify_email_view(request):
                 },
             )
 
+        if matched_otp.is_invalidated:
+            return render(
+                request,
+                "accounts/verify_email.html",
+                {
+                    "error": "This code is no longer valid because a newer code was requested."
+                },
+            )
+
         if matched_otp.is_expired():
             return render(
                 request,
@@ -148,6 +158,128 @@ class CustomLogoutView(LogoutView):
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = "accounts/password_change.html"
     success_url = reverse_lazy("accounts:profile")
+
+
+def forgot_password_view(request):
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip()
+        user = User.objects.filter(email=email).first()
+
+        if user:
+            if has_exceeded_hourly_limit(user, "reset_password"):
+                return render(
+                    request,
+                    "accounts/forgot_password.html",
+                    {
+                        "error": "Too many reset requests. Please try again after an hour."
+                    },
+                )
+            wait = get_resend_wait_seconds(user, "reset_password")
+            if wait > 0:
+                return render(
+                    request,
+                    "accounts/forgot_password.html",
+                    {"error": f"Please wait {wait} seconds before requesting again."},
+                )
+            create_and_send_otp(user, "reset_password")
+            request.session["reset_user_id"] = user.id
+            return redirect("accounts:reset_password")
+
+        return render(
+            request,
+            "accounts/forgot_password.html",
+            {"error": "No account found with that email."},
+        )
+
+    return render(request, "accounts/forgot_password.html")
+
+
+def reset_password_view(request):
+    user_id = request.session.get("reset_user_id")
+    if not user_id:
+        return redirect("accounts:forgot_password")
+
+    user = User.objects.get(id=user_id)
+
+    if request.method == "POST":
+        entered_code = request.POST.get("code", "").strip()
+
+        matched_otp = (
+            EmailOTP.objects.filter(
+                user=user, purpose="reset_password", code=entered_code
+            )
+            .order_by("-created_at")
+            .first()
+        )
+
+        if not matched_otp:
+            return render(
+                request,
+                "accounts/reset_password.html",
+                {"error": "Incorrect code. Please check your email and try again."},
+            )
+        if matched_otp.is_used:
+            return render(
+                request,
+                "accounts/reset_password.html",
+                {"error": "This code has already been used. Please request a new one."},
+            )
+        if matched_otp.is_invalidated:
+            return render(
+                request,
+                "accounts/reset_password.html",
+                {
+                    "error": "This code is no longer valid because a newer code was requested."
+                },
+            )
+        if matched_otp.is_expired():
+            return render(
+                request,
+                "accounts/reset_password.html",
+                {"error": "This code has expired. Please request a new one."},
+            )
+
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            matched_otp.is_used = True
+            matched_otp.save()
+            del request.session["reset_user_id"]
+            return redirect("accounts:login")
+
+        return render(
+            request, "accounts/reset_password.html", {"error": form.errors.as_text()}
+        )
+
+    return render(request, "accounts/reset_password.html")
+
+
+def resend_reset_otp_view(request):
+    user_id = request.session.get("reset_user_id")
+    if not user_id:
+        return redirect("accounts:forgot_password")
+
+    user = User.objects.get(id=user_id)
+
+    if has_exceeded_hourly_limit(user, "reset_password"):
+        return render(
+            request,
+            "accounts/reset_password.html",
+            {"error": "Too many code requests. Please try again after an hour."},
+        )
+
+    wait = get_resend_wait_seconds(user, "reset_password")
+    if wait > 0:
+        return render(
+            request,
+            "accounts/reset_password.html",
+            {"error": f"Please wait {wait} seconds before requesting a new code."},
+        )
+
+    create_and_send_otp(user, "reset_password")
+    return render(
+        request, "accounts/reset_password.html", {"info": "A new code has been sent."}
+    )
 
 
 @login_required

@@ -34,6 +34,7 @@ class EmailOTP(models.Model):
     purpose = models.CharField(max_length=20, choices=PURPOSE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     is_used = models.BooleanField(default=False)
+    is_invalidated = models.BooleanField(default=False)
 
     def is_expired(self):
         return timezone.now() > self.created_at + timedelta(minutes=5)

@@ -16,4 +16,7 @@ urlpatterns = [
         views.CustomPasswordChangeView.as_view(),
         name="password_change",
     ),
+    path("forgot-password/", views.forgot_password_view, name="forgot_password"),
+    path("reset-password/", views.reset_password_view, name="reset_password"),
+    path("resend-reset-otp/", views.resend_reset_otp_view, name="resend_reset_otp"),
 ]
