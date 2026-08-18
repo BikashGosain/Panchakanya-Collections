@@ -1,0 +1,61 @@
+id,name,slug,sku,description,category_id,metal_type,purity,weight_grams,price,stock,status,featured
+1,Classic Gold Wedding Ring,classic-gold-wedding-ring,GWR-001,"Classic 22K gold wedding ring with a polished finish.",21,gold,22K,5.50,45000.00,12,active,true
+2,Minimal Gold Band,minimal-gold-band,GWR-002,"Simple and elegant 18K gold band suitable for everyday wear.",6,gold,18K,3.80,32000.00,20,active,false
+3,Silver Classic Ring,silver-classic-ring,SVR-001,"Elegant sterling silver ring with a smooth polished surface.",7,silver,925,4.20,6500.00,30,active,false
+4,Diamond Solitaire Ring,diamond-solitaire-ring,DR-001,"Premium diamond solitaire engagement ring.",22,diamond,18K,4.80,185000.00,5,active,true
+5,Gold Floral Ring,gold-floral-ring,GFR-001,"Beautiful floral-inspired gold ring with detailed craftsmanship.",6,gold,22K,6.20,54000.00,9,active,true
+6,Platinum Diamond Ring,platinum-diamond-ring,PDR-001,"Premium platinum ring featuring a brilliant diamond.",9,platinum,950,6.10,210000.00,3,active,true
+7,Classic Couple Ring Set,classic-couple-ring-set,CR-001,"Matching gold rings designed for couples.",23,gold,18K,8.40,72000.00,6,active,false
+8,Emerald Statement Ring,emerald-statement-ring,SR-001,"Statement ring featuring a vibrant emerald centerpiece.",24,gold,18K,7.80,68000.00,4,active,true
+9,Ruby Gold Ring,ruby-gold-ring,RGR-001,"Elegant 22K gold ring with a ruby centerpiece.",6,gold,22K,5.90,49000.00,8,active,false
+10,Silver Infinity Ring,silver-infinity-ring,SIR-001,"Delicate sterling silver infinity ring.",7,silver,925,3.50,5800.00,25,active,false
+11,Gold Floral Necklace,gold-floral-necklace,GNL-001,"Beautiful floral-inspired necklace crafted in 22K gold.",10,gold,22K,12.50,98000.00,8,active,true
+12,Diamond Pendant Necklace,diamond-pendant-necklace,DNL-001,"Elegant pendant necklace featuring a brilliant diamond.",12,diamond,18K,7.20,125000.00,4,active,true
+13,Silver Heart Necklace,silver-heart-necklace,SNL-001,"Delicate sterling silver necklace featuring a heart pendant.",25,silver,925,5.60,9500.00,18,active,false
+14,Gold Rope Chain,gold-rope-chain,GNL-002,"Traditional 22K gold rope chain with a premium finish.",26,gold,22K,18.40,145000.00,5,active,true
+15,Diamond Choker Necklace,diamond-choker-necklace,DNL-002,"Elegant diamond choker suitable for special occasions.",27,diamond,18K,14.20,245000.00,2,active,true
+16,Bridal Gold Necklace Set,bridal-gold-necklace-set,BGN-001,"Traditional bridal necklace crafted in 22K gold.",28,gold,22K,32.50,285000.00,3,active,true
+17,Silver Layered Necklace,silver-layered-necklace,SLN-001,"Modern layered sterling silver necklace.",11,silver,925,9.80,14500.00,12,active,false
+18,Gold Lotus Pendant,gold-lotus-pendant,GLP-001,"Elegant lotus pendant crafted in 18K gold.",25,gold,18K,4.60,37000.00,10,active,false
+19,Classic Gold Earrings,classic-gold-earrings,GE-001,"Traditional 22K gold earrings with a timeless design.",13,gold,22K,6.80,52000.00,10,active,false
+20,Diamond Stud Earrings,diamond-stud-earrings,DE-001,"Classic diamond stud earrings for everyday elegance.",29,diamond,18K,3.40,89000.00,6,active,true
+21,Gold Hoop Earrings,gold-hoop-earrings,GE-002,"Classic 18K gold hoop earrings.",30,gold,18K,5.20,39000.00,14,active,false
+22,Silver Drop Earrings,silver-drop-earrings,SDE-001,"Elegant sterling silver drop earrings.",31,silver,925,4.80,8500.00,20,active,false
+23,Gold Jhumka Earrings,gold-jhumka-earrings,GJE-001,"Traditional Indian-style 22K gold jhumka earrings.",32,gold,22K,11.60,92000.00,7,active,true
+24,Diamond Hoop Earrings,diamond-hoop-earrings,DHE-001,"Luxury diamond-encrusted hoop earrings.",30,diamond,18K,8.20,145000.00,3,active,true
+25,Platinum Stud Earrings,platinum-stud-earrings,PSE-001,"Minimal platinum stud earrings.",16,platinum,950,3.10,75000.00,5,active,false
+26,Silver Jhumka Earrings,silver-jhumka-earrings,SJE-001,"Traditional sterling silver jhumka earrings.",32,silver,925,7.60,12000.00,16,active,false
+27,Gold Chain Bracelet,gold-chain-bracelet,GB-001,"Premium 22K gold chain bracelet.",33,gold,22K,9.80,76000.00,7,active,false
+28,Silver Charm Bracelet,silver-charm-bracelet,SB-001,"Sterling silver charm bracelet with a delicate finish.",34,silver,925,8.50,14500.00,15,active,false
+29,Diamond Tennis Bracelet,diamond-tennis-bracelet,DB-001,"Elegant diamond tennis bracelet with premium stone settings.",35,diamond,18K,15.40,275000.00,2,active,true
+30,Gold Cuff Bracelet,gold-cuff-bracelet,GCB-001,"Modern 18K gold cuff bracelet.",36,gold,18K,13.80,112000.00,5,active,true
+31,Silver Classic Bracelet,silver-classic-bracelet,SB-002,"Minimal sterling silver bracelet with a polished finish.",18,silver,925,7.30,12000.00,25,inactive,false
+32,Platinum Tennis Bracelet,platinum-tennis-bracelet,PTB-001,"Luxury platinum bracelet with diamond detailing.",20,platinum,950,18.60,390000.00,2,active,true
+33,Gold Mens Chain,gold-mens-chain,MG-001,"Heavy 22K gold chain designed for men.",37,gold,22K,28.50,225000.00,4,active,true
+34,Silver Mens Ring,silver-mens-ring,MR-001,"Bold sterling silver ring for men.",37,silver,925,9.20,13500.00,18,active,false
+35,Gold Mens Bracelet,gold-mens-bracelet,MB-001,"Classic 22K gold bracelet for men.",37,gold,22K,19.80,158000.00,5,active,true
+36,Platinum Mens Ring,platinum-mens-ring,PMR-001,"Premium platinum men's ring.",37,platinum,950,8.60,145000.00,3,active,false
+37,Gold Womens Ring,gold-womens-ring,WR-001,"Elegant everyday 18K gold ring for women.",38,gold,18K,4.10,35000.00,15,active,false
+38,Diamond Womens Ring,diamond-womens-ring,WDR-001,"Elegant diamond ring with a contemporary design.",38,diamond,18K,4.90,165000.00,5,active,true
+39,Gold Bridal Earrings,gold-bridal-earrings,BE-001,"Detailed 22K gold earrings designed for bridal wear.",39,gold,22K,15.20,135000.00,4,active,true
+40,Bridal Diamond Bracelet,bridal-diamond-bracelet,BDB-001,"Luxury diamond bracelet designed for bridal occasions.",39,diamond,18K,16.80,295000.00,2,active,true
+41,Everyday Silver Ring,everyday-silver-ring,ER-001,"Simple sterling silver ring for everyday use.",40,silver,925,3.10,4900.00,35,active,false
+42,Everyday Gold Pendant,everyday-gold-pendant,EGP-001,"Small 18K gold pendant for everyday styling.",40,gold,18K,2.80,24500.00,22,active,false
+43,Gold Pearl Necklace,gold-pearl-necklace,GPN-001,"Elegant gold necklace featuring freshwater pearls.",10,gold,18K,10.50,78000.00,6,active,true
+44,Silver Pearl Earrings,silver-pearl-earrings,SPE-001,"Elegant sterling silver earrings with pearl accents.",14,silver,925,5.40,11500.00,12,active,false
+45,Diamond Drop Earrings,diamond-drop-earrings,DDE-001,"Luxury diamond drop earrings for formal occasions.",31,diamond,18K,7.90,158000.00,3,active,true
+46,Gold Layered Bracelet,gold-layered-bracelet,GLB-001,"Stylish layered bracelet crafted from 18K gold.",17,gold,18K,11.20,88000.00,8,active,false
+47,Silver Chain Bracelet,silver-chain-bracelet,SCB-001,"Classic sterling silver chain bracelet.",33,silver,925,6.90,10500.00,21,active,false
+48,Diamond Heart Pendant,diamond-heart-pendant,DHP-001,"Romantic heart pendant featuring a diamond centerpiece.",12,diamond,18K,5.10,98000.00,5,active,true
+49,Platinum Wedding Band,platinum-wedding-band,PWB-001,"Classic platinum wedding band with a polished finish.",21,platinum,950,7.20,125000.00,4,active,true
+50,Gold Engraved Wedding Ring,gold-engraved-wedding-ring,GER-001,"22K gold wedding ring with an elegant engraved pattern.",21,gold,22K,6.40,59000.00,9,active,false
+51,Sapphire Gold Ring,sapphire-gold-ring,SGR-001,"18K gold ring featuring a deep blue sapphire.",24,gold,18K,6.80,72000.00,5,active,true
+52,Diamond Halo Ring,diamond-halo-ring,DHR-001,"Diamond halo engagement ring with multiple accent stones.",22,diamond,18K,5.70,225000.00,3,active,true
+53,Silver Moon Necklace,silver-moon-necklace,SMN-001,"Sterling silver crescent moon necklace.",25,silver,925,4.30,7800.00,24,active,false
+54,Gold Box Chain,gold-box-chain,GBC-001,"Strong 22K gold box chain with a smooth finish.",26,gold,22K,16.80,132000.00,6,active,false
+55,Diamond Bridal Necklace,diamond-bridal-necklace,DBN-001,"Premium bridal necklace featuring diamonds and gold.",28,diamond,18K,24.60,365000.00,1,active,true
+56,Silver Hoop Earrings,silver-hoop-earrings,SHE-001,"Lightweight sterling silver hoop earrings.",30,silver,925,4.60,7200.00,30,active,false
+57,Gold Drop Earrings,gold-drop-earrings,GDE-001,"Elegant 22K gold drop earrings.",31,gold,22K,8.90,69000.00,8,active,false
+58,Platinum Diamond Earrings,platinum-diamond-earrings,PDE-001,"Premium platinum earrings featuring natural diamonds.",16,platinum,950,5.80,175000.00,2,active,true
+59,Gold Charm Bracelet,gold-charm-bracelet,GCB-001,"18K gold bracelet with decorative charm details.",34,gold,18K,10.30,82000.00,7,active,false
+60,Silver Cuff Bracelet,silver-cuff-bracelet,SCF-001,"Modern sterling silver cuff bracelet.",36,silver,925,12.40,18500.00,11,inactive,false
