@@ -1,17 +1,394 @@
-<a href="{% url 'products:list' %}">← Back to all products</a>
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>{{ product.name }}</h1>
+<head>
 
-{% for image in product.images.all %}
-    <img src="{{ image.image.url }}" alt="{{ product.name }}" width="300">
-{% endfor %}
+    <meta charset="UTF-8">
 
-<p>Price: Rs. {{ product.price }}</p>
-<p>Category: {{ product.category.name }}</p>
-<p>Metal: {{ product.get_metal_type_display }}</p>
-{% if product.purity %}<p>Purity: {{ product.purity }}</p>{% endif %}
-{% if product.weight_grams %}<p>Weight: {{ product.weight_grams }}g</p>{% endif %}
-<p>Stock: {{ product.stock }}</p>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<h3>Description</h3>
-<p>{{ product.description }}</p>
+    <title>
+        {{ product.name }} | Panchakanya Collections
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f8f8f8;
+
+            color: #222;
+        }
+
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 30px;
+        }
+
+
+        .back-link {
+
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            color: #555;
+
+            text-decoration: none;
+        }
+
+
+        .back-link:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .product-detail {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 40px;
+
+            background: white;
+
+            padding: 30px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+        }
+
+
+        .product-gallery {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+
+        .product-image {
+
+            width: 100%;
+
+            max-height: 550px;
+
+            object-fit: contain;
+
+            background: #f5f5f5;
+
+            border-radius: 6px;
+        }
+
+
+        .no-image {
+
+            height: 400px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eee;
+
+            color: #777;
+
+            border-radius: 6px;
+        }
+
+
+        .product-info h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 15px;
+
+            font-size: 30px;
+        }
+
+
+        .price {
+
+            margin-bottom: 25px;
+
+            font-size: 25px;
+
+            font-weight: bold;
+        }
+
+
+        .description {
+
+            margin-bottom: 25px;
+
+            line-height: 1.6;
+
+            color: #555;
+        }
+
+
+        .product-details {
+
+            border-top: 1px solid #eee;
+        }
+
+
+        .detail-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .detail-label {
+
+            font-weight: bold;
+        }
+
+
+        .stock {
+
+            margin-top: 25px;
+
+            font-weight: bold;
+        }
+
+
+        @media (max-width: 768px) {
+
+            .product-detail {
+
+                grid-template-columns: 1fr;
+
+                padding: 20px;
+            }
+
+
+            .container {
+
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <a
+        href="{% url 'products:list' %}"
+        class="back-link"
+    >
+        ← Back to Jewellery
+    </a>
+
+
+    <div class="product-detail">
+
+
+        <!-- =================================
+             GALLERY
+             ================================= -->
+
+        <div class="product-gallery">
+
+
+            {% with primary_image=product.images.all|first %}
+
+                {% if primary_image %}
+
+                    <img
+                        src="{{ primary_image.image.url }}"
+                        alt="{{ product.name }}"
+                        class="product-image"
+                    >
+
+                {% else %}
+
+                    <div class="no-image">
+                        No Image Available
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+        </div>
+
+
+        <!-- =================================
+             PRODUCT INFORMATION
+             ================================= -->
+
+        <div class="product-info">
+
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+
+            <div class="price">
+                Rs. {{ product.price }}
+            </div>
+
+
+            {% if product.description %}
+
+                <div class="description">
+
+                    {{ product.description|linebreaks }}
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="product-details">
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Category
+                    </span>
+
+                    <span>
+                        {{ product.category.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Metal
+                    </span>
+
+                    <span>
+                        {{ product.get_metal_type_display }}
+                    </span>
+
+                </div>
+
+
+                {% if product.purity %}
+
+                    <div class="detail-row">
+
+                        <span class="detail-label">
+                            Purity
+                        </span>
+
+                        <span>
+                            {{ product.purity }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if product.weight_grams %}
+
+                    <div class="detail-row">
+
+                        <span class="detail-label">
+                            Weight
+                        </span>
+
+                        <span>
+                            {{ product.weight_grams }} g
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        SKU
+                    </span>
+
+                    <span>
+                        {{ product.sku }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="stock">
+
+                {% if product.stock > 0 %}
+
+                    In Stock
+
+                {% else %}
+
+                    Out of Stock
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,10 +1,17 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=120, unique=True, blank=True)
+    name = models.CharField(max_length=100)
+
+    slug = models.SlugField(
+        max_length=120,
+        unique=True,
+        blank=True,
+    )
+
     parent = models.ForeignKey(
         "self",
         on_delete=models.CASCADE,
@@ -16,15 +23,59 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "categories"
 
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name", "parent"],
+                name="unique_category_name_per_parent",
+            ),
+        ]
+
+    @property
+    def has_children(self):
+        return self.subcategories.exists()
+
+    def clean(self):
+        """
+        Prevent invalid category relationships.
+        """
+
+        super().clean()
+
+        # A category cannot be its own parent.
+        if self.parent_id == self.pk:
+            raise ValidationError({"parent": "A category cannot be its own parent."})
+
+        # Prevent circular relationships.
+        ancestor = self.parent
+
+        while ancestor is not None:
+            if ancestor.pk == self.pk:
+                raise ValidationError(
+                    {
+                        "parent": (
+                            "Invalid parent. This would create "
+                            "a circular category structure."
+                        )
+                    }
+                )
+
+            ancestor = ancestor.parent
+
     def save(self, *args, **kwargs):
+
+        self.full_clean()
+
         if not self.slug:
             base_slug = slugify(self.name)
             slug = base_slug
             counter = 1
+
             while Category.objects.filter(slug=slug).exclude(pk=self.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
+
             self.slug = slug
+
         super().save(*args, **kwargs)
 
     def __str__(self):
