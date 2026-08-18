@@ -82,24 +82,33 @@
            ========================================= */
 
         .sidebar {
+    width: 280px;
+    flex-shrink: 0;
 
-            width: 270px;
+    background: #fff;
 
-            flex-shrink: 0;
+    border: 1px solid #ddd;
 
-            background: #fff;
+    border-radius: 8px;
 
-            border: 1px solid #ddd;
+    padding: 20px;
 
-            border-radius: 8px;
+    position: sticky;
 
-            padding: 20px;
+    top: 20px;
 
-            position: sticky;
+    max-height: calc(100vh - 40px);
 
-            top: 20px;
-        }
+    overflow-y: auto;
+}
 
+.category-tree-container {
+    max-height: 350px;
+
+    overflow-y: auto;
+
+    padding-right: 5px;
+}
 
         .filter-section {
 
@@ -677,7 +686,9 @@
                 </div>
 
 
-                <ul class="category-tree">
+                <div class="category-tree-container">
+
+    <ul class="category-tree">
 
 
                     <!-- ALL PRODUCTS -->
@@ -707,7 +718,7 @@
 
 
                 </ul>
-
+</div>
             </div>
 
 
@@ -722,140 +733,123 @@
                 </div>
 
 
-                <form
-                    method="get"
-                    class="filter-form"
+<form
+    method="get"
+    class="filter-form"
+>
+
+    <div class="filter-group">
+
+        <label
+            class="filter-label"
+            for="sidebar-search"
+        >
+            Search
+        </label>
+
+        <input
+            id="sidebar-search"
+            class="filter-input"
+            type="text"
+            name="q"
+            placeholder="Search jewellery..."
+            value="{{ search_query }}"
+        >
+
+    </div>
+
+
+    <div class="filter-group">
+
+        <label
+            class="filter-label"
+            for="metal"
+        >
+            Metal Type
+        </label>
+
+        <select
+            id="metal"
+            name="metal"
+            class="filter-select"
+        >
+
+            <option value="">
+                All Metals
+            </option>
+
+            {% for value, label in metal_choices %}
+
+                <option
+                    value="{{ value }}"
+                    {% if value == selected_metal %}
+                        selected
+                    {% endif %}
                 >
+                    {{ label }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
 
 
-                    <!-- SEARCH -->
+    <div class="filter-group">
 
-                    <div class="filter-group">
+        <label class="filter-label">
+            Price
+        </label>
 
-                        <label
-                            class="filter-label"
-                            for="sidebar-search"
-                        >
-                            Search
-                        </label>
+        <div class="price-row">
 
+            <input
+                class="filter-input"
+                type="number"
+                name="min_price"
+                placeholder="Min"
+                value="{{ min_price }}"
+            >
 
-                        <input
-                            id="sidebar-search"
-                            class="filter-input"
-                            type="text"
-                            name="q"
-                            placeholder="Search jewellery..."
-                            value="{{ search_query }}"
-                        >
+            <input
+                class="filter-input"
+                type="number"
+                name="max_price"
+                placeholder="Max"
+                value="{{ max_price }}"
+            >
 
-                    </div>
+        </div>
 
-
-                    <!-- METAL -->
-
-                    <div class="filter-group">
-
-                        <label
-                            class="filter-label"
-                            for="metal"
-                        >
-                            Metal Type
-                        </label>
+    </div>
 
 
-                        <select
-                            id="metal"
-                            name="metal"
-                            class="filter-select"
-                        >
+    <!-- KEEP SELECTED CATEGORY -->
 
-                            <option value="">
-                                All Metals
-                            </option>
+    <input
+        type="hidden"
+        name="category"
+        value="{{ selected_category }}"
+    >
 
 
-                            {% for value, label in metal_choices %}
-
-                                <option
-                                    value="{{ value }}"
-                                    {% if value == selected_metal %}
-                                        selected
-                                    {% endif %}
-                                >
-                                    {{ label }}
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
+    <button
+        type="submit"
+        class="filter-button"
+    >
+        Apply Filters
+    </button>
 
 
-                    <!-- PRICE -->
+    <a
+        href="{% url 'products:list' %}"
+        class="clear-button"
+    >
+        Clear All Filters
+    </a>
 
-                    <div class="filter-group">
-
-                        <label class="filter-label">
-                            Price
-                        </label>
-
-
-                        <div class="price-row">
-
-                            <input
-                                class="filter-input"
-                                type="number"
-                                name="min_price"
-                                placeholder="Min"
-                                value="{{ min_price }}"
-                            >
-
-
-                            <input
-                                class="filter-input"
-                                type="number"
-                                name="max_price"
-                                placeholder="Max"
-                                value="{{ max_price }}"
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- KEEP CATEGORY -->
-
-                    <input
-                        type="hidden"
-                        name="category"
-                        value="{{ selected_category }}"
-                    >
-
-
-                    <!-- APPLY -->
-
-                    <button
-                        type="submit"
-                        class="filter-button"
-                    >
-                        Apply Filters
-                    </button>
-
-
-                    <!-- CLEAR -->
-
-                    <a
-                        href="{% url 'products:list' %}"
-                        class="clear-button"
-                    >
-                        Clear All Filters
-                    </a>
-
-
-                </form>
+</form>
 
             </div>
 

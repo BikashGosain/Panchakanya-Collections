@@ -5,11 +5,8 @@
         <div class="category-row">
 
             <a
-                href="?category={{ category.slug }}"
-                class="category-link
-                {% if category.slug == selected_category %}
-                    selected
-                {% endif %}"
+                href="?category={{ category.slug }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}{% if selected_metal %}&metal={{ selected_metal }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}"
+                class="category-link {% if category.slug == selected_category %}selected{% endif %}"
             >
                 {{ category.name }}
             </a>

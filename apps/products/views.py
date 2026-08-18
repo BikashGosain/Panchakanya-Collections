@@ -17,20 +17,8 @@ def get_category_and_descendants(category):
 
 def get_category_ancestors(category):
     """
-    Return all parents of the selected category,
-    starting from the root down to the immediate parent.
-
-    Example:
-
-    Silver Jewellery
-        ↓
-    Rings
-        ↓
-    Silver Rings
-
-    returns:
-
-    [Silver Jewellery, Rings]
+    Return all ancestors of the selected category,
+    from root to immediate parent.
     """
     ancestors = []
 
@@ -59,51 +47,79 @@ def product_list_view(request):
     metal_type = request.GET.get("metal", "")
 
     selected_category = None
-    category_tree = []
 
-    # Category filter
+    # -----------------------------------------
+    # CATEGORY FILTER
+    # -----------------------------------------
+
     if category_slug:
         selected_category = get_object_or_404(
             Category,
             slug=category_slug,
         )
 
-        # Selected category + descendants
         category_tree = get_category_and_descendants(selected_category)
 
         products = products.filter(category__in=category_tree)
 
-    # Search
+    # -----------------------------------------
+    # SEARCH FILTER
+    # -----------------------------------------
+
     if search_query:
         products = products.filter(name__icontains=search_query)
 
-    # Minimum price
+    # -----------------------------------------
+    # MIN PRICE
+    # -----------------------------------------
+
     if min_price:
         products = products.filter(price__gte=min_price)
 
-    # Maximum price
+    # -----------------------------------------
+    # MAX PRICE
+    # -----------------------------------------
+
     if max_price:
         products = products.filter(price__lte=max_price)
 
-    # Metal
+    # -----------------------------------------
+    # METAL FILTER
+    # -----------------------------------------
+
     if metal_type:
         products = products.filter(metal_type=metal_type)
 
-    # Root categories
+    # -----------------------------------------
+    # ROOT CATEGORIES
+    # -----------------------------------------
+
     root_categories = (
         Category.objects.filter(parent__isnull=True)
         .prefetch_related("subcategories")
         .order_by("name")
     )
 
-    # Find the selected category's parents
+    # -----------------------------------------
+    # SELECTED CATEGORY ANCESTORS
+    # -----------------------------------------
+
     selected_category_ancestors = []
 
     if selected_category:
         selected_category_ancestors = get_category_ancestors(selected_category)
+
+    # -----------------------------------------
+    # CATEGORIES THAT SHOULD BE OPEN
+    # -----------------------------------------
+
     expanded_category_slugs = [
         category.slug for category in selected_category_ancestors
     ]
+
+    # -----------------------------------------
+    # CONTEXT
+    # -----------------------------------------
 
     return render(
         request,
@@ -118,7 +134,6 @@ def product_list_view(request):
             "selected_metal": metal_type,
             "selected_category": category_slug,
             "selected_category_obj": selected_category,
-            # NEW
             "selected_category_ancestors": selected_category_ancestors,
             "expanded_category_slugs": expanded_category_slugs,
         },
@@ -126,6 +141,7 @@ def product_list_view(request):
 
 
 def product_detail_view(request, slug):
+
     product = get_object_or_404(
         Product,
         slug=slug,
@@ -135,5 +151,7 @@ def product_detail_view(request, slug):
     return render(
         request,
         "products/product_detail.html",
-        {"product": product},
+        {
+            "product": product,
+        },
     )
