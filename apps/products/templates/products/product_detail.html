@@ -1,0 +1,17 @@
+<a href="{% url 'products:list' %}">← Back to all products</a>
+
+<h1>{{ product.name }}</h1>
+
+{% for image in product.images.all %}
+    <img src="{{ image.image.url }}" alt="{{ product.name }}" width="300">
+{% endfor %}
+
+<p>Price: Rs. {{ product.price }}</p>
+<p>Category: {{ product.category.name }}</p>
+<p>Metal: {{ product.get_metal_type_display }}</p>
+{% if product.purity %}<p>Purity: {{ product.purity }}</p>{% endif %}
+{% if product.weight_grams %}<p>Weight: {{ product.weight_grams }}g</p>{% endif %}
+<p>Stock: {{ product.stock }}</p>
+
+<h3>Description</h3>
+<p>{{ product.description }}</p>

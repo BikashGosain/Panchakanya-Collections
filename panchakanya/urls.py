@@ -24,6 +24,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("apps.accounts.urls")),
     path("social-auth/", include("allauth.urls")),
+    path("", include("apps.products.urls")),
 ]
 
 if settings.DEBUG:

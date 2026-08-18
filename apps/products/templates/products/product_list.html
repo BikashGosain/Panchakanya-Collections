@@ -1,0 +1,22 @@
+<h1>Panchakanya Collections</h1>
+
+<nav>
+    <a href="{% url 'products:list' %}">All</a>
+    {% for category in categories %}
+        <a href="?category={{ category.slug }}">{{ category.name }}</a>
+    {% endfor %}
+</nav>
+
+<div>
+    {% for product in products %}
+        <div>
+            <a href="{% url 'products:detail' product.slug %}">
+                <h3>{{ product.name }}</h3>
+                <p>Rs. {{ product.price }}</p>
+                <p>{{ product.category.name }} — {{ product.get_metal_type_display }}</p>
+            </a>
+        </div>
+    {% empty %}
+        <p>No products available yet.</p>
+    {% endfor %}
+</div>
