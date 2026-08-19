@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -966,25 +967,35 @@
 
                                 <!-- PRODUCT IMAGE -->
 
-                                {% with primary_image=product.images.all|first %}
+{% if product.cover_images %}
 
-                                    {% if primary_image %}
+    {% with primary_image=product.cover_images.0 %}
 
-                                        <img
-                                            src="{{ primary_image.image.url }}"
-                                            alt="{{ product.name }}"
-                                            class="product-image"
-                                        >
+        <img
+            src="{{ primary_image.image.url }}"
+            alt="{{ product.name }}"
+            class="product-image"
+            onerror="
+                this.onerror=null;
+                this.src='{% static 'images/products/default.png' %}';
+            "
+        >
 
-                                    {% else %}
+    {% endwith %}
 
-                                        <div class="product-image-placeholder">
-                                            No Image
-                                        </div>
+{% else %}
 
-                                    {% endif %}
+    <div class="product-image-placeholder">
 
-                                {% endwith %}
+        <img
+            src="{% static 'images/products/default.png' %}"
+            alt="{{ product.name }}"
+            class="default-image"
+        >
+
+    </div>
+
+{% endif %}
 
 
                                 <!-- PRODUCT INFORMATION -->

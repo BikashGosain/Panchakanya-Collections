@@ -1,6 +1,7 @@
+from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, render
 
-from .models import Category, Product
+from .models import Category, Product, ProductImage
 
 
 def get_category_and_descendants(category):
@@ -37,7 +38,13 @@ def product_list_view(request):
     products = (
         Product.objects.filter(status="active")
         .select_related("category")
-        .prefetch_related("images")
+        .prefetch_related(
+            Prefetch(
+                "images",
+                queryset=ProductImage.objects.filter(is_primary=True),
+                to_attr="cover_images",
+            )
+        )
     )
 
     category_slug = request.GET.get("category", "")

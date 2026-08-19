@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -476,6 +477,7 @@
                                 src="{{ image.image.url }}"
                                 alt="{{ product.name }}"
                                 class="main-product-image"
+                                onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';"
                             >
 
                         {% endif %}
@@ -495,14 +497,14 @@
                         class="no-image"
                         style="display: none;"
                     >
-                        No Image Available
+                        <img src="{% static 'images/products/default.png' %}" alt="Default product image" class="default-image" >
                     </div>
 
 
                 {% else %}
 
                     <div class="no-image">
-                        No Image Available
+                        <img src="{% static 'images/products/default.png' %}" alt="Default product image" class="default-image" >
                     </div>
 
                 {% endif %}
@@ -728,6 +730,22 @@
 
 <script>
 
+    /*
+     * Default image.
+     *
+     * This file exists in:
+     * static/images/products/default.png
+     */
+    const DEFAULT_IMAGE =
+        "{% static 'images/products/default.png' %}";
+
+
+    /*
+     * Change the main product image.
+     *
+     * If the requested image does not exist,
+     * automatically use the default image.
+     */
     function changeMainImage(imageUrl, thumbnailButton) {
 
         const mainImage =
@@ -736,25 +754,43 @@
             );
 
 
-        /*
-         * If a primary image existed,
-         * change its source.
-         */
-
-        if (mainImage) {
-
-            mainImage.src = imageUrl;
-
-            mainImage.style.display = "block";
-
+        if (!mainImage) {
+            return;
         }
 
 
         /*
-         * Remove active state from
-         * every thumbnail.
+         * Remove the previous error handler.
          */
+        mainImage.onerror = null;
 
+
+        /*
+         * If the selected image does not exist,
+         * show the default image instead.
+         */
+        mainImage.onerror = function () {
+
+            this.onerror = null;
+
+            this.src = DEFAULT_IMAGE;
+
+            this.style.display = "block";
+
+        };
+
+
+        /*
+         * Try to load the selected image.
+         */
+        mainImage.src = imageUrl;
+
+        mainImage.style.display = "block";
+
+
+        /*
+         * Remove active state from all thumbnails.
+         */
         const thumbnails =
             document.querySelectorAll(
                 ".thumbnail-button"
@@ -769,21 +805,36 @@
 
 
         /*
-         * Mark the clicked thumbnail
-         * as active.
+         * Mark clicked thumbnail as active.
          */
+        if (thumbnailButton) {
 
-        thumbnailButton.classList.add("active");
+            thumbnailButton.classList.add("active");
+
+        }
 
     }
 
 
     /*
-     * Handle the case where the product
-     * has images but none is marked
-     * as primary.
+     * Handle broken thumbnail images.
+     *
+     * If the actual JPG doesn't exist,
+     * show default.png inside the thumbnail.
      */
+    function handleThumbnailError(image) {
 
+        image.onerror = null;
+
+        image.src = DEFAULT_IMAGE;
+
+    }
+
+
+    /*
+     * Handle the product page when there is
+     * no primary image.
+     */
     document.addEventListener(
         "DOMContentLoaded",
         function() {
@@ -800,6 +851,10 @@
                 );
 
 
+            /*
+             * Product has thumbnails but no
+             * primary image.
+             */
             if (!mainImage && firstThumbnail) {
 
                 const firstImage =
@@ -813,10 +868,6 @@
                     const imageUrl =
                         firstImage.src;
 
-
-                    /*
-                     * Create the main image.
-                     */
 
                     const container =
                         document.querySelector(
@@ -833,14 +884,32 @@
                     newImage.id =
                         "mainProductImage";
 
+
                     newImage.src =
                         imageUrl;
+
 
                     newImage.alt =
                         "{{ product.name|escapejs }}";
 
+
                     newImage.className =
                         "main-product-image";
+
+
+                    /*
+                     * If first image doesn't exist,
+                     * use default image.
+                     */
+                    newImage.onerror =
+                        function() {
+
+                            this.onerror = null;
+
+                            this.src =
+                                DEFAULT_IMAGE;
+
+                        };
 
 
                     container.prepend(

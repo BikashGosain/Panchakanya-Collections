@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Panchakanya Collections — Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Panchakanya Collections</h1>
+    <p>Timeless jewelry, crafted with care.</p>
+    <a href="{% url 'products:list' %}" class="btn">Shop All Products</a>
+</section>
+
+{% if featured_products %}
+<section>
+    <h2>Featured</h2>
+    <div class="product-grid">
+        {% for product in featured_products %}
+            <a href="{% url 'products:detail' product.slug %}" class="product-card">
+                <h3>{{ product.name }}</h3>
+                <p>Rs. {{ product.price }}</p>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section>
+    <h2>Latest Arrivals</h2>
+    <div class="product-grid">
+        {% for product in latest_products %}
+            <a href="{% url 'products:detail' product.slug %}" class="product-card">
+                <h3>{{ product.name }}</h3>
+                <p>Rs. {{ product.price }}</p>
+            </a>
+        {% empty %}
+            <p>No products available yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
