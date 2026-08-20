@@ -19,6 +19,8 @@ class Category(models.Model):
         blank=True,
         related_name="subcategories",
     )
+    image = models.ImageField(upload_to="categories/", blank=True, null=True)
+    show_on_home = models.BooleanField(default=False, verbose_name="Show on homepage")
 
     class Meta:
         verbose_name_plural = "categories"

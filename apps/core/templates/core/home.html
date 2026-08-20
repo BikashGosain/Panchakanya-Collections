@@ -1,93 +1,53 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Home | Panchakanya Collections{% endblock %}
 
 {% block content %}
-  <!-- Hero Section -->
-  <section class="relative bg-stone-900 text-white py-24 sm:py-32 px-4 sm:px-6">
-    <div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=80');"></div>
-    <div class="relative max-w-4xl mx-auto text-center">
-      <p class="text-amber-400 uppercase tracking-widest text-xs sm:text-sm mb-3">Exquisite Craftsmanship</p>
-      <h1 class="font-serif-luxury text-3xl sm:text-5xl md:text-6xl font-bold mb-6 text-amber-100">Panchakanya Collections</h1>
-      <p class="text-stone-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">Discover handcrafted gold, diamond, and traditional jewelry designed to celebrate grace and elegance.</p>
-      <a href="#featured" class="inline-block bg-amber-600 text-stone-900 font-semibold uppercase tracking-wider px-6 py-3 text-sm sm:px-8 sm:py-3 rounded-sm hover:bg-amber-400 transition">Explore Collections</a>
+<section class="hero">
+    <div class="hero-overlay">
+        <p class="hero-eyebrow">Exquisite Craftsmanship</p>
+        <h1 class="hero-title">Panchakanya Collections</h1>
+        <p class="hero-subtitle">Discover handcrafted gold, diamond, and traditional jewelry designed to celebrate grace and elegance.</p>
+        <a href="#featured" class="btn-hero">Explore Collections</a>
     </div>
-  </section>
+</section>
 
-  <!-- Categories -->
-  <section id="categories" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-    <h2 class="font-serif-luxury text-2xl sm:text-3xl text-center mb-10 text-stone-900">Shop by Category</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-
-      <div class="group relative overflow-hidden bg-stone-200 h-48 sm:h-64 rounded-sm cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Necklaces">
-        <div class="absolute inset-0 bg-stone-900/40 flex items-end p-4">
-          <h3 class="font-serif-luxury text-white text-base sm:text-lg tracking-wide">Necklaces</h3>
-        </div>
-      </div>
-
-      <div class="group relative overflow-hidden bg-stone-200 h-48 sm:h-64 rounded-sm cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Rings">
-        <div class="absolute inset-0 bg-stone-900/40 flex items-end p-4">
-          <h3 class="font-serif-luxury text-white text-base sm:text-lg tracking-wide">Rings</h3>
-        </div>
-      </div>
-
-      <div class="group relative overflow-hidden bg-stone-200 h-48 sm:h-64 rounded-sm cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Earrings">
-        <div class="absolute inset-0 bg-stone-900/40 flex items-end p-4">
-          <h3 class="font-serif-luxury text-white text-base sm:text-lg tracking-wide">Earrings</h3>
-        </div>
-      </div>
-
-      <div class="group relative overflow-hidden bg-stone-200 h-48 sm:h-64 rounded-sm cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1611591475179-420d28f22947?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Bangles">
-        <div class="absolute inset-0 bg-stone-900/40 flex items-end p-4">
-          <h3 class="font-serif-luxury text-white text-base sm:text-lg tracking-wide">Bangles</h3>
-        </div>
-      </div>
-
+<section class="section">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="category-grid">
+        {% for category in root_categories %}
+            <a href="{% url 'products:category' category.slug %}" class="category-card"
+   {% if category.image %}style="background-image: url('{{ category.image.url }}');"{% endif %}>
+    <span class="category-card-name">{{ category.name }}</span>
+</a>
+        {% empty %}
+            <p>No categories yet.</p>
+        {% endfor %}
     </div>
-  </section>
+</section>
 
-  <!-- Featured Products -->
-  <section id="featured" class="bg-stone-100 py-16 sm:py-20 border-t border-stone-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="font-serif-luxury text-2xl sm:text-3xl text-center mb-10 text-stone-900">Featured Items</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-
-        <div class="bg-white p-4 shadow-sm border border-stone-200 rounded-sm">
-          <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" class="w-full h-64 sm:h-72 object-cover mb-4" alt="Royal Kundan Set">
-          <h3 class="font-serif-luxury text-lg font-semibold text-stone-800">Royal Kundan Set</h3>
-          <p class="text-sm text-stone-500 mb-2">22k Gold Finish</p>
-          <div class="flex justify-between items-center mt-4">
-            <span class="text-amber-700 font-bold">$1,250</span>
-            <button class="bg-stone-900 text-white text-xs uppercase px-4 py-2 hover:bg-amber-600 transition">Add to Cart</button>
-          </div>
-        </div>
-
-        <div class="bg-white p-4 shadow-sm border border-stone-200 rounded-sm">
-          <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" class="w-full h-64 sm:h-72 object-cover mb-4" alt="Diamond Band">
-          <h3 class="font-serif-luxury text-lg font-semibold text-stone-800">Solitaire Diamond Ring</h3>
-          <p class="text-sm text-stone-500 mb-2">18k White Gold</p>
-          <div class="flex justify-between items-center mt-4">
-            <span class="text-amber-700 font-bold">$890</span>
-            <button class="bg-stone-900 text-white text-xs uppercase px-4 py-2 hover:bg-amber-600 transition">Add to Cart</button>
-          </div>
-        </div>
-
-        <div class="bg-white p-4 shadow-sm border border-stone-200 rounded-sm">
-          <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80" class="w-full h-64 sm:h-72 object-cover mb-4" alt="Temple Jhumkas">
-          <h3 class="font-serif-luxury text-lg font-semibold text-stone-800">Temple Jhumkas</h3>
-          <p class="text-sm text-stone-500 mb-2">Pure Handcrafted Gold</p>
-          <div class="flex justify-between items-center mt-4">
-            <span class="text-amber-700 font-bold">$650</span>
-            <button class="bg-stone-900 text-white text-xs uppercase px-4 py-2 hover:bg-amber-600 transition">Add to Cart</button>
-          </div>
-        </div>
-
-      </div>
+<section id="featured" class="section section-alt">
+    <h2 class="section-title">Featured Items</h2>
+    <div class="products-grid">
+        {% for product in featured_products %}
+            <article class="product-card">
+                <a href="{% url 'products:detail' product.slug %}">
+                    {% if product.cover_images %}
+                        <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image">
+                    {% else %}
+                        <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
+                    {% endif %}
+                    <div class="product-content">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <p class="product-meta">{{ product.get_metal_type_display }}{% if product.purity %} — {{ product.purity }}{% endif %}</p>
+                        <p class="product-price">Rs. {{ product.price }}</p>
+                    </div>
+                </a>
+            </article>
+        {% empty %}
+            <p>No featured products yet.</p>
+        {% endfor %}
     </div>
-  </section>
+</section>
 {% endblock %}

@@ -10,7 +10,8 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", "parent"]
+    list_display = ["name", "parent", "show_on_home"]
+    list_filter = ["show_on_home"]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
