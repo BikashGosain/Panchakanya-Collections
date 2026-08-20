@@ -273,3 +273,44 @@ body {
 @media (max-width: 900px) {
     .category-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    font-size: 14px;
+}
+
+.pagination a {
+    color: #1c1917;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
+
+.search-bar {
+    display: flex;
+    gap: 8px;
+    max-width: 400px;
+    margin: 0 auto 24px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    border: none;
+    background: #1c1917;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}

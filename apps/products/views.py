@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, render
 
@@ -128,11 +129,16 @@ def product_list_view(request):
     # CONTEXT
     # -----------------------------------------
 
+    paginator = Paginator(products, 12)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     return render(
         request,
         "products/product_list.html",
         {
-            "products": products,
+            "products": page_obj,
+            "page_obj": page_obj,
             "root_categories": root_categories,
             "metal_choices": Product.METAL_CHOICES,
             "search_query": search_query,
@@ -181,6 +187,13 @@ def category_view(request, slug):
         )
     )
 
+    search_query = request.GET.get("q", "")
+    if search_query:
+        products = products.filter(name__icontains=search_query)
+
+    paginator = Paginator(products, 6)
+    page_obj = paginator.get_page(request.GET.get("page"))
+
     ancestors = get_category_ancestors(category)
 
     return render(
@@ -189,14 +202,31 @@ def category_view(request, slug):
         {
             "category": category,
             "subcategories": subcategories,
-            "products": products,
+            "products": page_obj,
+            "page_obj": page_obj,
+            "search_query": search_query,
             "ancestors": ancestors,
         },
     )
 
 
 def category_overview_view(request):
-    root_categories = Category.objects.filter(parent__isnull=True).order_by("name")
+    categories = Category.objects.filter(parent__isnull=True).order_by("name")
+
+    search_query = request.GET.get("q", "")
+    if search_query:
+        categories = categories.filter(name__icontains=search_query)
+
+    paginator = Paginator(categories, 12)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     return render(
-        request, "products/category_overview.html", {"root_categories": root_categories}
+        request,
+        "products/category_overview.html",
+        {
+            "root_categories": page_obj,
+            "page_obj": page_obj,
+            "search_query": search_query,
+        },
     )

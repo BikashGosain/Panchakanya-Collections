@@ -36,6 +36,17 @@ class Category(models.Model):
     def has_children(self):
         return self.subcategories.exists()
 
+    @property
+    def product_count(self):
+        ids = [self.pk]
+        stack = [self]
+        while stack:
+            current = stack.pop()
+            children = list(current.subcategories.all())
+            ids.extend(child.pk for child in children)
+            stack.extend(children)
+        return Product.objects.filter(status="active", category_id__in=ids).count()
+
     def clean(self):
         """
         Prevent invalid category relationships.

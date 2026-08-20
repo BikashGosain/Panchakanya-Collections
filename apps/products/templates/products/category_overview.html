@@ -5,11 +5,20 @@
 {% block content %}
 <h1>Shop by Category</h1>
 
+<form method="get" class="search-bar">
+    <input type="text" name="q" placeholder="Search categories..." value="{{ search_query }}">
+    <button type="submit">Search</button>
+</form>
+
 <div class="subcategory-tiles">
     {% for category in root_categories %}
         <a href="{% url 'products:category' category.slug %}" class="subcategory-tile">
-            {{ category.name }}
+            {{ category.name }} ({{ category.product_count }})
         </a>
+    {% empty %}
+        <p>No categories found.</p>
     {% endfor %}
 </div>
+
+{% include "includes/pagination.html" %}
 {% endblock %}
