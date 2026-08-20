@@ -1,0 +1,27 @@
+{% if page_obj.has_other_pages %}
+<nav class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?{% if search_query %}{{ search_param|default:'q' }}={{ search_query }}&{% endif %}{{ page_param|default:'page' }}=1{{ anchor|default:'' }}" class="page-link">First</a>
+        <a href="?{% if search_query %}{{ search_param|default:'q' }}={{ search_query }}&{% endif %}{{ page_param|default:'page' }}={{ page_obj.previous_page_number }}{{ anchor|default:'' }}" class="page-link">Prev</a>
+    {% else %}
+        <span class="page-link disabled">First</span>
+        <span class="page-link disabled">Prev</span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+            <span class="page-link active">{{ num }}</span>
+        {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+            <a href="?{% if search_query %}{{ search_param|default:'q' }}={{ search_query }}&{% endif %}{{ page_param|default:'page' }}={{ num }}{{ anchor|default:'' }}" class="page-link">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?{% if search_query %}{{ search_param|default:'q' }}={{ search_query }}&{% endif %}{{ page_param|default:'page' }}={{ page_obj.next_page_number }}{{ anchor|default:'' }}" class="page-link">Next</a>
+        <a href="?{% if search_query %}{{ search_param|default:'q' }}={{ search_query }}&{% endif %}{{ page_param|default:'page' }}={{ page_obj.paginator.num_pages }}{{ anchor|default:'' }}" class="page-link">Last</a>
+    {% else %}
+        <span class="page-link disabled">Next</span>
+        <span class="page-link disabled">Last</span>
+    {% endif %}
+</nav>
+{% endif %}

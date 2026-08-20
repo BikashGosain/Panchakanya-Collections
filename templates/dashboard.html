@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Account | Panchakanya Collections{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pk-container pk-db-container">
+    <div class="pk-db-header">
+        <div>
+            <h1 class="pk-db-title">My Account</h1>
+            <p class="pk-db-welcome-msg">Welcome back, <span class="pk-db-user-name">{{ request.user.first_name|default:request.user.username }}</span></p>
+        </div>
+        <a href="#" class="pk-db-logout-link" id="pk-js-logout-btn">Log Out</a>
+    </div>
+
+    <div class="pk-db-grid">
+        <aside class="pk-db-sidebar">
+            <a href="#" class="pk-db-nav-item pk-db-active">
+                <i data-lucide="package"></i> Orders History
+            </a>
+            <a href="#" class="pk-db-nav-item">
+                <i data-lucide="heart"></i> Wishlist
+            </a>
+            <a href="#" class="pk-db-nav-item">
+                <i data-lucide="map-pin"></i> Saved Addresses
+            </a>
+            <a href="#" class="pk-db-nav-item">
+                <i data-lucide="settings"></i> Account Details
+            </a>
+        </aside>
+
+        <main>
+            <div class="pk-db-card">
+                <h2 class="pk-db-card-title">Recent Orders</h2>
+
+                <div class="pk-db-order-card">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=200" class="pk-db-order-thumb" alt="Product">
+                        <div>
+                            <span class="pk-db-order-code">Order #PK-84920</span>
+                            <h4 class="pk-db-order-name">24K Royal Gold Peacock Ring</h4>
+                            <span class="pk-db-status-tag">Delivered</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="pk-db-order-price">NPR 125,000</span>
+                        <div>
+                            <a href="#" class="pk-text-gold-dark" style="font-size: 0.75rem; text-decoration: underline;">View Invoice</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

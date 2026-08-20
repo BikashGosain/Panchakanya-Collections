@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ category.name }} — Panchakanya Collections{% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs">
+    <a href="{% url 'products:category_overview' %}">All Jewellery</a>
+    {% for ancestor in ancestors %}
+        › <a href="{% url 'products:category' ancestor.slug %}">{{ ancestor.name }}</a>
+    {% endfor %}
+    › <span>{{ category.name }}</span>
+</nav>
+
+<h1>{{ category.name }}</h1>
+
+{% if subcategories %}
+<div class="subcategory-tiles">
+    {% for sub in subcategories %}
+        <a href="{% url 'products:category' sub.slug %}" class="subcategory-tile">
+            {{ sub.name }} ({{ sub.product_count }})
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="get" action="{% url 'products:category' category.slug %}" class="search-bar">
+    <input type="text" name="q" placeholder="Search in {{ category.name }}..." value="{{ search_query }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if products %}
+<div class="products-grid">
+    {% for product in products %}
+        <article class="product-card">
+            <a href="{% url 'products:detail' product.slug %}">
+                {% if product.cover_images %}
+                    <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
+                {% else %}
+                    <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
+                {% endif %}
+                <div class="product-content">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-price">Rs. {{ product.price }}</p>
+                </div>
+            </a>
+        </article>
+    {% endfor %}
+</div>
+
+{% include "includes/pagination.html" %}
+{% else %}
+<p>No products found{% if search_query %} for "{{ search_query }}"{% endif %} in this category.</p>
+{% endif %}
+{% endblock %}

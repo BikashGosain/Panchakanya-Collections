@@ -1,0 +1,490 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+    {{ product.name }} | Panchakanya Collections
+{% endblock %}
+
+
+{% block extra_css %}
+
+    <link
+        rel="stylesheet"
+        href="{% static 'products/css/product_detail.css' %}"
+    >
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="product-detail-page">
+
+    <div class="product-detail-container">
+
+
+        <!-- =================================================
+             BREADCRUMB
+             ================================================= -->
+
+        <nav
+            class="product-breadcrumb"
+            aria-label="Breadcrumb"
+        >
+
+            <a href="{% url 'products:list' %}">
+                Jewellery
+            </a>
+
+            <span class="breadcrumb-separator">
+                /
+            </span>
+
+            <span class="breadcrumb-current">
+                {{ product.category.name }}
+            </span>
+
+            <span class="breadcrumb-separator">
+                /
+            </span>
+
+            <span class="breadcrumb-current">
+                {{ product.name }}
+            </span>
+
+        </nav>
+
+
+        <!-- =================================================
+             PRODUCT DETAIL CARD
+             ================================================= -->
+
+        <div class="product-detail-card">
+
+
+            <!-- =================================================
+                 PRODUCT GALLERY
+                 ================================================= -->
+
+            <section
+                class="product-gallery"
+                aria-label="Product images"
+            >
+
+
+                <!-- =================================================
+                     MAIN IMAGE
+                     ================================================= -->
+
+                <div
+                    id="productMainImageWrapper"
+                    class="product-main-image-wrapper"
+                >
+
+                    {% if images %}
+
+                        {% for image in images %}
+
+                            {% if image.is_primary %}
+
+                                <img
+                                    id="mainProductImage"
+                                    src="{{ image.image.url }}"
+                                    alt="{{ product.name }}"
+                                    class="product-main-image"
+                                    onerror="
+                                        this.onerror=null;
+                                        this.src='{% static 'images/products/default.png' %}';
+                                    "
+                                >
+
+                                <span class="product-cover-badge">
+                                    Cover
+                                </span>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        <!--
+                            If there is no primary image,
+                            JavaScript will use the first image.
+                        -->
+
+
+                    {% else %}
+
+                        <!-- =================================================
+                             NO PRODUCT IMAGE
+                             ================================================= -->
+
+                        <div class="product-no-image">
+
+                            <img
+                                src="{% static 'images/products/default.png' %}"
+                                alt="No image available for {{ product.name }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         IMAGE COUNTER
+                         ================================================= -->
+
+                    {% if images %}
+
+                        <span
+                            id="productImageCounter"
+                            class="product-image-counter"
+                        >
+                            1 / {{ images|length }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =================================================
+                     THUMBNAILS
+                     ================================================= -->
+
+                {% if images %}
+
+                    <div
+                        class="product-thumbnails"
+                        role="list"
+                        aria-label="Product image thumbnails"
+                    >
+
+                        {% for image in images %}
+
+                            <button
+                                type="button"
+                                class="product-thumbnail {% if image.is_primary %}active{% endif %}"
+                                data-image-url="{{ image.image.url }}"
+                                data-index="{{ forloop.counter0 }}"
+                                aria-label="View image {{ forloop.counter }} of {{ images|length }}"
+                                aria-pressed="{% if image.is_primary %}true{% else %}false{% endif %}"
+                            >
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ product.name }} thumbnail {{ forloop.counter }}"
+                                    loading="lazy"
+                                    onerror="
+                                        this.onerror=null;
+                                        this.src='{% static 'images/products/default.png' %}';
+                                    "
+                                >
+
+
+                                {% if image.is_primary %}
+
+                                    <span class="thumbnail-cover-label">
+                                        Cover
+                                    </span>
+
+                                {% endif %}
+
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+            </section>
+
+
+            <!-- =================================================
+                 PRODUCT INFORMATION
+                 ================================================= -->
+
+            <section class="product-information">
+
+
+                <!-- =================================================
+                     CATEGORY
+                     ================================================= -->
+
+                <div class="product-category">
+                    {{ product.category.name }}
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCT NAME
+                     ================================================= -->
+
+                <h1 class="product-title">
+                    {{ product.name }}
+                </h1>
+
+
+                <!-- =================================================
+                     SKU
+                     ================================================= -->
+
+                <p class="product-sku">
+                    SKU: {{ product.sku }}
+                </p>
+
+
+                <!-- =================================================
+                     PRICE
+                     ================================================= -->
+
+                <div class="product-price-wrapper">
+
+                    <p class="product-price">
+                        Rs. {{ product.price }}
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                     ================================================= -->
+
+                {% if product.description %}
+
+                    <div class="product-description">
+
+                        {{ product.description|linebreaks }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     PRODUCT SPECIFICATIONS
+                     ================================================= -->
+
+                <div class="product-specifications">
+
+
+                    <!-- Category -->
+
+                    <div class="product-specification-row">
+
+                        <span class="product-specification-label">
+                            Category
+                        </span>
+
+                        <span class="product-specification-value">
+                            {{ product.category.name }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Metal -->
+
+                    <div class="product-specification-row">
+
+                        <span class="product-specification-label">
+                            Metal
+                        </span>
+
+                        <span class="product-specification-value">
+                            {{ product.get_metal_type_display }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Purity -->
+
+                    {% if product.purity %}
+
+                        <div class="product-specification-row">
+
+                            <span class="product-specification-label">
+                                Purity
+                            </span>
+
+                            <span class="product-specification-value">
+                                {{ product.purity }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- Weight -->
+
+                    {% if product.weight_grams %}
+
+                        <div class="product-specification-row">
+
+                            <span class="product-specification-label">
+                                Weight
+                            </span>
+
+                            <span class="product-specification-value">
+                                {{ product.weight_grams }} g
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- SKU -->
+
+                    <div class="product-specification-row">
+
+                        <span class="product-specification-label">
+                            SKU
+                        </span>
+
+                        <span class="product-specification-value">
+                            {{ product.sku }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     STOCK STATUS
+                     ================================================= -->
+
+                {% if product.stock > 0 %}
+
+                    <div class="product-stock in-stock">
+                        In Stock
+                    </div>
+
+                {% else %}
+
+                    <div class="product-stock out-of-stock">
+                        Out of Stock
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     PURCHASE AREA
+                     ================================================= -->
+
+                <div class="product-purchase">
+
+
+                    <!-- =================================================
+                         QUANTITY
+                         ================================================= -->
+
+                    <div class="product-quantity">
+
+                        <button
+                            type="button"
+                            id="decreaseQuantity"
+                            class="quantity-button"
+                            aria-label="Decrease quantity"
+                        >
+                            −
+                        </button>
+
+
+                        <span
+                            id="quantityValue"
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            1
+                        </span>
+
+
+                        <button
+                            type="button"
+                            id="increaseQuantity"
+                            class="quantity-button"
+                            data-stock="{{ product.stock }}"
+                            aria-label="Increase quantity"
+
+                            {% if product.stock <= 0 %}
+                                disabled
+                            {% endif %}
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ADD TO CART
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        id="addToCartButton"
+                        class="add-to-cart-button"
+                        data-product-id="{{ product.pk }}"
+
+                        {% if product.stock <= 0 %}
+                            disabled
+                        {% endif %}
+                    >
+
+                        {% if product.stock > 0 %}
+                            Add to Cart
+                        {% else %}
+                            Out of Stock
+                        {% endif %}
+
+                    </button>
+
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT CONFIGURATION
+     ========================================================= -->
+
+<script>
+
+    window.PRODUCT_DEFAULT_IMAGE =
+        "{% static 'images/products/default.png' %}";
+
+    window.PRODUCT_NAME =
+        "{{ product.name|escapejs }}";
+
+</script>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+    <script
+        src="{% static 'products/js/product_detail.js' %}"
+    ></script>
+
+{% endblock %}

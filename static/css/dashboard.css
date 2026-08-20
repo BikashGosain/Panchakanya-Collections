@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Panchakanya Collections - User Dashboard Stylesheet (dashboard.css)
+   Namespace Prefix: pk-db-
+   ========================================================================== */
+
+.pk-db-container {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+}
+
+.pk-db-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--pk-color-border);
+    margin-bottom: 2.5rem;
+}
+
+.pk-db-title {
+    font-family: var(--pk-font-serif);
+    font-size: 2.25rem;
+    color: var(--pk-color-primary);
+}
+
+.pk-db-welcome-msg {
+    font-size: 0.875rem;
+    color: var(--pk-color-text-muted);
+    margin-top: 0.25rem;
+}
+
+.pk-db-user-name {
+    font-weight: 600;
+    color: var(--pk-color-primary);
+}
+
+.pk-db-logout-link {
+    font-size: 0.8125rem;
+    color: var(--pk-color-accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.pk-db-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+}
+
+.pk-db-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pk-db-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--pk-color-text-main);
+    text-decoration: none;
+    border-radius: var(--pk-radius-sm);
+    transition: var(--pk-transition-fast);
+}
+
+.pk-db-nav-item:hover {
+    background-color: #f3ede2;
+    color: var(--pk-color-gold-dark);
+}
+
+.pk-db-nav-item.pk-db-active {
+    background-color: #ffffff;
+    color: var(--pk-color-primary);
+    border-left: 4px solid var(--pk-color-gold-base);
+    box-shadow: var(--pk-shadow-sm);
+}
+
+.pk-db-card {
+    background-color: #ffffff;
+    border: 1px solid var(--pk-color-border);
+    border-radius: var(--pk-radius-md);
+    padding: 2rem;
+    box-shadow: var(--pk-shadow-sm);
+}
+
+.pk-db-card-title {
+    font-family: var(--pk-font-serif);
+    font-size: 1.35rem;
+    color: var(--pk-color-primary);
+    margin-bottom: 1.5rem;
+}
+
+.pk-db-order-card {
+    border: 1px solid #eee8dd;
+    border-radius: var(--pk-radius-sm);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.pk-db-order-thumb {
+    width: 70px;
+    height: 70px;
+    border-radius: var(--pk-radius-sm);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.pk-db-order-code {
+    font-size: 0.75rem;
+    color: var(--pk-color-text-muted);
+    text-transform: uppercase;
+}
+
+.pk-db-order-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--pk-color-primary);
+    margin: 0.15rem 0;
+}
+
+.pk-db-status-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    background-color: #e6f4ea;
+    color: #137333;
+    text-transform: uppercase;
+}
+
+.pk-db-order-price {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--pk-color-primary);
+}
+
+@media (max-width: 850px) {
+    .pk-db-grid {
+        grid-template-columns: 1fr;
+    }
+    .pk-db-order-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

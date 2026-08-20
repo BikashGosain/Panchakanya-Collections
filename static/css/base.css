@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Panchakanya Collections - Global Base Stylesheet (base.css)
+   Namespace Prefix: pk-
+   ========================================================================== */
+
+:root {
+    --pk-color-primary: #121110;       /* Deep Charcoal Black */
+    --pk-color-secondary: #1a1816;     /* Off-Black / Surface dark */
+    --pk-color-gold-base: #d4af37;     /* Classic Metallic Gold */
+    --pk-color-gold-light: #f4e8c1;    /* Soft Creamy Gold */
+    --pk-color-gold-dark: #a8841a;     /* Deep Antique Gold */
+    --pk-color-accent: #8b0000;        /* Royal Ruby Red */
+    --pk-color-bg-light: #fbf9f5;      /* Ivory / Warm Pearl Background */
+    --pk-color-surface: #ffffff;       /* Pure White */
+    --pk-color-text-main: #2b2825;     /* Dark Taupe / Text Primary */
+    --pk-color-text-muted: #736d65;    /* Muted Grey-Brown */
+    --pk-color-border: #e6dfd3;        /* Soft Luxury Border */
+
+    --pk-font-serif: 'Playfair Display', Georgia, serif;
+    --pk-font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+    --pk-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --pk-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --pk-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+
+    --pk-radius-sm: 4px;
+    --pk-radius-md: 8px;
+    --pk-radius-lg: 16px;
+
+    --pk-transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --pk-transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body.pk-body-root {
+    background-color: var(--pk-color-bg-light);
+    color: var(--pk-color-text-main);
+    font-family: var(--pk-font-sans);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+.pk-main-wrapper {
+    flex: 1 0 auto;
+}
+
+.pk-container {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.pk-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 2rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--pk-radius-sm);
+    transition: var(--pk-transition-smooth);
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.pk-btn-gold {
+    background-color: var(--pk-color-gold-base);
+    color: var(--pk-color-primary);
+}
+
+.pk-btn-gold:hover {
+    background-color: var(--pk-color-gold-dark);
+    color: #ffffff;
+    box-shadow: var(--pk-shadow-md);
+    transform: translateY(-2px);
+}
+
+.pk-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--pk-color-gold-base);
+    color: var(--pk-color-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+}

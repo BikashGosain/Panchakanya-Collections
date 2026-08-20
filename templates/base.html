@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Panchakanya Collections | Luxury Jewelry{% endblock %}</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Namespaced CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/includes/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/includes/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/includes/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'css/includes/search.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="pk-body-root">
+
+    {% include 'includes/header.html' %}
+
+    <main class="pk-main-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <script src="{% static 'js/header.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

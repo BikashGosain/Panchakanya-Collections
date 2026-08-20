@@ -1,0 +1,149 @@
+/* ==========================================================================
+   Panchakanya Collections - Footer Stylesheet (footer.css)
+   Namespace Prefix: pk-ftr-
+   ========================================================================== */
+
+.pk-ftr-root {
+    background-color: var(--pk-color-primary);
+    color: #a39c93;
+    padding-top: 4.5rem;
+    padding-bottom: 2rem;
+    border-top: 2px solid var(--pk-color-gold-dark);
+    margin-top: auto;
+}
+
+.pk-ftr-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pk-ftr-brand-title {
+    font-family: var(--pk-font-serif);
+    font-size: 1.35rem;
+    color: var(--pk-color-gold-base);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.pk-ftr-about-text {
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: #8c857b;
+}
+
+.pk-ftr-col-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--pk-color-gold-light);
+    margin-bottom: 1.25rem;
+}
+
+.pk-ftr-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.pk-ftr-link {
+    font-size: 0.8125rem;
+    color: #a39c93;
+    text-decoration: none;
+    transition: var(--pk-transition-fast);
+}
+
+.pk-ftr-link:hover {
+    color: var(--pk-color-gold-base);
+    padding-left: 4px;
+}
+
+.pk-ftr-newsletter-desc {
+    font-size: 0.8125rem;
+    margin-bottom: 1rem;
+    color: #8c857b;
+}
+
+.pk-ftr-form {
+    display: flex;
+    border-radius: var(--pk-radius-sm);
+    overflow: hidden;
+}
+
+.pk-ftr-input {
+    width: 100%;
+    background-color: #1e1b18;
+    border: 1px solid #332f2a;
+    color: #ffffff;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.8125rem;
+}
+
+.pk-ftr-input:focus {
+    outline: none;
+    border-color: var(--pk-color-gold-base);
+}
+
+.pk-ftr-submit-btn {
+    background-color: var(--pk-color-gold-base);
+    color: var(--pk-color-primary);
+    border: none;
+    padding: 0 1.25rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: var(--pk-transition-fast);
+}
+
+.pk-ftr-submit-btn:hover {
+    background-color: var(--pk-color-gold-dark);
+    color: #ffffff;
+}
+
+.pk-ftr-bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    font-size: 0.75rem;
+    color: #666057;
+}
+
+.pk-ftr-legal-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.pk-ftr-legal-link {
+    color: #666057;
+    text-decoration: none;
+    transition: var(--pk-transition-fast);
+}
+
+.pk-ftr-legal-link:hover {
+    color: var(--pk-color-gold-light);
+}
+
+@media (max-width: 991px) {
+    .pk-ftr-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .pk-ftr-grid {
+        grid-template-columns: 1fr;
+    }
+    .pk-ftr-bottom-bar {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}

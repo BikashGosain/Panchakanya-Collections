@@ -9,6 +9,7 @@ __pycache__/
 # Django
 *.sqlite3
 staticfiles/
+media/
 
 # Editors
 .vscode/

@@ -1,0 +1,1117 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %}
+        Panchakanya Collections
+    {% endblock %}
+
+{% block content %}
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f8f8f8;
+
+            color: #222;
+        }
+
+
+        a {
+            color: inherit;
+        }
+
+
+        /* =========================================
+           PAGE
+           ========================================= */
+
+        .page-container {
+
+            max-width: 1400px;
+
+            margin: 0 auto;
+
+            padding: 30px;
+        }
+
+
+        .page-title {
+
+            margin: 0 0 30px;
+
+            font-size: 30px;
+        }
+
+
+        /* =========================================
+           SHOP LAYOUT
+           ========================================= */
+
+        .shop-layout {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 30px;
+        }
+
+
+        /* =========================================
+           SIDEBAR
+           ========================================= */
+
+        .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+
+    background: #fff;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    position: sticky;
+
+    top: 20px;
+
+    max-height: calc(100vh - 40px);
+
+    overflow-y: auto;
+}
+
+.category-tree-container {
+    max-height: 350px;
+
+    overflow-y: auto;
+
+    padding-right: 5px;
+}
+
+        .filter-section {
+
+            margin-bottom: 30px;
+        }
+
+
+        .filter-section:last-child {
+
+            margin-bottom: 0;
+        }
+
+
+        .filter-title {
+
+            margin-bottom: 15px;
+
+            padding-bottom: 10px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =========================================
+           CATEGORY TREE
+           ========================================= */
+
+        .category-tree {
+
+            list-style: none;
+
+            margin: 0;
+
+            padding: 0;
+        }
+
+
+        .category-item {
+
+            list-style: none;
+
+            margin: 0;
+
+            padding: 0;
+        }
+
+
+        .category-row {
+
+            display: flex;
+
+            align-items: center;
+
+            min-height: 40px;
+        }
+
+
+        .category-link {
+
+            flex: 1;
+
+            display: block;
+
+            padding: 8px 5px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            color: #333;
+
+            font-size: 14px;
+        }
+
+
+        .category-link:hover {
+
+            background: #f2f2f2;
+        }
+
+
+        .category-link.selected {
+
+            font-weight: bold;
+
+            background: #f2f2f2;
+        }
+
+
+        .category-toggle {
+
+            width: 30px;
+
+            height: 30px;
+
+            flex-shrink: 0;
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            border-radius: 5px;
+
+            font-size: 11px;
+        }
+
+
+        .category-toggle:hover {
+
+            background: #eee;
+        }
+
+
+        .subcategory-list {
+
+            list-style: none;
+
+            margin: 0 0 0 12px;
+
+            padding: 0 0 0 12px;
+
+            border-left: 1px solid #ddd;
+        }
+
+
+        /* =========================================
+           FILTER FORM
+           ========================================= */
+
+        .filter-form {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+
+        .filter-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .filter-label {
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .filter-input,
+        .filter-select {
+
+            width: 100%;
+
+            padding: 9px 10px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            background: #fff;
+
+            font-size: 14px;
+        }
+
+
+        .price-row {
+
+            display: flex;
+
+            gap: 8px;
+        }
+
+
+        .price-row .filter-input {
+
+            width: 50%;
+        }
+
+
+        .filter-button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: #222;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        .filter-button:hover {
+
+            background: #444;
+        }
+
+
+        .clear-button {
+
+            display: block;
+
+            text-align: center;
+
+            padding: 8px;
+
+            color: #555;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+
+        .clear-button:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           PRODUCTS AREA
+           ========================================= */
+
+        .products-area {
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        /* =========================================
+           SEARCH
+           ========================================= */
+
+        .search-bar {
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .search-form {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .search-input {
+
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 10px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+        }
+
+
+        .search-button {
+
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: #222;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        .search-button:hover {
+
+            background: #444;
+        }
+
+
+        /* =========================================
+           ACTIVE FILTER
+           ========================================= */
+
+        .active-filter {
+
+            margin-bottom: 20px;
+
+            padding: 12px 15px;
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+        }
+
+
+        .active-filter strong {
+
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           PRODUCTS
+           ========================================= */
+
+        .products-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+
+        .product-card {
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        .product-card:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .product-image {
+
+            width: 100%;
+
+            height: 220px;
+
+            object-fit: cover;
+
+            background: #eee;
+        }
+
+
+        .product-image-placeholder {
+
+            width: 100%;
+
+            height: 220px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eee;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        .product-content {
+
+            padding: 15px;
+        }
+
+
+        .product-name {
+
+            margin: 0 0 10px;
+
+            font-size: 17px;
+        }
+
+
+        .product-price {
+
+            margin: 0 0 8px;
+
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+
+        .product-meta {
+
+            margin: 4px 0;
+
+            color: #666;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           EMPTY PRODUCTS
+           ========================================= */
+
+        .empty-products {
+
+            padding: 40px;
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            color: #666;
+        }
+
+
+        /* =========================================
+           MOBILE
+           ========================================= */
+
+        @media (max-width: 900px) {
+
+            .shop-layout {
+
+                flex-direction: column;
+            }
+
+
+            .sidebar {
+
+                width: 100%;
+
+                position: static;
+            }
+
+
+            .products-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .page-container {
+
+                padding: 15px;
+            }
+
+
+            .page-title {
+
+                font-size: 24px;
+            }
+
+
+            .search-form {
+
+                flex-direction: column;
+            }
+
+
+            .search-button {
+
+                width: 100%;
+            }
+
+
+            .products-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+
+<div class="page-container">
+
+
+    <!-- =====================================
+         PAGE TITLE
+         ===================================== -->
+
+    <h1 class="page-title">
+        Panchakanya Collections
+    </h1>
+
+
+    <div class="shop-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+             ===================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- =================================
+                 CATEGORY
+                 ================================= -->
+
+            <div class="filter-section">
+
+                <div class="filter-title">
+                    Category
+                </div>
+
+
+                <div class="category-tree-container">
+
+    <ul class="category-tree">
+
+
+                    <!-- ALL PRODUCTS -->
+
+                    <li class="category-item">
+
+                        <div class="category-row">
+
+                            <a
+                                href="{% url 'products:list' %}"
+                                class="category-link
+                                {% if not selected_category %}
+                                    selected
+                                {% endif %}"
+                            >
+                                All Jewellery
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <!-- RECURSIVE CATEGORY TREE -->
+
+                    {% include "products/category_tree.html" with categories=root_categories %}
+
+
+                </ul>
+</div>
+            </div>
+
+
+            <!-- =================================
+                 OTHER FILTERS
+                 ================================= -->
+
+            <div class="filter-section">
+
+                <div class="filter-title">
+                    Filters
+                </div>
+
+
+<form
+    method="get"
+    class="filter-form"
+>
+
+    <div class="filter-group">
+
+        <label
+            class="filter-label"
+            for="sidebar-search"
+        >
+            Search
+        </label>
+
+        <input
+            id="sidebar-search"
+            class="filter-input"
+            type="text"
+            name="q"
+            placeholder="Search jewellery..."
+            value="{{ search_query }}"
+        >
+
+    </div>
+
+
+    <div class="filter-group">
+
+        <label
+            class="filter-label"
+            for="metal"
+        >
+            Metal Type
+        </label>
+
+        <select
+            id="metal"
+            name="metal"
+            class="filter-select"
+        >
+
+            <option value="">
+                All Metals
+            </option>
+
+            {% for value, label in metal_choices %}
+
+                <option
+                    value="{{ value }}"
+                    {% if value == selected_metal %}
+                        selected
+                    {% endif %}
+                >
+                    {{ label }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <div class="filter-group">
+
+        <label class="filter-label">
+            Price
+        </label>
+
+        <div class="price-row">
+
+            <input
+                class="filter-input"
+                type="number"
+                name="min_price"
+                placeholder="Min"
+                value="{{ min_price }}"
+            >
+
+            <input
+                class="filter-input"
+                type="number"
+                name="max_price"
+                placeholder="Max"
+                value="{{ max_price }}"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- KEEP SELECTED CATEGORY -->
+
+    <input
+        type="hidden"
+        name="category"
+        value="{{ selected_category }}"
+    >
+
+
+    <button
+        type="submit"
+        class="filter-button"
+    >
+        Apply Filters
+    </button>
+
+
+    <a
+        href="{% url 'products:list' %}"
+        class="clear-button"
+    >
+        Clear All Filters
+    </a>
+
+</form>
+
+            </div>
+
+
+        </aside>
+
+
+        <!-- =====================================
+             PRODUCTS AREA
+             ===================================== -->
+
+        <main class="products-area">
+
+
+            <!-- =================================
+                 SEARCH BAR
+                 ================================= -->
+
+            <div class="search-bar">
+
+                <form
+                    method="get"
+                    class="search-form"
+                >
+
+
+                    <input
+                        class="search-input"
+                        type="text"
+                        name="q"
+                        placeholder="Search jewellery..."
+                        value="{{ search_query }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="category"
+                        value="{{ selected_category }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="metal"
+                        value="{{ selected_metal }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="min_price"
+                        value="{{ min_price }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="max_price"
+                        value="{{ max_price }}"
+                    >
+
+
+                    <button
+                        class="search-button"
+                        type="submit"
+                    >
+                        Search
+                    </button>
+
+
+                </form>
+
+            </div>
+
+
+            <!-- =================================
+                 ACTIVE CATEGORY
+                 ================================= -->
+
+            {% if selected_category_obj %}
+
+                <div class="active-filter">
+
+                    Category:
+
+                    <strong>
+                        {{ selected_category_obj.name }}
+                    </strong>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================
+                 PRODUCT GRID
+                 ================================= -->
+
+            {% if products %}
+
+                <div class="products-grid">
+
+
+                    {% for product in products %}
+
+                        <article class="product-card">
+
+
+                            <a
+                                href="{% url 'products:detail' product.slug %}"
+                            >
+
+
+                                <!-- PRODUCT IMAGE -->
+
+{% if product.cover_images %}
+
+    {% with primary_image=product.cover_images.0 %}
+
+        <img
+            src="{{ primary_image.image.url }}"
+            alt="{{ product.name }}"
+            class="product-image"
+            onerror="
+                this.onerror=null;
+                this.src='{% static 'images/products/default.png' %}';
+            "
+        >
+
+    {% endwith %}
+
+{% else %}
+
+    <div class="product-image-placeholder">
+
+        <img
+            src="{% static 'images/products/default.png' %}"
+            alt="{{ product.name }}"
+            class="default-image"
+        >
+
+    </div>
+
+{% endif %}
+
+
+                                <!-- PRODUCT INFORMATION -->
+
+                                <div class="product-content">
+
+
+                                    <h3 class="product-name">
+                                        {{ product.name }}
+                                    </h3>
+
+
+                                    <p class="product-price">
+                                        Rs. {{ product.price }}
+                                    </p>
+
+
+                                    <p class="product-meta">
+                                        Category:
+                                        {{ product.category.name }}
+                                    </p>
+
+
+                                    <p class="product-meta">
+                                        Metal:
+                                        {{ product.get_metal_type_display }}
+                                    </p>
+
+
+                                    {% if product.stock > 0 %}
+
+                                        <p class="product-meta">
+                                            In Stock
+                                        </p>
+
+                                    {% else %}
+
+                                        <p class="product-meta">
+                                            Out of Stock
+                                        </p>
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                            </a>
+
+
+                        </article>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-products">
+
+                    <p>
+                        No products match your filters.
+                    </p>
+
+
+                    <a
+                        href="{% url 'products:list' %}"
+                    >
+                        Clear all filters
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+
+        </main>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================
+     CATEGORY TREE JAVASCRIPT
+     ========================================= -->
+
+<script>
+
+    function toggleCategory(categoryId) {
+
+        const category =
+            document.getElementById(categoryId);
+
+        const icon =
+            document.getElementById(
+                "icon-" + categoryId
+            );
+
+        if (!category || !icon) {
+            return;
+        }
+
+
+        const isHidden =
+            category.style.display === "none";
+
+
+        if (isHidden) {
+
+            category.style.display = "block";
+
+            icon.textContent = "▼";
+
+        } else {
+
+            category.style.display = "none";
+
+            icon.textContent = "▶";
+
+        }
+
+    }
+
+</script>
+{% include "includes/pagination.html" %}
+{% endblock %}

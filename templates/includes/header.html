@@ -1,0 +1,95 @@
+{% load static %}
+<div id="pk-header-announcement">
+    Complimentary Insured Delivery Across Nepal on Orders Over NPR 50,000
+</div>
+
+<header class="pk-hdr-sticky-wrapper">
+    <div class="pk-container">
+        <div class="pk-hdr-main-row">
+
+            <button type="button" class="pk-hdr-mobile-toggle" id="pk-js-mobile-toggle" aria-label="Toggle Navigation">
+                <i data-lucide="menu"></i>
+            </button>
+
+            <div class="pk-hdr-search-col">
+                <div class="pk-hdr-search-box">
+                    <input type="text" placeholder="Search jewelry..." class="pk-hdr-search-input" id="pk-js-search-input">
+                    <i data-lucide="search" class="pk-hdr-search-icon"></i>
+                </div>
+            </div>
+
+            <a href="{% url 'core:home' %}" class="pk-hdr-brand-col">
+                <span class="pk-hdr-brand-title">PANCHAKANYA</span>
+                <span class="pk-hdr-brand-subtitle">C o l l e c t i o n s</span>
+            </a>
+
+            <div class="pk-hdr-actions-col">
+                <!-- User Account / Auth Section -->
+                <div class="pk-hdr-user-dropdown-wrapper">
+                    {% if user.is_authenticated %}
+                        <button type="button" class="pk-hdr-action-btn" id="pk-js-user-btn" title="Account ({{ user.username }})">
+                            <i data-lucide="user-check"></i>
+                        </button>
+
+                        <!-- Dropdown Menu for Logged In User -->
+                        <div class="pk-hdr-dropdown-menu" id="pk-js-user-dropdown">
+                            <div class="pk-dropdown-header">
+                                <strong>Hello, {{ user.first_name|default:user.username }}</strong>
+                            </div>
+                            <hr class="pk-dropdown-divider">
+                            <a href="dashboard.html" class="pk-dropdown-item">
+                                <i data-lucide="layout-dashboard"></i> Dashboard
+                            </a>
+                            <a href="{% url 'accounts:profile' %}" class="pk-dropdown-item">
+                                <i data-lucide="layout-dashboard"></i> Profile
+                            </a>
+                            <a href="#" class="pk-dropdown-item">
+                                <i data-lucide="package"></i> My Orders
+                            </a>
+                            <hr class="pk-dropdown-divider">
+                            <form action="{% url 'accounts:logout' %}" method="post" class="pk-logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="pk-dropdown-item pk-logout-btn">
+                                    <i data-lucide="log-out"></i> Log Out
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="pk-hdr-action-btn" title="Sign In / Register">
+                            <i data-lucide="user"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Wishlist -->
+                <a href="#" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist">
+                    <i data-lucide="heart"></i>
+                </a>
+
+                <!-- Shopping Bag -->
+                <a href="#" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag">
+                    <i data-lucide="shopping-bag"></i>
+                    <span class="pk-badge pk-hdr-cart-badge" id="pk-js-cart-count">2</span>
+                </a>
+            </div>
+
+        </div>
+
+        <nav class="pk-nav-bar" id="pk-js-nav-bar">
+            <a href="{% url 'core:home' %}" class="pk-nav-link pk-active">Home</a>
+
+
+            <a href="{% url 'products:category_overview' %}" class="pk-nav-link pk-active">Categories</a>
+            <a href="{% url 'products:list' %}" class="pk-nav-link pk-active">Collections</a>
+
+
+
+            <a href="#" class="pk-nav-link">Bridal Sets</a>
+            <a href="#" class="pk-nav-link">Necklaces & Pendants</a>
+            <a href="#" class="pk-nav-link">Rings</a>
+            <a href="#" class="pk-nav-link">Earrings</a>
+            <a href="#" class="pk-nav-link">Bangles & Bracelets</a>
+            <a href="#" class="pk-nav-link pk-nav-link-highlight">24K Gold Collections</a>
+        </nav>
+    </div>
+</header>
