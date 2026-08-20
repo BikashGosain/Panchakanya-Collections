@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ category.name }} — Panchakanya Collections{% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs">
+    <a href="{% url 'products:list' %}">All Jewellery</a>
+    {% for ancestor in ancestors %}
+        › <a href="{% url 'products:category' ancestor.slug %}">{{ ancestor.name }}</a>
+    {% endfor %}
+    › <span>{{ category.name }}</span>
+</nav>
+
+<h1>{{ category.name }}</h1>
+
+{% if subcategories %}
+<div class="subcategory-tiles">
+    {% for sub in subcategories %}
+        <a href="{% url 'products:category' sub.slug %}" class="subcategory-tile">
+            {{ sub.name }}
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if products %}
+<div class="products-grid">
+    {% for product in products %}
+        <article class="product-card">
+            <a href="{% url 'products:detail' product.slug %}">
+                {% if product.cover_images %}
+                    <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image">
+                {% else %}
+                    <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
+                {% endif %}
+                <div class="product-content">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-price">Rs. {{ product.price }}</p>
+                </div>
+            </a>
+        </article>
+    {% endfor %}
+</div>
+{% else %}
+<p>No products in this category yet.</p>
+{% endif %}
+{% endblock %}

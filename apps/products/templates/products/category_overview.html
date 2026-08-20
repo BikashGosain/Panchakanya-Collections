@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}All Categories — Panchakanya Collections{% endblock %}
+
+{% block content %}
+<h1>Shop by Category</h1>
+
+<div class="subcategory-tiles">
+    {% for category in root_categories %}
+        <a href="{% url 'products:category' category.slug %}" class="subcategory-tile">
+            {{ category.name }}
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

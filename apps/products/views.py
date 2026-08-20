@@ -162,3 +162,41 @@ def product_detail_view(request, slug):
             "product": product,
         },
     )
+
+
+def category_view(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    subcategories = category.subcategories.all()
+
+    category_tree = get_category_and_descendants(category)
+    products = (
+        Product.objects.filter(status="active", category__in=category_tree)
+        .select_related("category")
+        .prefetch_related(
+            Prefetch(
+                "images",
+                queryset=ProductImage.objects.filter(is_primary=True),
+                to_attr="cover_images",
+            )
+        )
+    )
+
+    ancestors = get_category_ancestors(category)
+
+    return render(
+        request,
+        "products/category_detail.html",
+        {
+            "category": category,
+            "subcategories": subcategories,
+            "products": products,
+            "ancestors": ancestors,
+        },
+    )
+
+
+def category_overview_view(request):
+    root_categories = Category.objects.filter(parent__isnull=True).order_by("name")
+    return render(
+        request, "products/category_overview.html", {"root_categories": root_categories}
+    )

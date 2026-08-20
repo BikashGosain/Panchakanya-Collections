@@ -15,8 +15,8 @@
     <!-- Desktop Navigation Links -->
     <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
       <a href="{% url 'core:home' %}" class="hover:text-amber-400 transition">Home</a>
-      <a href="{% url 'core:home' %}#categories" class="hover:text-amber-400 transition">Categories</a>
-      <a href="{% url 'core:home' %}#featured" class="hover:text-amber-400 transition">Collections</a>
+      <a href="{% url 'products:category_overview' %}" class="hover:text-amber-400 transition">Categories</a>
+      <a href="{% url 'products:list' %}" class="hover:text-amber-400 transition">Collections</a>
       <a href="#" class="hover:text-amber-400 transition">About</a>
     </div>
 
@@ -60,8 +60,8 @@
       </div>
       <div class="flex flex-col space-y-6 text-lg uppercase tracking-wider text-stone-200">
         <a href="{% url 'core:home' %}" class="hover:text-amber-400">Home</a>
-        <a href="{% url 'core:home' %}#categories" class="hover:text-amber-400">Categories</a>
-        <a href="{% url 'core:home' %}#featured" class="hover:text-amber-400">Collections</a>
+        <a href="{% url 'products:category_overview' %}" class="hover:text-amber-400 transition">Categories</a>
+        <a href="{% url 'products:list' %}#featured" class="hover:text-amber-400">Collections</a>
         <a href="#" class="hover:text-amber-400">About Us</a>
       </div>
     </div>
