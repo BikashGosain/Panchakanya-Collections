@@ -2,20 +2,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Panchakanya Collections{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% block extra_css %}{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Panchakanya Collections{% endblock %}</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom CSS file -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  {% block extra_css %}{% endblock %}
 </head>
-<body>
-    {% include "includes/header.html" %}
+<body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col">
 
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
+  <!-- Shared Header -->
+  {% include 'includes/header.html' %}
 
-    {% include "includes/footer.html" %}
+  <!-- Main View Content -->
+  <main class="flex-grow">
+    {% block content %}{% endblock %}
+  </main>
 
-    {% block extra_js %}{% endblock %}
+  <!-- Shared Footer -->
+  {% include 'includes/footer.html' %}
+
+  <!-- Custom JS file -->
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

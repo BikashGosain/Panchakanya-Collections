@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Panchakanya Collections{% endblock %}
+
+{% block content %}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full grid grid-cols-1 md:grid-cols-4 gap-8">
+
+    <!-- Mobile-Responsive Dashboard Sidebar -->
+    <aside class="bg-white p-6 rounded-sm shadow-sm border border-stone-200 h-fit">
+      <div class="text-center pb-6 border-b border-stone-200 mb-6">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center font-serif-luxury font-bold text-xl sm:text-2xl mx-auto mb-3">
+          {{ user.username|first|upper }}
+        </div>
+        <h3 class="font-semibold text-stone-900">{{ user.get_full_name|default:user.username }}</h3>
+        <p class="text-xs text-stone-500">{{ user.email }}</p>
+      </div>
+
+      <nav class="flex md:flex-col overflow-x-auto md:overflow-visible space-x-2 md:space-x-0 md:space-y-2 text-sm font-medium pb-2 md:pb-0">
+        <a href="#" class="whitespace-nowrap px-4 py-2 bg-amber-50 text-amber-700 rounded-sm">Overview</a>
+        <a href="#" class="whitespace-nowrap px-4 py-2 text-stone-600 hover:bg-stone-50 rounded-sm transition">Orders</a>
+        <a href="#" class="whitespace-nowrap px-4 py-2 text-stone-600 hover:bg-stone-50 rounded-sm transition">Wishlist</a>
+        <a href="#" class="whitespace-nowrap px-4 py-2 text-stone-600 hover:bg-stone-50 rounded-sm transition">Address</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="md:col-span-3 space-y-8">
+
+      <div>
+        <h1 class="font-serif-luxury text-xl sm:text-2xl font-bold text-stone-900">Account Overview</h1>
+        <p class="text-xs text-stone-500 mt-1">Review your recent activity and saved settings.</p>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-5 border border-stone-200 rounded-sm shadow-sm">
+          <span class="text-xs uppercase tracking-wider text-stone-400">Total Orders</span>
+          <p class="text-2xl font-serif-luxury font-bold text-stone-900 mt-1">02</p>
+        </div>
+        <div class="bg-white p-5 border border-stone-200 rounded-sm shadow-sm">
+          <span class="text-xs uppercase tracking-wider text-stone-400">Active Shipments</span>
+          <p class="text-2xl font-serif-luxury font-bold text-amber-600 mt-1">01</p>
+        </div>
+        <div class="bg-white p-5 border border-stone-200 rounded-sm shadow-sm">
+          <span class="text-xs uppercase tracking-wider text-stone-400">Saved Wishlist</span>
+          <p class="text-2xl font-serif-luxury font-bold text-stone-900 mt-1">05</p>
+        </div>
+      </div>
+
+      <!-- Recent Orders Table -->
+      <div class="bg-white p-4 sm:p-6 border border-stone-200 rounded-sm shadow-sm">
+        <h2 class="font-serif-luxury text-lg font-semibold text-stone-900 mb-4">Recent Orders</h2>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm min-w-[500px]">
+            <thead class="bg-stone-50 text-stone-500 text-xs uppercase border-b border-stone-200">
+              <tr>
+                <th class="py-3 px-4">Order ID</th>
+                <th class="py-3 px-4">Date</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4">Total</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100">
+              <tr>
+                <td class="py-4 px-4 font-medium text-stone-900">#PK-8842</td>
+                <td class="py-4 px-4 text-stone-500">Aug 14, 2026</td>
+                <td class="py-4 px-4"><span class="px-2 py-1 text-xs bg-amber-100 text-amber-800 rounded">Shipped</span></td>
+                <td class="py-4 px-4 font-semibold text-stone-800">$1,250</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-4 font-medium text-stone-900">#PK-7412</td>
+                <td class="py-4 px-4 text-stone-500">Jun 02, 2026</td>
+                <td class="py-4 px-4"><span class="px-2 py-1 text-xs bg-emerald-100 text-emerald-800 rounded">Delivered</span></td>
+                <td class="py-4 px-4 font-semibold text-stone-800">$650</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+{% endblock %}
