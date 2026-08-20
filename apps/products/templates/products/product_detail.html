@@ -1,918 +1,490 @@
 {% extends "base.html" %}
 {% load static %}
 
-    {% block title %}
-        {{ product.name }} | Panchakanya Collections
-    {% endblock %}
-{% block content %}
-    <style>
 
-        * {
-            box-sizing: border-box;
-        }
+{% block title %}
+    {{ product.name }} | Panchakanya Collections
+{% endblock %}
 
 
-        body {
-            margin: 0;
+{% block extra_css %}
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background: #f8f8f8;
-
-            color: #222;
-        }
-
-
-        a {
-            color: inherit;
-        }
-
-
-        /* =========================================
-           PAGE CONTAINER
-           ========================================= */
-
-        .container {
-
-            max-width: 1200px;
-
-            margin: 0 auto;
-
-            padding: 30px;
-        }
-
-
-        /* =========================================
-           BACK LINK
-           ========================================= */
-
-        .back-link {
-
-            display: inline-block;
-
-            margin-bottom: 25px;
-
-            color: #555;
-
-            text-decoration: none;
-
-            font-size: 14px;
-        }
-
-
-        .back-link:hover {
-
-            text-decoration: underline;
-        }
-
-
-        /* =========================================
-           PRODUCT DETAIL LAYOUT
-           ========================================= */
-
-        .product-detail {
-
-            display: grid;
-
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(0, 1fr);
-
-            gap: 50px;
-
-            background: #fff;
-
-            padding: 30px;
-
-            border: 1px solid #ddd;
-
-            border-radius: 8px;
-        }
-
-
-        /* =========================================
-           PRODUCT GALLERY
-           ========================================= */
-
-        .product-gallery {
-
-            width: 100%;
-        }
-
-
-        /* =========================================
-           MAIN IMAGE
-           ========================================= */
-
-        .main-image-container {
-
-            position: relative;
-
-            width: 100%;
-
-            aspect-ratio: 1 / 1;
-
-            background: #f5f5f5;
-
-            border-radius: 8px;
-
-            overflow: hidden;
-
-            border: 1px solid #eee;
-        }
-
-
-        .main-product-image {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: contain;
-
-            display: block;
-        }
-
-
-        /* =========================================
-           NO IMAGE
-           ========================================= */
-
-        .no-image {
-
-            width: 100%;
-
-            height: 100%;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            color: #777;
-
-            font-size: 15px;
-        }
-
-
-        /* =========================================
-           THUMBNAILS
-           ========================================= */
-
-        .thumbnail-list {
-
-            display: flex;
-
-            gap: 12px;
-
-            margin-top: 15px;
-
-            overflow-x: auto;
-
-            padding-bottom: 5px;
-        }
-
-
-        .thumbnail-button {
-
-            position: relative;
-
-            flex: 0 0 80px;
-
-            width: 80px;
-
-            height: 80px;
-
-            padding: 0;
-
-            border: 2px solid transparent;
-
-            border-radius: 6px;
-
-            background: #f5f5f5;
-
-            overflow: hidden;
-
-            cursor: pointer;
-        }
-
-
-        .thumbnail-button:hover {
-
-            border-color: #999;
-        }
-
-
-        .thumbnail-button.active {
-
-            border-color: #222;
-        }
-
-
-        .thumbnail-image {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-
-            display: block;
-        }
-
-
-        /* =========================================
-           PRIMARY BADGE
-           ========================================= */
-
-        .primary-badge {
-
-            position: absolute;
-
-            left: 4px;
-
-            bottom: 4px;
-
-            padding: 3px 5px;
-
-            background: rgba(0, 0, 0, 0.7);
-
-            color: white;
-
-            border-radius: 3px;
-
-            font-size: 9px;
-
-            text-transform: uppercase;
-        }
-
-
-        /* =========================================
-           PRODUCT INFORMATION
-           ========================================= */
-
-        .product-info {
-
-            padding-top: 5px;
-        }
-
-
-        .product-name {
-
-            margin: 0 0 15px;
-
-            font-size: 32px;
-
-            line-height: 1.2;
-        }
-
-
-        .product-price {
-
-            margin: 0 0 25px;
-
-            font-size: 26px;
-
-            font-weight: bold;
-        }
-
-
-        /* =========================================
-           DESCRIPTION
-           ========================================= */
-
-        .description {
-
-            margin-bottom: 30px;
-
-            color: #555;
-
-            line-height: 1.7;
-        }
-
-
-        /* =========================================
-           PRODUCT DETAILS
-           ========================================= */
-
-        .product-details {
-
-            border-top: 1px solid #eee;
-        }
-
-
-        .detail-row {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            gap: 20px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid #eee;
-        }
-
-
-        .detail-label {
-
-            font-weight: bold;
-
-            color: #444;
-        }
-
-
-        .detail-value {
-
-            color: #555;
-
-            text-align: right;
-        }
-
-
-        /* =========================================
-           STOCK
-           ========================================= */
-
-        .stock-status {
-
-            margin-top: 25px;
-
-            padding: 12px 15px;
-
-            border-radius: 5px;
-
-            font-weight: bold;
-        }
-
-
-        .in-stock {
-
-            background: #eef8ee;
-
-            color: #287528;
-        }
-
-
-        .out-of-stock {
-
-            background: #fceeee;
-
-            color: #a33;
-        }
-
-
-        /* =========================================
-           RESPONSIVE
-           ========================================= */
-
-        @media (max-width: 768px) {
-
-            .container {
-
-                padding: 15px;
-            }
-
-
-            .product-detail {
-
-                grid-template-columns: 1fr;
-
-                gap: 30px;
-
-                padding: 20px;
-            }
-
-
-            .product-name {
-
-                font-size: 26px;
-            }
-
-
-            .product-price {
-
-                font-size: 23px;
-            }
-
-
-            .thumbnail-button {
-
-                flex-basis: 70px;
-
-                width: 70px;
-
-                height: 70px;
-            }
-
-        }
-
-    </style>
-
-
-
-<div class="container">
-
-
-    <!-- =========================================
-         BACK TO PRODUCTS
-         ========================================= -->
-
-    <a
-        href="{% url 'products:list' %}"
-        class="back-link"
+    <link
+        rel="stylesheet"
+        href="{% static 'products/css/product_detail.css' %}"
     >
-        ← Back to Jewellery
-    </a>
+
+{% endblock %}
 
 
-    <div class="product-detail">
+{% block content %}
+
+<div class="product-detail-page">
+
+    <div class="product-detail-container">
 
 
-        <!-- =====================================
-             PRODUCT GALLERY
-             ===================================== -->
+        <!-- =================================================
+             BREADCRUMB
+             ================================================= -->
 
-        <div class="product-gallery">
+        <nav
+            class="product-breadcrumb"
+            aria-label="Breadcrumb"
+        >
 
+            <a href="{% url 'products:list' %}">
+                Jewellery
+            </a>
 
-            <div class="main-image-container">
+            <span class="breadcrumb-separator">
+                /
+            </span>
 
+            <span class="breadcrumb-current">
+                {{ product.category.name }}
+            </span>
 
-                {% if product.images.all %}
+            <span class="breadcrumb-separator">
+                /
+            </span>
 
-                    <!--
-                        We initially show the primary image.
+            <span class="breadcrumb-current">
+                {{ product.name }}
+            </span>
 
-                        If there is no primary image,
-                        JavaScript will use the first image.
-                    -->
-
-                    {% for image in product.images.all %}
-
-                        {% if image.is_primary %}
-
-                            <img
-                                id="mainProductImage"
-                                src="{{ image.image.url }}"
-                                alt="{{ product.name }}"
-                                class="main-product-image"
-                                onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';"
-                            >
-
-                        {% endif %}
-
-                    {% endfor %}
+        </nav>
 
 
-                    <!--
-                        Fallback:
-                        If no image was marked primary,
-                        JavaScript will select the first
-                        available image.
-                    -->
+        <!-- =================================================
+             PRODUCT DETAIL CARD
+             ================================================= -->
 
-                    <div
-                        id="noPrimaryImage"
-                        class="no-image"
-                        style="display: none;"
-                    >
-                        <img src="{% static 'images/products/default.png' %}" alt="Default product image" class="default-image" >
-                    </div>
+        <div class="product-detail-card">
 
 
-                {% else %}
+            <!-- =================================================
+                 PRODUCT GALLERY
+                 ================================================= -->
 
-                    <div class="no-image">
-                        <img src="{% static 'images/products/default.png' %}" alt="Default product image" class="default-image" >
-                    </div>
-
-                {% endif %}
-
-
-            </div>
+            <section
+                class="product-gallery"
+                aria-label="Product images"
+            >
 
 
-            <!-- =================================
-                 THUMBNAILS
-                 ================================= -->
+                <!-- =================================================
+                     MAIN IMAGE
+                     ================================================= -->
 
-            {% if product.images.all %}
+                <div
+                    id="productMainImageWrapper"
+                    class="product-main-image-wrapper"
+                >
 
-                <div class="thumbnail-list">
+                    {% if images %}
 
-
-                    {% for image in product.images.all %}
-
-                        <button
-                            type="button"
-                            class="thumbnail-button
-                            {% if image.is_primary %}
-                                active
-                            {% endif %}"
-                            onclick="changeMainImage(
-                                '{{ image.image.url }}',
-                                this
-                            )"
-                            aria-label="View {{ product.name }} image {{ forloop.counter }}"
-                        >
-
-
-                            <img
-                                src="{{ image.image.url }}"
-                                alt="{{ product.name }} image {{ forloop.counter }}"
-                                class="thumbnail-image"
-                            >
-
+                        {% for image in images %}
 
                             {% if image.is_primary %}
 
-                                <span class="primary-badge">
+                                <img
+                                    id="mainProductImage"
+                                    src="{{ image.image.url }}"
+                                    alt="{{ product.name }}"
+                                    class="product-main-image"
+                                    onerror="
+                                        this.onerror=null;
+                                        this.src='{% static 'images/products/default.png' %}';
+                                    "
+                                >
+
+                                <span class="product-cover-badge">
                                     Cover
                                 </span>
 
                             {% endif %}
 
+                        {% endfor %}
 
+
+                        <!--
+                            If there is no primary image,
+                            JavaScript will use the first image.
+                        -->
+
+
+                    {% else %}
+
+                        <!-- =================================================
+                             NO PRODUCT IMAGE
+                             ================================================= -->
+
+                        <div class="product-no-image">
+
+                            <img
+                                src="{% static 'images/products/default.png' %}"
+                                alt="No image available for {{ product.name }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         IMAGE COUNTER
+                         ================================================= -->
+
+                    {% if images %}
+
+                        <span
+                            id="productImageCounter"
+                            class="product-image-counter"
+                        >
+                            1 / {{ images|length }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =================================================
+                     THUMBNAILS
+                     ================================================= -->
+
+                {% if images %}
+
+                    <div
+                        class="product-thumbnails"
+                        role="list"
+                        aria-label="Product image thumbnails"
+                    >
+
+                        {% for image in images %}
+
+                            <button
+                                type="button"
+                                class="product-thumbnail {% if image.is_primary %}active{% endif %}"
+                                data-image-url="{{ image.image.url }}"
+                                data-index="{{ forloop.counter0 }}"
+                                aria-label="View image {{ forloop.counter }} of {{ images|length }}"
+                                aria-pressed="{% if image.is_primary %}true{% else %}false{% endif %}"
+                            >
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ product.name }} thumbnail {{ forloop.counter }}"
+                                    loading="lazy"
+                                    onerror="
+                                        this.onerror=null;
+                                        this.src='{% static 'images/products/default.png' %}';
+                                    "
+                                >
+
+
+                                {% if image.is_primary %}
+
+                                    <span class="thumbnail-cover-label">
+                                        Cover
+                                    </span>
+
+                                {% endif %}
+
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+            </section>
+
+
+            <!-- =================================================
+                 PRODUCT INFORMATION
+                 ================================================= -->
+
+            <section class="product-information">
+
+
+                <!-- =================================================
+                     CATEGORY
+                     ================================================= -->
+
+                <div class="product-category">
+                    {{ product.category.name }}
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCT NAME
+                     ================================================= -->
+
+                <h1 class="product-title">
+                    {{ product.name }}
+                </h1>
+
+
+                <!-- =================================================
+                     SKU
+                     ================================================= -->
+
+                <p class="product-sku">
+                    SKU: {{ product.sku }}
+                </p>
+
+
+                <!-- =================================================
+                     PRICE
+                     ================================================= -->
+
+                <div class="product-price-wrapper">
+
+                    <p class="product-price">
+                        Rs. {{ product.price }}
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                     ================================================= -->
+
+                {% if product.description %}
+
+                    <div class="product-description">
+
+                        {{ product.description|linebreaks }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     PRODUCT SPECIFICATIONS
+                     ================================================= -->
+
+                <div class="product-specifications">
+
+
+                    <!-- Category -->
+
+                    <div class="product-specification-row">
+
+                        <span class="product-specification-label">
+                            Category
+                        </span>
+
+                        <span class="product-specification-value">
+                            {{ product.category.name }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Metal -->
+
+                    <div class="product-specification-row">
+
+                        <span class="product-specification-label">
+                            Metal
+                        </span>
+
+                        <span class="product-specification-value">
+                            {{ product.get_metal_type_display }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Purity -->
+
+                    {% if product.purity %}
+
+                        <div class="product-specification-row">
+
+                            <span class="product-specification-label">
+                                Purity
+                            </span>
+
+                            <span class="product-specification-value">
+                                {{ product.purity }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- Weight -->
+
+                    {% if product.weight_grams %}
+
+                        <div class="product-specification-row">
+
+                            <span class="product-specification-label">
+                                Weight
+                            </span>
+
+                            <span class="product-specification-value">
+                                {{ product.weight_grams }} g
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- SKU -->
+
+                    <div class="product-specification-row">
+
+                        <span class="product-specification-label">
+                            SKU
+                        </span>
+
+                        <span class="product-specification-value">
+                            {{ product.sku }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     STOCK STATUS
+                     ================================================= -->
+
+                {% if product.stock > 0 %}
+
+                    <div class="product-stock in-stock">
+                        In Stock
+                    </div>
+
+                {% else %}
+
+                    <div class="product-stock out-of-stock">
+                        Out of Stock
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =================================================
+                     PURCHASE AREA
+                     ================================================= -->
+
+                <div class="product-purchase">
+
+
+                    <!-- =================================================
+                         QUANTITY
+                         ================================================= -->
+
+                    <div class="product-quantity">
+
+                        <button
+                            type="button"
+                            id="decreaseQuantity"
+                            class="quantity-button"
+                            aria-label="Decrease quantity"
+                        >
+                            −
                         </button>
 
-                    {% endfor %}
 
-
-                </div>
-
-            {% endif %}
-
-
-        </div>
-
-
-        <!-- =====================================
-             PRODUCT INFORMATION
-             ===================================== -->
-
-        <div class="product-info">
-
-
-            <h1 class="product-name">
-                {{ product.name }}
-            </h1>
-
-
-            <p class="product-price">
-                Rs. {{ product.price }}
-            </p>
-
-
-            <!-- =================================
-                 DESCRIPTION
-                 ================================= -->
-
-            {% if product.description %}
-
-                <div class="description">
-
-                    {{ product.description|linebreaks }}
-
-                </div>
-
-            {% endif %}
-
-
-            <!-- =================================
-                 PRODUCT DETAILS
-                 ================================= -->
-
-            <div class="product-details">
-
-
-                <!-- CATEGORY -->
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        Category
-                    </span>
-
-                    <span class="detail-value">
-                        {{ product.category.name }}
-                    </span>
-
-                </div>
-
-
-                <!-- METAL -->
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        Metal
-                    </span>
-
-                    <span class="detail-value">
-                        {{ product.get_metal_type_display }}
-                    </span>
-
-                </div>
-
-
-                <!-- PURITY -->
-
-                {% if product.purity %}
-
-                    <div class="detail-row">
-
-                        <span class="detail-label">
-                            Purity
+                        <span
+                            id="quantityValue"
+                            class="quantity-value"
+                            aria-live="polite"
+                        >
+                            1
                         </span>
 
-                        <span class="detail-value">
-                            {{ product.purity }}
-                        </span>
+
+                        <button
+                            type="button"
+                            id="increaseQuantity"
+                            class="quantity-button"
+                            data-stock="{{ product.stock }}"
+                            aria-label="Increase quantity"
+
+                            {% if product.stock <= 0 %}
+                                disabled
+                            {% endif %}
+                        >
+                            +
+                        </button>
 
                     </div>
 
-                {% endif %}
 
+                    <!-- =================================================
+                         ADD TO CART
+                         ================================================= -->
 
-                <!-- WEIGHT -->
+                    <button
+                        type="button"
+                        id="addToCartButton"
+                        class="add-to-cart-button"
+                        data-product-id="{{ product.pk }}"
 
-                {% if product.weight_grams %}
+                        {% if product.stock <= 0 %}
+                            disabled
+                        {% endif %}
+                    >
 
-                    <div class="detail-row">
+                        {% if product.stock > 0 %}
+                            Add to Cart
+                        {% else %}
+                            Out of Stock
+                        {% endif %}
 
-                        <span class="detail-label">
-                            Weight
-                        </span>
+                    </button>
 
-                        <span class="detail-value">
-                            {{ product.weight_grams }} g
-                        </span>
-
-                    </div>
-
-                {% endif %}
-
-
-                <!-- SKU -->
-
-                <div class="detail-row">
-
-                    <span class="detail-label">
-                        SKU
-                    </span>
-
-                    <span class="detail-value">
-                        {{ product.sku }}
-                    </span>
 
                 </div>
 
 
-            </div>
-
-
-            <!-- =================================
-                 STOCK
-                 ================================= -->
-
-            {% if product.stock > 0 %}
-
-                <div class="stock-status in-stock">
-
-                    In Stock
-
-                </div>
-
-            {% else %}
-
-                <div class="stock-status out-of-stock">
-
-                    Out of Stock
-
-                </div>
-
-            {% endif %}
+            </section>
 
 
         </div>
-
 
     </div>
-
 
 </div>
 
 
-<!-- =========================================
-     IMAGE GALLERY JAVASCRIPT
-     ========================================= -->
+<!-- =========================================================
+     JAVASCRIPT CONFIGURATION
+     ========================================================= -->
 
 <script>
 
-    /*
-     * Default image.
-     *
-     * This file exists in:
-     * static/images/products/default.png
-     */
-    const DEFAULT_IMAGE =
+    window.PRODUCT_DEFAULT_IMAGE =
         "{% static 'images/products/default.png' %}";
 
-
-    /*
-     * Change the main product image.
-     *
-     * If the requested image does not exist,
-     * automatically use the default image.
-     */
-    function changeMainImage(imageUrl, thumbnailButton) {
-
-        const mainImage =
-            document.getElementById(
-                "mainProductImage"
-            );
-
-
-        if (!mainImage) {
-            return;
-        }
-
-
-        /*
-         * Remove the previous error handler.
-         */
-        mainImage.onerror = null;
-
-
-        /*
-         * If the selected image does not exist,
-         * show the default image instead.
-         */
-        mainImage.onerror = function () {
-
-            this.onerror = null;
-
-            this.src = DEFAULT_IMAGE;
-
-            this.style.display = "block";
-
-        };
-
-
-        /*
-         * Try to load the selected image.
-         */
-        mainImage.src = imageUrl;
-
-        mainImage.style.display = "block";
-
-
-        /*
-         * Remove active state from all thumbnails.
-         */
-        const thumbnails =
-            document.querySelectorAll(
-                ".thumbnail-button"
-            );
-
-
-        thumbnails.forEach(function(button) {
-
-            button.classList.remove("active");
-
-        });
-
-
-        /*
-         * Mark clicked thumbnail as active.
-         */
-        if (thumbnailButton) {
-
-            thumbnailButton.classList.add("active");
-
-        }
-
-    }
-
-
-    /*
-     * Handle broken thumbnail images.
-     *
-     * If the actual JPG doesn't exist,
-     * show default.png inside the thumbnail.
-     */
-    function handleThumbnailError(image) {
-
-        image.onerror = null;
-
-        image.src = DEFAULT_IMAGE;
-
-    }
-
-
-    /*
-     * Handle the product page when there is
-     * no primary image.
-     */
-    document.addEventListener(
-        "DOMContentLoaded",
-        function() {
-
-            const mainImage =
-                document.getElementById(
-                    "mainProductImage"
-                );
-
-
-            const firstThumbnail =
-                document.querySelector(
-                    ".thumbnail-button"
-                );
-
-
-            /*
-             * Product has thumbnails but no
-             * primary image.
-             */
-            if (!mainImage && firstThumbnail) {
-
-                const firstImage =
-                    firstThumbnail.querySelector(
-                        ".thumbnail-image"
-                    );
-
-
-                if (firstImage) {
-
-                    const imageUrl =
-                        firstImage.src;
-
-
-                    const container =
-                        document.querySelector(
-                            ".main-image-container"
-                        );
-
-
-                    const newImage =
-                        document.createElement(
-                            "img"
-                        );
-
-
-                    newImage.id =
-                        "mainProductImage";
-
-
-                    newImage.src =
-                        imageUrl;
-
-
-                    newImage.alt =
-                        "{{ product.name|escapejs }}";
-
-
-                    newImage.className =
-                        "main-product-image";
-
-
-                    /*
-                     * If first image doesn't exist,
-                     * use default image.
-                     */
-                    newImage.onerror =
-                        function() {
-
-                            this.onerror = null;
-
-                            this.src =
-                                DEFAULT_IMAGE;
-
-                        };
-
-
-                    container.prepend(
-                        newImage
-                    );
-
-
-                    firstThumbnail.classList.add(
-                        "active"
-                    );
-
-                }
-
-            }
-
-        }
-    );
+    window.PRODUCT_NAME =
+        "{{ product.name|escapejs }}";
 
 </script>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+    <script
+        src="{% static 'products/js/product_detail.js' %}"
+    ></script>
 
 {% endblock %}

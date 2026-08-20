@@ -129,6 +129,8 @@ def product_list_view(request):
     # CONTEXT
     # -----------------------------------------
 
+    products = products.order_by("-created_at")
+
     paginator = Paginator(products, 12)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -156,16 +158,19 @@ def product_list_view(request):
 def product_detail_view(request, slug):
 
     product = get_object_or_404(
-        Product,
+        Product.objects.prefetch_related("images"),
         slug=slug,
         status="active",
     )
+
+    images = list(product.images.all())
 
     return render(
         request,
         "products/product_detail.html",
         {
             "product": product,
+            "images": images,
         },
     )
 

@@ -20,5 +20,6 @@
     {% endfor %}
 </div>
 
-{% include "includes/pagination.html" %}
-{% endblock %}
+   {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query %}
+
+   {% endblock %}

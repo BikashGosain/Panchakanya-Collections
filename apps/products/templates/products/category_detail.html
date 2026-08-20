@@ -35,7 +35,7 @@
         <article class="product-card">
             <a href="{% url 'products:detail' product.slug %}">
                 {% if product.cover_images %}
-                    <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image">
+                    <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
                 {% else %}
                     <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
                 {% endif %}

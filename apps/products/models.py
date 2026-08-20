@@ -55,7 +55,7 @@ class Category(models.Model):
         super().clean()
 
         # A category cannot be its own parent.
-        if self.parent_id == self.pk:
+        if self.parent_id is not None and self.parent_id == self.pk:
             raise ValidationError({"parent": "A category cannot be its own parent."})
 
         # Prevent circular relationships.

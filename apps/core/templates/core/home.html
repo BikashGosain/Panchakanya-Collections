@@ -21,28 +21,19 @@
     <button type="submit">Search</button>
 </form>
 
-    <div class="category-grid">
-        {% for category in root_categories %}
-            <a href="{% url 'products:category' category.slug %}" class="category-card"
-               {% if category.image %}style="background-image: url('{{ category.image.url }}');"{% endif %}>
-                <span class="category-card-name">{{ category.name }} ({{ category.product_count }})</span>
-            </a>
-        {% empty %}
-            <p>No categories found.</p>
-        {% endfor %}
-    </div>
+<div class="category-grid">
+    {% for category in root_categories %}
+        <a href="{% url 'products:category' category.slug %}" class="category-card"
+           style="background-image: url('{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/products/default.png' %}{% endif %}');">
+            <span class="category-card-name">{{ category.name }} ({{ category.product_count }})</span>
+        </a>
+    {% empty %}
+        <p>No categories found.</p>
+    {% endfor %}
+</div>
 
-    {% if category_page_obj.has_other_pages %}
-    <nav class="pagination">
-        {% if category_page_obj.has_previous %}
-            <a href="?{% if category_search %}cat_q={{ category_search }}&{% endif %}cat_page={{ category_page_obj.previous_page_number }}#categories">&laquo; Prev</a>
-        {% endif %}
-        <span>Page {{ category_page_obj.number }} of {{ category_page_obj.paginator.num_pages }}</span>
-        {% if category_page_obj.has_next %}
-            <a href="?{% if category_search %}cat_q={{ category_search }}&{% endif %}cat_page={{ category_page_obj.next_page_number }}#categories">Next &raquo;</a>
-        {% endif %}
-    </nav>
-    {% endif %}
+{% include "includes/pagination.html" with page_obj=category_page_obj search_query=category_search page_param="cat_page" search_param="cat_q" anchor="#categories" %}
+
 </section>
 
 <section id="featured" class="section section-alt">
@@ -58,7 +49,7 @@
             <article class="product-card">
                 <a href="{% url 'products:detail' product.slug %}">
                     {% if product.cover_images %}
-                        <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image">
+                        <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
                     {% else %}
                         <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
                     {% endif %}
@@ -74,16 +65,7 @@
         {% endfor %}
     </div>
 
-    {% if featured_page_obj.has_other_pages %}
-    <nav class="pagination">
-        {% if featured_page_obj.has_previous %}
-            <a href="?{% if featured_search %}featured_q={{ featured_search }}&{% endif %}featured_page={{ featured_page_obj.previous_page_number }}#featured">&laquo; Prev</a>
-        {% endif %}
-        <span>Page {{ featured_page_obj.number }} of {{ featured_page_obj.paginator.num_pages }}</span>
-        {% if featured_page_obj.has_next %}
-            <a href="?{% if featured_search %}featured_q={{ featured_search }}&{% endif %}featured_page={{ featured_page_obj.next_page_number }}#featured">Next &raquo;</a>
-        {% endif %}
-    </nav>
-    {% endif %}
+{% include "includes/pagination.html" with page_obj=featured_page_obj search_query=featured_search page_param="featured_page" search_param="featured_q" anchor="#featured" %}
+
 </section>
 {% endblock %}
