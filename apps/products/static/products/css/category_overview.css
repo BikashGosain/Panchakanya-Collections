@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Panchakanya Collections - Category Overview Page (category_overview.css)
+   Namespace Prefix: pk-catov-
+   ========================================================================== */
+
+.pk-catov-section {
+    padding: 3rem 0 5rem 0;
+    width: 100%;
+}
+
+.pk-catov-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pk-catov-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #1a2a22;
+    margin: 0 0 0.5rem 0;
+}
+
+.pk-catov-divider {
+    width: 60px;
+    height: 2px;
+    background-color: #d4af37;
+    margin: 0 auto 1.5rem auto;
+}
+
+/* Category Grid & Tiles */
+/* ==========================================================================
+   Panchakanya Collections - Category Overview Grid (category_overview.css)
+   Namespace Prefix: pk-catov-
+   ========================================================================== */
+
+.pk-catov-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.75rem;
+    margin-bottom: 3rem;
+}
+
+/* Card Wrapper */
+.pk-catov-card {
+    position: relative;
+    height: 320px;
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid #e6dfd3;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Background Image with Zoom Effect */
+.pk-catov-card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+
+/* Dark Gradient Overlay */
+.pk-catov-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(26, 42, 34, 0.2) 0%, rgba(26, 42, 34, 0.85) 100%);
+    z-index: 2;
+    transition: background 0.3s ease;
+}
+
+/* Content Area */
+.pk-catov-card-content {
+    position: relative;
+    z-index: 3;
+    padding: 1.5rem;
+    width: 100%;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.pk-catov-card-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.pk-catov-card-count {
+    font-size: 0.8125rem;
+    color: #f4e8c1;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.pk-catov-card-cta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #d4af37;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* Hover States */
+.pk-catov-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(26, 42, 34, 0.15);
+    border-color: #d4af37;
+}
+
+.pk-catov-card:hover .pk-catov-card-bg {
+    transform: scale(1.06);
+}
+
+.pk-catov-card:hover .pk-catov-card-overlay {
+    background: linear-gradient(180deg, rgba(26, 42, 34, 0.3) 0%, rgba(26, 42, 34, 0.92) 100%);
+}
+
+.pk-catov-card:hover .pk-catov-card-cta {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.pk-catov-empty-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #777777;
+    font-size: 0.9375rem;
+    padding: 3rem 0;
+}

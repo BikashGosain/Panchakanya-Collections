@@ -1,25 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}All Categories — Panchakanya Collections{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/category_overview.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/search.css' %}"> -->
+{% endblock %}
+
 {% block content %}
-<h1>Shop by Category</h1>
+<section class="pk-catov-section" id="pk-catov-page">
+    <div class="pk-container">
 
-<form method="get" class="search-bar">
-    <input type="text" name="q" placeholder="Search categories..." value="{{ search_query }}">
-    <button type="submit">Search</button>
-</form>
+        <div class="pk-catov-header">
+            <h1 class="pk-catov-title" id="pk-catov-main-title">Shop by Category</h1>
+            <div class="pk-catov-divider"></div>
 
-<div class="subcategory-tiles">
+            <!-- Reusable Search Component with Search Namespace -->
+            <form method="get" class="pk-srch-bar" id="pk-catov-search-form">
+                <input type="text" name="q" class="pk-srch-input" placeholder="Search categories..." value="{{ search_query }}">
+                <button type="submit" class="pk-srch-btn">Search</button>
+            </form>
+        </div>
+
+<div class="pk-catov-grid" id="pk-catov-tiles-grid">
     {% for category in root_categories %}
-        <a href="{% url 'products:category' category.slug %}" class="subcategory-tile">
-            {{ category.name }} ({{ category.product_count }})
+        <a href="{% url 'products:category' category.slug %}" class="pk-catov-card">
+            <!-- Background Image -->
+            <div class="pk-catov-card-bg" style="background-image: url('{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/products/default.png' %}{% endif %}');"></div>
+
+            <!-- Dark Overlay -->
+            <div class="pk-catov-card-overlay"></div>
+
+            <!-- Content -->
+            <div class="pk-catov-card-content">
+                <h3 class="pk-catov-card-title">{{ category.name }}</h3>
+                <span class="pk-catov-card-count">{{ category.product_count }} {% if category.product_count == 1 %}Item{% else %}Items{% endif %}</span>
+                <span class="pk-catov-card-cta">Explore Collection &rarr;</span>
+            </div>
         </a>
     {% empty %}
-        <p>No categories found.</p>
+        <p class="pk-catov-empty-msg">No categories found.</p>
     {% endfor %}
 </div>
 
-   {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query %}
+        {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query %}
 
-   {% endblock %}
+    </div>
+</section>
+{% endblock %}

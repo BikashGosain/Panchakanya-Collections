@@ -3,53 +3,94 @@
 
 {% block title %}{{ category.name }} — Panchakanya Collections{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/category_detail.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/search.css' %}"> -->
+{% endblock %}
+
 {% block content %}
-<nav class="breadcrumbs">
-    <a href="{% url 'products:category_overview' %}">All Jewellery</a>
-    {% for ancestor in ancestors %}
-        › <a href="{% url 'products:category' ancestor.slug %}">{{ ancestor.name }}</a>
-    {% endfor %}
-    › <span>{{ category.name }}</span>
-</nav>
+<section class="pk-catdt-section" id="pk-catdt-page">
+    <div class="pk-container">
 
-<h1>{{ category.name }}</h1>
+        <!-- Breadcrumbs Navigation -->
+        <nav class="pk-catdt-breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'products:category_overview' %}" class="pk-catdt-crumb-link">All Jewellery</a>
+            {% for ancestor in ancestors %}
+                <span class="pk-catdt-crumb-sep">&rsaquo;</span>
+                <a href="{% url 'products:category' ancestor.slug %}" class="pk-catdt-crumb-link">{{ ancestor.name }}</a>
+            {% endfor %}
+            <span class="pk-catdt-crumb-sep">&rsaquo;</span>
+            <span class="pk-catdt-crumb-current">{{ category.name }}</span>
+        </nav>
 
-{% if subcategories %}
-<div class="subcategory-tiles">
-    {% for sub in subcategories %}
-        <a href="{% url 'products:category' sub.slug %}" class="subcategory-tile">
-            {{ sub.name }} ({{ sub.product_count }})
-        </a>
-    {% endfor %}
-</div>
-{% endif %}
+        <!-- Category Header -->
+        <div class="pk-catdt-header">
+            <h1 class="pk-catdt-title" id="pk-catdt-main-title">{{ category.name }}</h1>
+            <div class="pk-catdt-divider"></div>
 
-<form method="get" action="{% url 'products:category' category.slug %}" class="search-bar">
-    <input type="text" name="q" placeholder="Search in {{ category.name }}..." value="{{ search_query }}">
-    <button type="submit">Search</button>
-</form>
+            <!-- In-Page Search Bar -->
+            <form method="get" action="{% url 'products:category' category.slug %}" class="pk-srch-bar" id="pk-catdt-search-form">
+                <input type="text" name="q" class="pk-srch-input" placeholder="Search in {{ category.name }}..." value="{{ search_query }}">
+                <button type="submit" class="pk-srch-btn">Search</button>
+            </form>
+        </div>
 
-{% if products %}
-<div class="products-grid">
-    {% for product in products %}
-        <article class="product-card">
-            <a href="{% url 'products:detail' product.slug %}">
-                {% if product.cover_images %}
-                    <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
-                {% else %}
-                    <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
-                {% endif %}
-                <div class="product-content">
-                    <h3 class="product-name">{{ product.name }}</h3>
-                    <p class="product-price">Rs. {{ product.price }}</p>
-                </div>
-            </a>
-        </article>
-    {% endfor %}
-</div>
-
-{% include "includes/pagination.html" %}
+        <!-- Subcategory Image Cards -->
+        {% if subcategories %}
+        <div class="pk-catdt-sub-wrapper">
+            <h2 class="pk-catdt-sub-heading">Explore Subcategories</h2>
+            <div class="pk-catdt-sub-grid" id="pk-catdt-subcategories-grid">
+                {% for sub in subcategories %}
+                    <a href="{% url 'products:category' sub.slug %}" class="pk-catdt-sub-card">
+                        <div class="pk-catdt-sub-bg" style="background-image: url('{% if sub.image %}{{ sub.image.url }}{% else %}{% static 'images/products/default.png' %}{% endif %}');"></div>
+                        <div class="pk-catdt-sub-overlay"></div>
+                        <div class="pk-catdt-sub-content">
+                            <h3 class="pk-catdt-sub-title">{{ sub.name }}</h3>
+                            <span class="pk-catdt-sub-count">{{ sub.product_count }} {% if sub.product_count == 1 %}Item{% else %}Items{% endif %}</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+{% if search_query %}
+    <h1>Search Results For ({{ category.name }}): "{{ search_query }}"</h1>
 {% else %}
-<p>No products found{% if search_query %} for "{{ search_query }}"{% endif %} in this category.</p>
+    <h1>Products in {{ category.name }}</h1>
 {% endif %}
+        <!-- Products Section -->
+        {% if products %}
+        <div class="pk-catdt-prod-grid" id="pk-catdt-products-grid">
+            {% for product in products %}
+                <article class="pk-catdt-prod-card">
+                    <a href="{% url 'products:detail' product.slug %}" class="pk-catdt-prod-link">
+                        <div class="pk-catdt-prod-img-wrapper">
+                            {% if product.cover_images %}
+                                <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="pk-catdt-prod-img" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
+                            {% else %}
+                                <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="pk-catdt-prod-img">
+                            {% endif %}
+                        </div>
+                        <div class="pk-catdt-prod-details">
+                            <h3 class="pk-catdt-prod-title">{{ product.name }}</h3>
+                            {% if product.get_metal_type_display or product.purity %}
+                                <p class="pk-catdt-prod-meta">{{ product.get_metal_type_display }}{% if product.purity %} — {{ product.purity }}{% endif %}</p>
+                            {% endif %}
+                            <p class="pk-catdt-prod-price">NPR {{ product.price }}</p>
+                        </div>
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
+
+   {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query %}
+
+   {% else %}
+            <div class="pk-catdt-empty-state">
+                <p class="pk-catdt-empty-msg">No products found{% if search_query %} for "<strong>{{ search_query }}</strong>"{% endif %} in this category.</p>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
 {% endblock %}
