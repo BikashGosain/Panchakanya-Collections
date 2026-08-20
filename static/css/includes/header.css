@@ -1,0 +1,329 @@
+/* ==========================================================================
+   Panchakanya Collections - Header Stylesheet (header.css)
+   Namespace Prefix: pk-hdr- / pk-nav-
+   ========================================================================== */
+
+/* 1. Global / Fallback CSS Variables */
+:root {
+    --pk-color-primary: #1a2a22;
+    --pk-color-gold-base: #d4af37;
+    --pk-color-gold-light: #f4e8c1;
+    --pk-color-gold-dark: #aa8625;
+    --pk-color-text-main: #2c2c2c;
+    --pk-color-text-muted: #777777;
+    --pk-color-border: #e6dfd3;
+    --pk-font-serif: 'Playfair Display', Georgia, serif;
+    --pk-transition-fast: all 0.2s ease-in-out;
+    --pk-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 2. Layout Container Wrapper */
+.pk-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* 3. Announcement Bar */
+#pk-header-announcement {
+    background-color: var(--pk-color-primary);
+    color: var(--pk-color-gold-light);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* 4. Sticky Header Wrapper */
+.pk-hdr-sticky-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--pk-color-border);
+    box-shadow: var(--pk-shadow-sm);
+}
+
+.pk-hdr-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 85px;
+}
+
+/* 5. Mobile Toggle Button */
+.pk-hdr-mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--pk-color-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.pk-hdr-mobile-toggle svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* 6. Search Bar Column */
+.pk-hdr-search-col {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.pk-hdr-search-box {
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+}
+
+.pk-hdr-search-input {
+    width: 100%;
+    background-color: #f4f1ea;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 0.5rem 1rem 0.5rem 2.25rem;
+    font-size: 0.75rem;
+    color: var(--pk-color-text-main);
+    transition: var(--pk-transition-fast);
+}
+
+.pk-hdr-search-input:focus {
+    outline: none;
+    background-color: #ffffff;
+    border-color: var(--pk-color-gold-base);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.pk-hdr-search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    color: var(--pk-color-text-muted);
+}
+
+/* 7. Brand Title & Subtitle */
+.pk-hdr-brand-col {
+    text-align: center;
+    text-decoration: none;
+}
+
+.pk-hdr-brand-title {
+    font-family: var(--pk-font-serif);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--pk-color-primary);
+    line-height: 1;
+}
+
+.pk-hdr-brand-subtitle {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    color: var(--pk-color-gold-dark);
+    font-weight: 600;
+    margin-top: 3px;
+    display: block;
+}
+
+/* 8. Action Buttons & Badges */
+.pk-hdr-actions-col {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.25rem;
+}
+
+.pk-hdr-action-btn {
+    position: relative;
+    color: var(--pk-color-text-main);
+    text-decoration: none;
+    transition: var(--pk-transition-fast);
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.pk-hdr-action-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.pk-hdr-action-btn:hover {
+    color: var(--pk-color-gold-dark);
+}
+
+.pk-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--pk-color-gold-dark);
+    color: #ffffff;
+    font-size: 0.625rem;
+    font-weight: 700;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.pk-hdr-cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+}
+
+/* 9. Navigation Bar */
+.pk-nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.25rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid rgba(230, 223, 211, 0.6);
+}
+
+.pk-nav-link {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pk-color-text-main);
+    text-decoration: none;
+    position: relative;
+    padding: 0.25rem 0;
+    transition: var(--pk-transition-fast);
+}
+
+.pk-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--pk-color-gold-base);
+    transition: var(--pk-transition-fast);
+}
+
+.pk-nav-link:hover::after,
+.pk-nav-link.pk-active::after {
+    width: 100%;
+}
+
+.pk-nav-link-highlight {
+    color: var(--pk-color-gold-dark);
+    font-weight: 700;
+}
+
+/* 10. User Dropdown Menu */
+.pk-hdr-user-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.pk-hdr-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    padding: 8px 0;
+    border: 1px solid var(--pk-color-border);
+}
+
+.pk-hdr-dropdown-menu.pk-dropdown-open {
+    display: block;
+}
+
+.pk-dropdown-header {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    color: var(--pk-color-text-main);
+}
+
+.pk-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: var(--pk-color-text-main);
+    text-decoration: none;
+    font-size: 0.875rem;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--pk-transition-fast);
+}
+
+.pk-dropdown-item svg {
+    width: 16px;
+    height: 16px;
+}
+
+.pk-dropdown-item:hover {
+    background-color: #f9f7f2;
+    color: var(--pk-color-gold-dark);
+}
+
+.pk-dropdown-divider {
+    margin: 4px 0;
+    border: none;
+    border-top: 1px solid var(--pk-color-border);
+}
+
+.pk-logout-form {
+    margin: 0;
+}
+
+/* 11. Mobile Responsiveness */
+@media (max-width: 991px) {
+    .pk-hdr-mobile-toggle {
+        display: block;
+    }
+
+    .pk-hdr-search-col {
+        display: none;
+    }
+
+    .pk-nav-bar {
+        display: none;
+    }
+
+    .pk-nav-bar.pk-nav-mobile-open {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.5rem;
+        background-color: #ffffff;
+        border-top: none;
+        border-bottom: 1px solid var(--pk-color-border);
+    }
+
+    .pk-nav-link::after {
+        display: none;
+    }
+}

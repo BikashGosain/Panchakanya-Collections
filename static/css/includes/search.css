@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Panchakanya Collections - Search Module Stylesheet (search.css)
+   Namespace Prefix: pk-srch-
+   ========================================================================== */
+
+/* Centered In-Section Search Bar */
+.pk-srch-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    border: 1px solid #d4af37;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.pk-srch-input {
+    flex: 1;
+    padding: 0.625rem 1.25rem;
+    border: none;
+    outline: none;
+    font-size: 0.8125rem;
+    color: #2c2c2c;
+    background: transparent;
+}
+
+.pk-srch-input::placeholder {
+    color: #999999;
+}
+
+.pk-srch-btn {
+    padding: 0.625rem 1.5rem;
+    background-color: #1a2a22;
+    color: #ffffff;
+    border: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.pk-srch-btn:hover {
+    background-color: #aa8625;
+}

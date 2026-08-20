@@ -1,28 +1,52 @@
 {% load static %}
-<footer class="bg-stone-900 text-stone-400 py-12 border-t border-amber-600/20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
-      <div>
-        <h3 class="font-serif-luxury text-amber-400 text-lg tracking-widest mb-3">PANCHAKANYA COLLECTIONS</h3>
-        <p class="text-sm text-stone-400 leading-relaxed">Handcrafted jewelry celebrating grace, purity, and heritage. Built with timeless craftsmanship for every occasion.</p>
-      </div>
-      <div>
-        <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wider">Quick Links</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="dashboard.html" class="hover:text-amber-400 transition">Shop All</a></li>
-          <li><a href="#" class="hover:text-amber-400 transition">Privacy Policy</a></li>
-          <li><a href="#" class="hover:text-amber-400 transition">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-white font-medium mb-3 text-sm uppercase tracking-wider">Contact & Support</h4>
-        <p class="text-sm">Kathmandu / Pokhara, Nepal</p>
-        <p class="text-sm">Email: info@panchakanya.com</p>
-        <p class="text-sm">Phone: +977 9800000000</p>
-      </div>
+<footer class="pk-ftr-root">
+    <div class="pk-container">
+        <div class="pk-ftr-grid">
+
+            <div>
+                <h3 class="pk-ftr-brand-title">Panchakanya Collections</h3>
+                <p class="pk-ftr-about-text">
+                    Crafting Nepal's finest heritage jewelry with certified 24K gold, flawless diamonds, and unmatched traditional craftsmanship.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="pk-ftr-col-heading">Collections</h4>
+                <ul class="pk-ftr-menu">
+                    <li><a href="#" class="pk-ftr-link">Royal Bridal Sets</a></li>
+                    <li><a href="#" class="pk-ftr-link">Solitaire Diamond Rings</a></li>
+                    <li><a href="#" class="pk-ftr-link">Traditional Gold Mangalsutra</a></li>
+                    <li><a href="#" class="pk-ftr-link">Custom Gold Coins</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="pk-ftr-col-heading">Client Care</h4>
+                <ul class="pk-ftr-menu">
+                    <li><a href="#" class="pk-ftr-link">Gold Purity Guarantee</a></li>
+                    <li><a href="#" class="pk-ftr-link">Bespoke Design Service</a></li>
+                    <li><a href="#" class="pk-ftr-link">Shipping & Returns</a></li>
+                    <li><a href="#" class="pk-ftr-link">Book Appointment</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="pk-ftr-col-heading">Private Newsletter</h4>
+                <p class="pk-ftr-newsletter-desc">Subscribe to receive exclusive invitations and newly launched collections.</p>
+                <form class="pk-ftr-form" id="pk-js-newsletter-form">
+                    <input type="email" placeholder="Your email address" class="pk-ftr-input" required id="pk-js-newsletter-input">
+                    <button type="submit" class="pk-ftr-submit-btn">Join</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="pk-ftr-bottom-bar">
+            <p>&copy; {% now "Y" %} Panchakanya Collections. All rights reserved.</p>
+            <div class="pk-ftr-legal-links">
+                <a href="#" class="pk-ftr-legal-link">Privacy Policy</a>
+                <a href="#" class="pk-ftr-legal-link">Terms of Service</a>
+            </div>
+        </div>
     </div>
-    <div class="text-center pt-8 border-t border-stone-800 text-xs text-stone-500">
-      &copy; {% now "Y" %} Panchakanya Collections. All rights reserved.
-    </div>
-  </div>
 </footer>

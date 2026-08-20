@@ -1,71 +1,95 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home | Panchakanya Collections{% endblock %}
+{% block title %}Panchakanya Collections | Fine Jewelry{% endblock %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+{% endblock %}
 
 {% block content %}
-<section class="hero">
-    <div class="hero-overlay">
-        <p class="hero-eyebrow">Exquisite Craftsmanship</p>
-        <h1 class="hero-title">Panchakanya Collections</h1>
-        <p class="hero-subtitle">Discover handcrafted gold, diamond, and traditional jewelry designed to celebrate grace and elegance.</p>
-        <a href="#featured" class="btn-hero">Explore Collections</a>
+<!-- Hero Section -->
+<section class="pk-hm-hero">
+    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=1920" alt="Gold Jewelry" class="pk-hm-hero-bg-img">
+    <div class="pk-hm-hero-overlay"></div>
+    <div class="pk-hm-hero-content">
+        <span class="pk-hm-hero-subtitle">Heritage & Craftsmanship</span>
+        <h1 class="pk-hm-hero-title">Timeless Jewelry for Extraordinary Moments</h1>
+        <a href="#categories" class="pk-hm-btn pk-hm-btn-gold">Explore Collections</a>
     </div>
 </section>
 
-<section id="categories" class="section">
-    <h2 class="section-title">Shop by Category</h2>
+<!-- Curated Categories Section -->
+<section class="pk-hm-section" id="categories">
+    <div class="pk-container">
+        <div class="pk-hm-sec-header">
+            <h2 class="pk-hm-sec-title">Curated Collections</h2>
+            <div class="pk-hm-sec-divider"></div>
 
-    <form method="get" action="{% url 'core:home' %}#categories" class="search-bar">
-    <input type="text" name="cat_q" placeholder="Search categories..." value="{{ category_search }}">
-    <button type="submit">Search</button>
-</form>
+            <!-- Centered Category Search Box -->
+            <form method="get" action="{% url 'core:home' %}#categories" class="pk-srch-bar">
+                <input type="text" name="cat_q" class="pk-srch-input" placeholder="Search categories..." value="{{ category_search }}">
+                <button type="submit" class="pk-srch-btn">Search</button>
+            </form>
+        </div>
 
-<div class="category-grid">
-    {% for category in root_categories %}
-        <a href="{% url 'products:category' category.slug %}" class="category-card"
-           style="background-image: url('{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/products/default.png' %}{% endif %}');">
-            <span class="category-card-name">{{ category.name }} ({{ category.product_count }})</span>
-        </a>
-    {% empty %}
-        <p>No categories found.</p>
-    {% endfor %}
-</div>
-
-{% include "includes/pagination.html" with page_obj=category_page_obj search_query=category_search page_param="cat_page" search_param="cat_q" anchor="#categories" %}
-
-</section>
-
-<section id="featured" class="section section-alt">
-    <h2 class="section-title">Featured Items</h2>
-
-    <form method="get" action="{% url 'core:home' %}#featured" class="search-bar">
-    <input type="text" name="featured_q" placeholder="Search featured items..." value="{{ featured_search }}">
-    <button type="submit">Search</button>
-</form>
-
-    <div class="products-grid">
-        {% for product in featured_products %}
-            <article class="product-card">
-                <a href="{% url 'products:detail' product.slug %}">
-                    {% if product.cover_images %}
-                        <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="product-image" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
-                    {% else %}
-                        <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="product-image">
-                    {% endif %}
-                    <div class="product-content">
-                        <h3 class="product-name">{{ product.name }}</h3>
-                        <p class="product-meta">{{ product.get_metal_type_display }}{% if product.purity %} — {{ product.purity }}{% endif %}</p>
-                        <p class="product-price">Rs. {{ product.price }}</p>
+        <div class="pk-hm-cat-grid">
+            {% for category in root_categories %}
+                <a href="{% url 'products:category' category.slug %}" class="pk-hm-cat-card"
+                   style="background-image: url('{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/products/default.png' %}{% endif %}');">
+                    <div class="pk-hm-cat-mask">
+                        <div>
+                            <h3 class="pk-hm-cat-title">{{ category.name }} ({{ category.product_count }})</h3>
+                            <span class="pk-hm-cat-cta">Discover Collection &rarr;</span>
+                        </div>
                     </div>
                 </a>
-            </article>
-        {% empty %}
-            <p>No featured products found.</p>
-        {% endfor %}
+            {% empty %}
+                <p class="pk-hm-empty-msg">No categories found.</p>
+            {% endfor %}
+        </div>
+
+        {% include "includes/pagination.html" with page_obj=category_page_obj search_query=category_search page_param="cat_page" search_param="cat_q" anchor="#categories" %}
     </div>
+</section>
 
-{% include "includes/pagination.html" with page_obj=featured_page_obj search_query=featured_search page_param="featured_page" search_param="featured_q" anchor="#featured" %}
+<!-- Featured Items Section -->
+<section class="pk-hm-section" id="featured">
+    <div class="pk-container">
+        <div class="pk-hm-sec-header">
+            <h2 class="pk-hm-sec-title">Featured Items</h2>
+            <div class="pk-hm-sec-divider"></div>
 
+            <!-- Centered Featured Items Search Box -->
+            <form method="get" action="{% url 'core:home' %}#featured" class="pk-srch-bar">
+                <input type="text" name="featured_q" class="pk-srch-input" placeholder="Search featured items..." value="{{ featured_search }}">
+                <button type="submit" class="pk-srch-btn">Search</button>
+            </form>
+        </div>
+
+        <div class="pk-hm-prod-grid">
+            {% for product in featured_products %}
+                <a href="{% url 'products:detail' product.slug %}" class="pk-hm-prod-card">
+                    <div class="pk-hm-prod-img-wrapper">
+                        {% if product.cover_images %}
+                            <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="pk-hm-prod-img" onerror="this.onerror=null; this.src='{% static 'images/products/default.png' %}';">
+                        {% else %}
+                            <img src="{% static 'images/products/default.png' %}" alt="{{ product.name }}" class="pk-hm-prod-img">
+                        {% endif %}
+                    </div>
+                    <div class="pk-hm-prod-details">
+                        <h3 class="pk-hm-prod-card-title">{{ product.name }}</h3>
+                        <p class="pk-hm-prod-meta">{{ product.get_metal_type_display }}{% if product.purity %} — {{ product.purity }}{% endif %}</p>
+                        <p class="pk-hm-prod-price">NPR {{ product.price }}</p>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="pk-hm-empty-msg">No featured products found.</p>
+            {% endfor %}
+        </div>
+
+        {% include "includes/pagination.html" with page_obj=featured_page_obj search_query=featured_search page_param="featured_page" search_param="featured_q" anchor="#featured" %}
+    </div>
 </section>
 {% endblock %}

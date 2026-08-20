@@ -1,81 +1,95 @@
 {% load static %}
-<nav class="bg-stone-900 text-stone-100 sticky top-0 z-50 border-b border-amber-600/30">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+<div id="pk-header-announcement">
+    Complimentary Insured Delivery Across Nepal on Orders Over NPR 50,000
+</div>
 
-    <!-- Mobile Hamburger Button -->
-    <button id="mobile-menu-btn" class="md:hidden text-amber-400 focus:outline-none" aria-label="Open Navigation Menu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
+<header class="pk-hdr-sticky-wrapper">
+    <div class="pk-container">
+        <div class="pk-hdr-main-row">
 
-    <!-- Brand Logo -->
-    <a href="{% url 'core:home' %}" class="font-serif-luxury text-xl sm:text-2xl tracking-widest text-amber-400 font-bold">PANCHAKANYA</a>
+            <button type="button" class="pk-hdr-mobile-toggle" id="pk-js-mobile-toggle" aria-label="Toggle Navigation">
+                <i data-lucide="menu"></i>
+            </button>
 
-    <!-- Desktop Navigation Links -->
-    <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider">
-      <a href="{% url 'core:home' %}" class="hover:text-amber-400 transition">Home</a>
-      <a href="{% url 'products:category_overview' %}" class="hover:text-amber-400 transition">Categories</a>
-      <a href="{% url 'products:list' %}" class="hover:text-amber-400 transition">Collections</a>
-      <a href="#" class="hover:text-amber-400 transition">About</a>
-    </div>
-
-    <!-- Account & Cart Actions -->
-    <div class="flex items-center space-x-4 sm:space-x-6 text-sm">
-      {% if user.is_authenticated %}
-        <div class="relative">
-          <button id="user-menu-btn" class="flex items-center space-x-2 text-stone-300 hover:text-amber-400 focus:outline-none">
-            <span class="font-medium hidden sm:inline">{{ user.username }}</span>
-            <div class="w-8 h-8 rounded-full bg-amber-600 text-stone-900 flex items-center justify-center font-bold font-serif-luxury">
-              {{ user.username|first|upper }}
+            <div class="pk-hdr-search-col">
+                <div class="pk-hdr-search-box">
+                    <input type="text" placeholder="Search jewelry..." class="pk-hdr-search-input" id="pk-js-search-input">
+                    <i data-lucide="search" class="pk-hdr-search-icon"></i>
+                </div>
             </div>
-          </button>
 
-          <!-- Account Dropdown -->
-          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white text-stone-800 rounded-sm shadow-xl py-2 z-50 border border-stone-200">
-            <a href="dashboard.html" class="block px-4 py-2 text-sm hover:bg-stone-100">Dashboard</a>
-            <a href="{% url 'accounts:profile' %}" class="block px-4 py-2 text-sm hover:bg-stone-100">Profile</a>
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-stone-100">My Orders</a>
-            <hr class="my-1 border-stone-200">
-            <form method="post" action="{% url 'accounts:logout' %}">
-    {% csrf_token %}
-    <button
-        type="submit"
-        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-stone-100"
-    >
-        Logout
-    </button>
-</form>
-          </div>
+            <a href="{% url 'core:home' %}" class="pk-hdr-brand-col">
+                <span class="pk-hdr-brand-title">PANCHAKANYA</span>
+                <span class="pk-hdr-brand-subtitle">C o l l e c t i o n s</span>
+            </a>
+
+            <div class="pk-hdr-actions-col">
+                <!-- User Account / Auth Section -->
+                <div class="pk-hdr-user-dropdown-wrapper">
+                    {% if user.is_authenticated %}
+                        <button type="button" class="pk-hdr-action-btn" id="pk-js-user-btn" title="Account ({{ user.username }})">
+                            <i data-lucide="user-check"></i>
+                        </button>
+
+                        <!-- Dropdown Menu for Logged In User -->
+                        <div class="pk-hdr-dropdown-menu" id="pk-js-user-dropdown">
+                            <div class="pk-dropdown-header">
+                                <strong>Hello, {{ user.first_name|default:user.username }}</strong>
+                            </div>
+                            <hr class="pk-dropdown-divider">
+                            <a href="dashboard.html" class="pk-dropdown-item">
+                                <i data-lucide="layout-dashboard"></i> Dashboard
+                            </a>
+                            <a href="{% url 'accounts:profile' %}" class="pk-dropdown-item">
+                                <i data-lucide="layout-dashboard"></i> Profile
+                            </a>
+                            <a href="#" class="pk-dropdown-item">
+                                <i data-lucide="package"></i> My Orders
+                            </a>
+                            <hr class="pk-dropdown-divider">
+                            <form action="{% url 'accounts:logout' %}" method="post" class="pk-logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="pk-dropdown-item pk-logout-btn">
+                                    <i data-lucide="log-out"></i> Log Out
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="pk-hdr-action-btn" title="Sign In / Register">
+                            <i data-lucide="user"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Wishlist -->
+                <a href="#" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist">
+                    <i data-lucide="heart"></i>
+                </a>
+
+                <!-- Shopping Bag -->
+                <a href="#" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag">
+                    <i data-lucide="shopping-bag"></i>
+                    <span class="pk-badge pk-hdr-cart-badge" id="pk-js-cart-count">2</span>
+                </a>
+            </div>
+
         </div>
-      {% else %}
-        <a href="{% url 'accounts:login' %}" class="hover:text-amber-400 font-medium">Login</a>
-      {% endif %}
 
-      <a href="#" class="bg-amber-600 text-stone-900 font-semibold px-3 py-1.5 sm:px-4 sm:py-2 rounded-sm hover:bg-amber-500 transition text-xs sm:text-sm">Cart (0)</a>
-    </div>
-  </div>
+        <nav class="pk-nav-bar" id="pk-js-nav-bar">
+            <a href="{% url 'core:home' %}" class="pk-nav-link pk-active">Home</a>
 
-  <!-- Mobile Drawer Menu -->
-  <div id="mobile-menu" class="closed fixed inset-0 bg-stone-900 z-50 p-6 md:hidden flex flex-col justify-between">
-    <div>
-      <div class="flex justify-between items-center mb-8 border-b border-stone-800 pb-4">
-        <span class="font-serif-luxury text-amber-400 font-bold text-lg">PANCHAKANYA</span>
-        <button id="close-menu-btn" class="text-stone-400 hover:text-white" aria-label="Close Navigation Menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-      <div class="flex flex-col space-y-6 text-lg uppercase tracking-wider text-stone-200">
-        <a href="{% url 'core:home' %}" class="hover:text-amber-400">Home</a>
-        <a href="{% url 'products:category_overview' %}" class="hover:text-amber-400 transition">Categories</a>
-        <a href="{% url 'products:list' %}#featured" class="hover:text-amber-400">Collections</a>
-        <a href="#" class="hover:text-amber-400">About Us</a>
-      </div>
+
+            <a href="{% url 'products:category_overview' %}" class="pk-nav-link pk-active">Categories</a>
+            <a href="{% url 'products:list' %}" class="pk-nav-link pk-active">Collections</a>
+
+
+
+            <a href="#" class="pk-nav-link">Bridal Sets</a>
+            <a href="#" class="pk-nav-link">Necklaces & Pendants</a>
+            <a href="#" class="pk-nav-link">Rings</a>
+            <a href="#" class="pk-nav-link">Earrings</a>
+            <a href="#" class="pk-nav-link">Bangles & Bracelets</a>
+            <a href="#" class="pk-nav-link pk-nav-link-highlight">24K Gold Collections</a>
+        </nav>
     </div>
-    {% if not user.is_authenticated %}
-      <a href="{% url 'accounts:login' %}" class="w-full text-center bg-amber-600 text-stone-900 py-3 font-semibold uppercase rounded-sm">Sign In</a>
-    {% endif %}
-  </div>
-</nav>
+</header>
