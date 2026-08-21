@@ -23,7 +23,17 @@
     {% include 'includes/header.html' %}
 
     <main class="pk-main-wrapper">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
         {% block content %}{% endblock %}
+
     </main>
 
     {% include 'includes/footer.html' %}

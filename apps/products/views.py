@@ -2,6 +2,8 @@ from django.core.paginator import Paginator
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, render
 
+from apps.wishlists.models import Wishlist
+
 from .models import Category, Product, ProductImage
 
 
@@ -165,12 +167,21 @@ def product_detail_view(request, slug):
 
     images = list(product.images.all())
 
+    is_wishlisted = False
+
+    if request.user.is_authenticated:
+        is_wishlisted = Wishlist.objects.filter(
+            user=request.user,
+            product=product,
+        ).exists()
+
     return render(
         request,
         "products/product_detail.html",
         {
             "product": product,
             "images": images,
+            "is_wishlisted": is_wishlisted,
         },
     )
 

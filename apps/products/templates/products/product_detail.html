@@ -52,6 +52,24 @@
                 {{ product.name }}
             </span>
 
+            {% if user.is_authenticated %}
+            {% if is_wishlisted %}
+            <form method="post" action="{% url 'wishlists:remove' product.id %}">
+                {% csrf_token %}
+                <button type="submit">
+                    💔 Remove from Wishlist
+                </button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'wishlists:add' product.id %}">
+                {% csrf_token %}
+                <button type="submit">
+                    ❤️ Add to Wishlist
+                </button>
+            </form>
+            {% endif %}
+            {% endif %}
+
         </nav>
 
 
