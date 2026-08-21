@@ -68,7 +68,18 @@
                 </button>
             </form>
             {% endif %}
+
             {% endif %}
+
+            {% if user.is_authenticated %}
+    <form method="post" action="{% url 'cart:add' product.id %}">
+        {% csrf_token %}
+        <button type="submit">
+            🛒 Add to Cart
+        </button>
+    </form>
+{% endif %}
+
 
         </nav>
 
