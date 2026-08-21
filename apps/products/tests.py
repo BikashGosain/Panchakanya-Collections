@@ -54,6 +54,37 @@ class ProductModelTests(TestCase):
         self.assertFalse(img1.is_primary)
         self.assertTrue(img2.is_primary)
 
+    def test_soft_deleted_product_excluded_from_default_queryset(self):
+        from .models import Product
+
+        product = Product.objects.create(
+            name="Silver Bangle",
+            sku="SKU010",
+            category=self.category,
+            metal_type="silver",
+            price=12000,
+        )
+        product.soft_delete()
+
+        self.assertFalse(Product.objects.filter(pk=product.pk).exists())
+        self.assertTrue(Product.all_objects.filter(pk=product.pk).exists())
+
+    def test_restored_product_reappears_in_default_queryset(self):
+        from .models import Product
+
+        product = Product.objects.create(
+            name="Rose Gold Bracelet",
+            sku="SKU011",
+            category=self.category,
+            metal_type="gold",
+            price=30000,
+        )
+        product.soft_delete()
+        product.restore()
+
+        self.assertTrue(Product.objects.filter(pk=product.pk).exists())
+        self.assertIsNone(product.deleted_at)
+
 
 class ProductViewTests(TestCase):
     def setUp(self):
@@ -95,3 +126,8 @@ class ProductViewTests(TestCase):
         response = self.client.get(reverse("products:list"), {"category": "rings"})
         self.assertContains(response, "Gold Ring")
         self.assertNotContains(response, "Diamond Necklace")
+
+    def test_soft_deleted_product_hidden_from_shop_list(self):
+        self.product.soft_delete()
+        response = self.client.get(reverse("products:list"))
+        self.assertNotContains(response, "Gold Ring")

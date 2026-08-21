@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils import timezone
 
 from .models import Category, Product, ProductImage
 
@@ -8,10 +9,20 @@ class ProductImageInline(admin.TabularInline):
     extra = 1
 
 
+def soft_delete_action(modeladmin, request, queryset):
+    queryset.update(is_deleted=True, deleted_at=timezone.now())
+
+
+@admin.action(description="Restore selected items")
+def restore_action(modeladmin, request, queryset):
+    queryset.update(is_deleted=False, deleted_at=None)
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", "parent", "show_on_home"]
-    list_filter = ["show_on_home"]
+    list_display = ["name", "parent", "show_on_home", "is_deleted"]
+    list_filter = ["show_on_home", "is_deleted"]
+    actions = [soft_delete_action, restore_action]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -54,6 +65,7 @@ class ProductAdmin(admin.ModelAdmin):
         "stock",
         "status",
         "featured",
+        "is_deleted",
     ]
 
     list_filter = [
@@ -61,6 +73,7 @@ class ProductAdmin(admin.ModelAdmin):
         "metal_type",
         "status",
         "featured",
+        "is_deleted",
     ]
 
     search_fields = [
@@ -69,3 +82,7 @@ class ProductAdmin(admin.ModelAdmin):
     ]
 
     inlines = [ProductImageInline]
+    actions = [soft_delete_action, restore_action]
+
+    def get_queryset(self, request):
+        return Product.all_objects.all()
