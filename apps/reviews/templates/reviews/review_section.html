@@ -1,67 +1,325 @@
-<section class="rv-section" id="reviews">
-    <h2 class="rv-title">Customer Reviews</h2>
+<section
+    class="mrv-container"
+    id="reviews"
+    data-product-id="{{ product.pk }}"
+    data-section-url="{% url 'reviews:section' product.pk %}"
+    data-load-more-url="{% url 'reviews:load_more' product.pk %}"
+>
 
-    {% if average_rating %}
-        <p class="rv-summary">{{ average_rating|floatformat:1 }} ★ average — {{ review_count }} review{{ review_count|pluralize }}</p>
-    {% else %}
-        <p class="rv-summary">No reviews yet.</p>
-    {% endif %}
+    <!-- SUMMARY -->
 
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'reviews:submit' product.pk %}" class="rv-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="rv-btn-primary">{% if user_review %}Update Review{% else %}Submit Review{% endif %}</button>
-        </form>
-        {% if user_review %}
-            <form method="post" action="{% url 'reviews:delete' user_review.pk %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="rv-btn-secondary">Delete My Review</button>
-            </form>
-        {% endif %}
-    {% else %}
-        <p><a href="{% url 'accounts:login' %}">Log in</a> to write a review.</p>
-    {% endif %}
+    <div class="mrv-summary-card">
 
-    {% if review_count > 1 %}
-    <form method="get" class="rv-sort">
-        <label for="rv-sort-select">Sort by:</label>
-        <select name="sort" id="rv-sort-select" onchange="this.form.submit()">
-            <option value="newest" {% if current_sort == "newest" %}selected{% endif %}>Newest</option>
-            <option value="highest_rating" {% if current_sort == "highest_rating" %}selected{% endif %}>Highest Rating</option>
-            <option value="lowest_rating" {% if current_sort == "lowest_rating" %}selected{% endif %}>Lowest Rating</option>
-            <option value="most_liked" {% if current_sort == "most_liked" %}selected{% endif %}>Most Liked</option>
-        </select>
-    </form>
-    {% endif %}
+        <h2 class="mrv-heading">
+            Customer Reviews
+        </h2>
 
-    <div class="rv-scroll-area" id="rv-scroll-area">
-        {% if user_review %}
-            <div class="rv-item rv-item-own">
-                <p class="rv-meta"><strong>{{ user_review.user.username }} (You)</strong> — {{ user_review.rating }} ★ — {{ user_review.created_at|date:"M d, Y" }}</p>
-                {% if user_review.comment %}<p class="rv-comment">{{ user_review.comment }}</p>{% endif %}
-                <form method="post" action="{% url 'reviews:toggle_like' user_review.pk %}" class="rv-like-form" data-review-id="{{ user_review.pk }}">
-                    {% csrf_token %}
-                    <button type="submit" class="rv-like-btn">
-                        {% if user_review.pk in liked_review_ids %}♥ Liked{% else %}♡ Like{% endif %}
-                        ({{ user_review.likes.count }})
-                    </button>
-                </form>
+        {% if average_rating %}
+
+            <div class="mrv-score-box">
+
+                <span class="mrv-score-num">
+                    {{ average_rating|floatformat:1 }}
+                </span>
+
+                <div class="mrv-score-meta">
+
+                    <div class="mrv-stars">
+
+                        {% for i in "12345" %}
+
+                            <span
+                                class="mrv-star {% if forloop.counter <= average_rating %}filled{% endif %}"
+                            >
+                                ★
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                    <span class="mrv-count">
+                        Based on {{ review_count }}
+                        review{{ review_count|pluralize }}
+                    </span>
+
+                </div>
+
             </div>
+
+        {% else %}
+
+            <p class="mrv-empty-summary">
+                No reviews yet. Be the first to leave one!
+            </p>
+
         {% endif %}
 
-        <div id="rv-items-list">
-            {% include "reviews/review_items.html" %}
-            {% if not reviews and not user_review %}
-                <p>Be the first to review this product.</p>
-            {% endif %}
-        </div>
     </div>
 
-    {% if has_more %}
-        <button type="button" id="rv-show-more" class="rv-btn-secondary"
-                data-product-id="{{ product.pk }}" data-offset="{{ next_offset }}" data-sort="{{ current_sort }}">
-            Show More
-        </button>
+
+    <!-- REVIEW FORM -->
+
+    {% if user.is_authenticated %}
+
+        <div
+            class="mrv-form-wrapper"
+            id="mrv-form-container"
+        >
+
+            <h3 class="mrv-subheading">
+
+                {% if user_review %}
+                    Update Your Review
+                {% else %}
+                    Write a Review
+                {% endif %}
+
+            </h3>
+
+            <form
+                method="post"
+                action="{% url 'reviews:submit' product.pk %}"
+                class="mrv-form"
+                id="mrv-main-form"
+            >
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <div class="mrv-form-buttons">
+
+                    <button
+                        type="submit"
+                        class="mrv-btn mrv-btn-primary"
+                    >
+
+                        {% if user_review %}
+                            Update Review
+                        {% else %}
+                            Submit Review
+                        {% endif %}
+
+                    </button>
+
+
+                    {% if user_review %}
+
+                        <button
+                            type="button"
+                            class="mrv-btn mrv-btn-danger"
+                            id="mrv-delete-btn"
+                            data-delete-url="{% url 'reviews:delete' user_review.pk %}"
+                        >
+                            Delete My Review
+                        </button>
+
+                    {% endif %}
+
+                </div>
+
+            </form>
+
+        </div>
+
+    {% else %}
+
+        <div class="mrv-login-notice">
+
+            Please
+            <a href="{% url 'accounts:login' %}">
+                Log in
+            </a>
+            to write a review.
+
+        </div>
+
     {% endif %}
+
+
+    <!-- SORT -->
+
+    <div class="mrv-toolbar">
+
+        {% if review_count > 1 %}
+
+            <form
+                method="get"
+                class="mrv-sort-form"
+                id="mrv-sort-form"
+            >
+
+                <label for="rv-sort-select">
+                    Sort by:
+                </label>
+
+                <select
+                    name="sort"
+                    id="rv-sort-select"
+                    class="mrv-select"
+                >
+
+                    <option
+                        value="newest"
+                        {% if current_sort == "newest" %}
+                            selected
+                        {% endif %}
+                    >
+                        Newest
+                    </option>
+
+                    <option
+                        value="highest_rating"
+                        {% if current_sort == "highest_rating" %}
+                            selected
+                        {% endif %}
+                    >
+                        Highest Rating
+                    </option>
+
+                    <option
+                        value="lowest_rating"
+                        {% if current_sort == "lowest_rating" %}
+                            selected
+                        {% endif %}
+                    >
+                        Lowest Rating
+                    </option>
+
+                    <option
+                        value="most_liked"
+                        {% if current_sort == "most_liked" %}
+                            selected
+                        {% endif %}
+                    >
+                        Most Liked
+                    </option>
+
+                </select>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- REVIEWS -->
+
+    <div class="mrv-list-wrapper">
+
+        {% if user_review %}
+
+            <div class="mrv-card mrv-card-own">
+
+                <div class="mrv-badge">
+                    Your Review
+                </div>
+
+                <div class="mrv-header">
+
+                    <div class="mrv-avatar">
+                        {{ user_review.user.username|slice:":1"|upper }}
+                    </div>
+
+                    <div class="mrv-meta">
+
+                        <span class="mrv-author">
+                            {{ user_review.user.username }}
+                        </span>
+
+                        <span class="mrv-date">
+                            {{ user_review.created_at|date:"M d, Y" }}
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="mrv-rating"
+                        title="{{ user_review.rating }} out of 5 stars"
+                    >
+
+                        {% for i in "12345" %}
+
+                            <span
+                                class="mrv-star {% if forloop.counter <= user_review.rating %}filled{% endif %}"
+                            >
+                                ★
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                {% if user_review.comment %}
+
+                    <p class="mrv-body">
+                        {{ user_review.comment }}
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+
+        <div id="rv-items-list">
+
+            {% include "reviews/review_items.html" %}
+
+        </div>
+
+    </div>
+
+
+    <!-- SHOW MORE -->
+
+{% if has_more %}
+    <div class="mrv-load-more-wrapper" id="rv-pagination-buttons">
+
+        <!-- Show More -->
+        <button
+            type="button"
+            id="rv-show-more"
+            class="mrv-btn mrv-btn-outline"
+            data-product-id="{{ product.pk }}"
+            data-offset="{{ next_offset }}"
+            data-sort="{{ current_sort }}"
+        >
+            Show More Reviews
+        </button>
+
+
+        <!-- Show All -->
+        <button
+            type="button"
+            id="rv-show-all"
+            class="mrv-btn mrv-btn-outline"
+            data-product-id="{{ product.pk }}"
+            data-offset="{{ next_offset }}"
+            data-sort="{{ current_sort }}"
+        >
+            Show All Reviews
+        </button>
+
+
+        <!-- Show Less -->
+        <button
+            type="button"
+            id="rv-show-less"
+            class="mrv-btn mrv-btn-outline"
+            data-product-id="{{ product.pk }}"
+            data-sort="{{ current_sort }}"
+            style="display: none;"
+        >
+            Show Less Reviews
+        </button>
+
+    </div>
+{% endif %}
+
 </section>
