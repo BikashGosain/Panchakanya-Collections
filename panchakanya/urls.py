@@ -26,6 +26,7 @@ urlpatterns = [
     path("", include("apps.core.urls")),
     path("social-auth/", include("allauth.urls")),
     path("product/", include("apps.products.urls")),
+    path("reviews/", include("apps.reviews.urls")),
 ]
 
 if settings.DEBUG:
