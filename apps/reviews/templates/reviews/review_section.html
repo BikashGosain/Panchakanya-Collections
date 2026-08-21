@@ -1,0 +1,80 @@
+{% load static %}
+<section class="reviews-section" id="reviews">
+    <h2 class="section-title">Customer Reviews</h2>
+
+    {% if average_rating %}
+        <p class="reviews-summary">
+            {{ average_rating|floatformat:1 }} ★ average — {{ review_count }} review{{ review_count|pluralize }}
+        </p>
+    {% else %}
+        <p class="reviews-summary">No reviews yet.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'reviews:submit' product.pk %}" class="review-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{% if user_review %}Update Review{% else %}Submit Review{% endif %}</button>
+        </form>
+        {% if user_review %}
+            <form method="post" action="{% url 'reviews:delete' user_review.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Delete My Review</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'accounts:login' %}">Log in</a> to write a review.</p>
+    {% endif %}
+
+    {% if review_count > 1 %}
+    <form method="get" class="review-sort">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="newest" {% if current_sort == "newest" %}selected{% endif %}>Newest</option>
+            <option value="highest_rating" {% if current_sort == "highest_rating" %}selected{% endif %}>Highest Rating</option>
+            <option value="lowest_rating" {% if current_sort == "lowest_rating" %}selected{% endif %}>Lowest Rating</option>
+            <option value="most_liked" {% if current_sort == "most_liked" %}selected{% endif %}>Most Liked</option>
+        </select>
+    </form>
+    {% endif %}
+
+    <div class="review-list">
+        {% if user_review %}
+            <div class="review-item review-item-own">
+                <p class="review-meta">
+                    <strong>{{ user_review.user.username }} (You)</strong> — {{ user_review.rating }} ★ — {{ user_review.created_at|date:"M d, Y" }}
+                </p>
+                {% if user_review.comment %}<p class="review-comment">{{ user_review.comment }}</p>{% endif %}
+                <form method="post" action="{% url 'reviews:toggle_like' user_review.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if user_review.pk in liked_review_ids %}♥ Liked{% else %}♡ Like{% endif %}
+                        ({{ user_review.likes.count }})
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        {% for review in reviews %}
+            <div class="review-item">
+                <p class="review-meta">
+                    <strong>{{ review.user.username }}</strong> — {{ review.rating }} ★ — {{ review.created_at|date:"M d, Y" }}
+                </p>
+                {% if review.comment %}<p class="review-comment">{{ review.comment }}</p>{% endif %}
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'reviews:toggle_like' review.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">
+                            {% if review.pk in liked_review_ids %}♥ Liked{% else %}♡ Like{% endif %}
+                            ({{ review.likes.count }})
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        {% empty %}
+            {% if not user_review %}<p>Be the first to review this product.</p>{% endif %}
+        {% endfor %}
+    </div>
+
+    {% include "includes/pagination.html" with page_obj=page_obj %}
+</section>

@@ -219,6 +219,8 @@
                     {{ product.category.name }}
                 </div>
 
+                <a href="#reviews" class="review-quick-link">See {{ review_count }} reviews ★{{ average_rating|floatformat:1 }}</a>
+
 
                 <!-- =================================================
                      PRODUCT NAME
@@ -477,6 +479,11 @@
         "{{ product.name|escapejs }}";
 
 </script>
+
+
+{% load reviews_tags %}
+{% reviews_section product %}
+
 
 {% endblock %}
 
