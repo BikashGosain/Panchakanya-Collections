@@ -9,10 +9,9 @@
 
 {% block extra_css %}
 
-    <link
-        rel="stylesheet"
-        href="{% static 'products/css/product_detail.css' %}"
-    >
+    <link rel="stylesheet" href="{% static 'products/css/product_detail.css' %}">
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'reviews/css/review_section.css' %}">
 
 {% endblock %}
 
@@ -493,5 +492,7 @@
     <script
         src="{% static 'products/js/product_detail.js' %}"
     ></script>
+    {{ block.super }}
+    <script src="{% static 'reviews/js/review_section.js' %}"></script>
 
 {% endblock %}

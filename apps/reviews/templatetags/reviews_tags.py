@@ -1,5 +1,4 @@
 from django import template
-from django.core.paginator import Paginator
 from django.db.models import Avg, Count
 
 from ..forms import ReviewForm
@@ -13,6 +12,8 @@ SORT_OPTIONS = {
     "lowest_rating": "rating",
     "most_liked": "-like_count",
 }
+
+PAGE_SIZE = 5
 
 
 @register.inclusion_tag("reviews/review_section.html", takes_context=True)
@@ -28,26 +29,32 @@ def reviews_section(context, product):
     average_rating = base_qs.aggregate(avg=Avg("rating"))["avg"]
     review_count = base_qs.count()
 
-    reviews = base_qs.annotate(like_count=Count("likes")).order_by(SORT_OPTIONS[sort])
-
     user_review = None
     liked_review_ids = set()
     if request.user.is_authenticated:
         user_review = base_qs.filter(user=request.user).first()
+
+    others_qs = base_qs.exclude(pk=user_review.pk) if user_review else base_qs
+    others_qs = others_qs.annotate(like_count=Count("likes")).order_by(
+        SORT_OPTIONS[sort]
+    )
+
+    reviews = list(others_qs[:PAGE_SIZE])
+    has_more = others_qs.count() > PAGE_SIZE
+
+    if request.user.is_authenticated:
+        all_visible_ids = [r.pk for r in reviews] + (
+            [user_review.pk] if user_review else []
+        )
         liked_review_ids = set(
-            request.user.review_likes.filter(review__in=reviews).values_list(
+            request.user.review_likes.filter(review_id__in=all_visible_ids).values_list(
                 "review_id", flat=True
             )
         )
-        # Exclude own review from the general list, we'll pin it separately
-        reviews = reviews.exclude(pk=user_review.pk) if user_review else reviews
-
-    page_obj = Paginator(reviews, 10).get_page(request.GET.get("review_page"))
 
     return {
         "product": product,
-        "reviews": page_obj,
-        "page_obj": page_obj,
+        "reviews": reviews,
         "average_rating": average_rating,
         "review_count": review_count,
         "user_review": user_review,
@@ -55,4 +62,6 @@ def reviews_section(context, product):
         "liked_review_ids": liked_review_ids,
         "user": request.user,
         "current_sort": sort,
+        "has_more": has_more,
+        "next_offset": PAGE_SIZE,
     }

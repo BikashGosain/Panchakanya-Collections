@@ -1,0 +1,17 @@
+{% for review in reviews %}
+    <div class="rv-item">
+        <p class="rv-meta">
+            <strong>{{ review.user.username }}</strong> — {{ review.rating }} ★ — {{ review.created_at|date:"M d, Y" }}
+        </p>
+        {% if review.comment %}<p class="rv-comment">{{ review.comment }}</p>{% endif %}
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'reviews:toggle_like' review.pk %}" class="rv-like-form" data-review-id="{{ review.pk }}">
+                {% csrf_token %}
+                <button type="submit" class="rv-like-btn">
+                    {% if review.pk in liked_review_ids %}♥ Liked{% else %}♡ Like{% endif %}
+                    ({{ review.likes.count }})
+                </button>
+            </form>
+        {% endif %}
+    </div>
+{% endfor %}

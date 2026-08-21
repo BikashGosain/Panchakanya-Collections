@@ -1,0 +1,21 @@
+username,product_id,rating,comment,is_deleted
+testuser01,1,5,"Beautiful ring. The finish is excellent and it looks very elegant.",false
+testuser02,1,5,"Really nice quality. The design is simple and beautiful.",false
+testuser03,1,4,"Good looking ring with a polished finish. Very happy with it.",false
+testuser04,1,5,"Excellent craftsmanship and a very attractive design.",false
+testuser05,1,4,"A lovely ring. The gold finish looks great.",false
+testuser06,1,5,"Very satisfied with the purchase. It feels solid and premium.",false
+testuser07,1,4,"The ring is comfortable and looks exactly like the product photos.",false
+testuser08,1,5,"Simple, classic and elegant. Exactly what I was looking for.",false
+testuser09,1,5,"The polished finish is excellent and the ring feels well made.",false
+testuser10,1,4,"Good product overall. The design is clean and attractive.",false
+testuser11,1,5,"I really like the classic design. It looks even better when worn.",false
+testuser12,1,3,"The quality is good, although the design is quite simple.",false
+testuser13,1,5,"Great looking gold ring with a smooth and polished finish.",false
+testuser14,1,4,"The ring has an elegant appearance and feels comfortable.",false
+testuser15,1,5,"Fantastic ring. The craftsmanship and finish are impressive.",false
+testuser16,1,4,"Nice product and good overall quality. Happy with the purchase.",false
+testuser17,1,5,"A beautiful classic ring. It looks premium and feels durable.",false
+testuser18,1,4,"The ring looks great and the finish is very smooth.",false
+testuser19,1,5,"Very happy with the quality and classic style.",false
+testuser20,1,5,"Beautiful design, good finish and comfortable to wear.",false
