@@ -177,7 +177,7 @@ class CartViewTest(TestCase):
 
         self.assertRedirects(
             response,
-            reverse("cart:view"),
+            reverse("dashboard:cart"),
         )
 
         self.assertFalse(
@@ -208,7 +208,7 @@ class CartViewTest(TestCase):
 
         self.assertRedirects(
             response,
-            reverse("cart:view"),
+            reverse("dashboard:cart"),
         )
 
         item = CartItem.objects.get(
@@ -225,11 +225,11 @@ class CartViewTest(TestCase):
         self.client.logout()
 
         response = self.client.get(
-            reverse("cart:view"),
+            reverse("dashboard:cart"),
         )
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.url,
-            f"{reverse('accounts:login')}?next={reverse('cart:view')}",
+            f"{reverse('accounts:login')}?next={reverse('dashboard:cart')}",
         )

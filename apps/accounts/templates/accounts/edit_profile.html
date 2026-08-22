@@ -1,12 +1,172 @@
-<h2>Edit Profile</h2>
-<form method="post">
-    {% csrf_token %}
-    <p>
-        <label>Email:</label>
-        <input type="email" value="{{ user.email }}" readonly> <small>Email cannot be changed here.</small>
-    </p>
+{% extends "base.html" %}
+{% load static %}
 
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
-<a href="{% url 'accounts:profile' %}">Cancel</a>
+{% block title %}Edit Profile | Panchakanya Collections{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/accounts-edit-profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="pk-edit-profile">
+
+    <div class="pk-edit-profile-card">
+
+        <div class="pk-edit-profile-header">
+            <h1>Edit Profile</h1>
+            <p>Update your personal information.</p>
+        </div>
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            class="pk-edit-profile-form"
+        >
+            {% csrf_token %}
+
+            <div class="pk-edit-profile-picture-field">
+
+                <label for="{{ form.profile_picture.id_for_label }}">
+                    Profile Picture
+                </label>
+
+                {% if request.user.profile_picture %}
+                    <img
+                        src="{{ request.user.profile_picture.url }}"
+                        alt="Current profile picture"
+                        class="pk-edit-profile-picture"
+                    >
+                {% else %}
+                    <div class="pk-edit-profile-picture-placeholder">
+                        <i data-lucide="user"></i>
+                    </div>
+                {% endif %}
+
+                {{ form.profile_picture }}
+
+                {% if form.profile_picture.errors %}
+                    <div class="pk-edit-profile-errors">
+                        {{ form.profile_picture.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="pk-edit-profile-email">
+
+                <label for="pk-edit-email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="pk-edit-email"
+                    value="{{ user.email }}"
+                    readonly
+                >
+
+                <small>
+                    Email cannot be changed here.
+                </small>
+
+            </div>
+
+            <p>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </p>
+
+            <p>
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+            </p>
+
+            <p>
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </p>
+
+            <p>
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+                {{ form.phone_number.errors }}
+            </p>
+
+            <p>
+                {{ form.address.label_tag }}
+                {{ form.address }}
+                {{ form.address.errors }}
+            </p>
+
+            <p>
+                {{ form.city.label_tag }}
+                {{ form.city }}
+                {{ form.city.errors }}
+            </p>
+
+            <div class="pk-edit-profile-actions">
+
+                <button
+                    type="submit"
+                    class="pk-edit-profile-save"
+                >
+                    Save Changes
+                </button>
+
+                <a
+                    href="{% url 'dashboard:profile' %}"
+                    class="pk-edit-profile-cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<script>
+    const profilePictureInput = document.getElementById(
+        "{{ form.profile_picture.id_for_label }}"
+    );
+
+    const profilePicturePreview = document.querySelector(
+        ".pk-edit-profile-picture"
+    );
+
+    const profilePicturePlaceholder = document.querySelector(
+        ".pk-edit-profile-picture-placeholder"
+    );
+
+    profilePictureInput.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const imageUrl = URL.createObjectURL(file);
+
+        if (profilePicturePreview) {
+            profilePicturePreview.src = imageUrl;
+            return;
+        }
+
+        if (profilePicturePlaceholder) {
+            const image = document.createElement("img");
+
+            image.src = imageUrl;
+            image.alt = "New profile picture";
+            image.className = "pk-edit-profile-picture";
+
+            profilePicturePlaceholder.replaceWith(image);
+        }
+    });
+</script>
+{% endblock %}

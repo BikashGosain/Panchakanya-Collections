@@ -19,6 +19,7 @@ class RegisterForm(UserCreationForm):
             "phone_number",
             "address",
             "city",
+            "profile_picture",
         ]
 
     def clean_email(self):
@@ -50,4 +51,12 @@ class ProfileEditForm(forms.ModelForm):
             "phone_number",
             "address",
             "city",
+            "profile_picture",
         ]
+        widgets = {
+            "profile_picture": forms.FileInput(
+                attrs={
+                    "accept": "image/*",
+                }
+            ),
+        }

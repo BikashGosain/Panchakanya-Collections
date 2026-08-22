@@ -10,7 +10,7 @@ urlpatterns = [
     path("resend-otp/", views.resend_otp_view, name="resend_otp"),
     path("login/", views.CustomLoginView.as_view(), name="login"),
     path("logout/", views.CustomLogoutView.as_view(), name="logout"),
-    path("profile/", views.profile_view, name="profile"),
+    # path("profile/", views.profile_view, name="profile"),
     path("profile/edit/", views.edit_profile_view, name="edit_profile"),
     path(
         "password-change/",

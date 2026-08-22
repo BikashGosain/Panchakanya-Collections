@@ -5,11 +5,11 @@ from . import views
 app_name = "wishlists"
 
 urlpatterns = [
-    path(
-        "",
-        views.wishlist_view,
-        name="list",
-    ),
+    # path(
+    #     "",
+    #     views.wishlist_view,
+    #     name="list",
+    # ),
     path(
         "add/<int:product_id>/",
         views.add_to_wishlist,

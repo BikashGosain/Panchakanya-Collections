@@ -1,0 +1,99 @@
+<div class="pk-profile">
+
+    <div class="pk-profile-header">
+
+        <div class="pk-profile-avatar">
+            {% if request.user.profile_picture %}
+                <img
+                    src="{{ request.user.profile_picture.url }}"
+                    alt="Profile picture"
+                    class="pk-profile-image"
+                >
+            {% else %}
+                <div class="pk-profile-placeholder">
+                    <i data-lucide="user"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="pk-profile-heading">
+            <h2>Profile</h2>
+            <p>
+                {{ request.user.get_full_name|default:request.user.username }}
+            </p>
+        </div>
+
+    </div>
+
+    <div class="pk-profile-details">
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">Username</span>
+            <span class="pk-profile-value">
+                {{ request.user.username }}
+            </span>
+        </div>
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">Email</span>
+            <span class="pk-profile-value">
+                {{ request.user.email }}
+            </span>
+        </div>
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">First name</span>
+            <span class="pk-profile-value">
+                {{ request.user.first_name }}
+            </span>
+        </div>
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">Last name</span>
+            <span class="pk-profile-value">
+                {{ request.user.last_name }}
+            </span>
+        </div>
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">Phone</span>
+            <span class="pk-profile-value">
+                {{ request.user.phone_number }}
+            </span>
+        </div>
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">Address</span>
+            <span class="pk-profile-value">
+                {{ request.user.address }}
+            </span>
+        </div>
+
+        <div class="pk-profile-field">
+            <span class="pk-profile-label">City</span>
+            <span class="pk-profile-value">
+                {{ request.user.city }}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="pk-profile-actions">
+
+        <a
+            href="{% url 'accounts:edit_profile' %}"
+            class="pk-profile-button pk-profile-button-secondary"
+        >
+            Edit Profile
+        </a>
+
+        <a
+            href="{% url 'accounts:password_change' %}"
+            class="pk-profile-button pk-profile-button-secondary"
+        >
+            Change Password
+        </a>
+
+    </div>
+
+</div>

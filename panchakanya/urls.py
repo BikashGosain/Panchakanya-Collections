@@ -29,6 +29,7 @@ urlpatterns = [
     path("reviews/", include("apps.reviews.urls")),
     path("wishlist/", include("apps.wishlists.urls")),
     path("cart/", include("apps.cart.urls")),
+    path("dashboard/", include("apps.dashboard.urls")),
 ]
 
 if settings.DEBUG:

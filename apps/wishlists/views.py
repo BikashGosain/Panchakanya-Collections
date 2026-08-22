@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 
 from apps.products.models import Product
@@ -62,16 +62,16 @@ def remove_from_wishlist(request, product_id):
     return redirect("products:detail", slug=product_slug)
 
 
-@login_required
-def wishlist_view(request):
-    wishlist_items = Wishlist.objects.filter(
-        user=request.user,
-        product__is_deleted=False,
-        product__status="active",
-    ).select_related("product")
+# @login_required
+# def wishlist_view(request):
+#     wishlist_items = Wishlist.objects.filter(
+#         user=request.user,
+#         product__is_deleted=False,
+#         product__status="active",
+#     ).select_related("product")
 
-    return render(
-        request,
-        "wishlists/wishlist.html",
-        {"wishlist_items": wishlist_items},
-    )
+#     return render(
+#         request,
+#         "wishlists/wishlist.html",
+#         {"wishlist_items": wishlist_items},
+#     )

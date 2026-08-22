@@ -1,0 +1,167 @@
+.pk-edit-profile {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+}
+
+.pk-edit-profile-card {
+    padding: 2rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.pk-edit-profile-header {
+    margin-bottom: 2rem;
+}
+
+.pk-edit-profile-header h1 {
+    margin: 0 0 0.4rem;
+    font-size: 1.75rem;
+}
+
+.pk-edit-profile-header p {
+    margin: 0;
+}
+
+.pk-edit-profile-picture-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.pk-edit-profile-picture,
+.pk-edit-profile-picture-placeholder {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.pk-edit-profile-picture {
+    display: block;
+    object-fit: cover;
+}
+
+.pk-edit-profile-picture-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e5e5;
+}
+
+.pk-edit-profile-picture-placeholder svg {
+    width: 40px;
+    height: 40px;
+}
+
+.pk-edit-profile-picture-section h3 {
+    margin: 0 0 0.35rem;
+}
+
+.pk-edit-profile-picture-section p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.pk-edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pk-edit-profile-form p {
+    margin: 0;
+}
+
+.pk-edit-profile-form label,
+.pk-edit-profile-email label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.pk-edit-profile-form input,
+.pk-edit-profile-form select,
+.pk-edit-profile-form textarea,
+.pk-edit-profile-email input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.pk-edit-profile-form input[type="file"] {
+    padding: 0.5rem;
+}
+
+.pk-edit-profile-form ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.25rem;
+}
+
+.pk-edit-profile-email {
+    margin-bottom: 0.5rem;
+}
+
+.pk-edit-profile-email small {
+    display: block;
+    margin-top: 0.35rem;
+}
+
+.pk-edit-profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.pk-edit-profile-save,
+.pk-edit-profile-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1.1rem;
+    border-radius: 6px;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pk-edit-profile-save {
+    border: 0;
+}
+
+.pk-edit-profile-cancel {
+    border: 1px solid #e5e5e5;
+}
+
+@media (max-width: 600px) {
+    .pk-edit-profile {
+        padding: 1rem 0.75rem 3rem;
+    }
+
+    .pk-edit-profile-card {
+        padding: 1.25rem;
+    }
+
+    .pk-edit-profile-picture-section {
+        align-items: flex-start;
+    }
+
+    .pk-edit-profile-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pk-edit-profile-save,
+    .pk-edit-profile-cancel {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

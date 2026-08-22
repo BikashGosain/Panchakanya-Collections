@@ -52,34 +52,6 @@
                 {{ product.name }}
             </span>
 
-            {% if user.is_authenticated %}
-            {% if is_wishlisted %}
-            <form method="post" action="{% url 'wishlists:remove' product.id %}">
-                {% csrf_token %}
-                <button type="submit">
-                    💔 Remove from Wishlist
-                </button>
-            </form>
-            {% else %}
-            <form method="post" action="{% url 'wishlists:add' product.id %}">
-                {% csrf_token %}
-                <button type="submit">
-                    ❤️ Add to Wishlist
-                </button>
-            </form>
-            {% endif %}
-
-            {% endif %}
-
-            {% if user.is_authenticated %}
-    <form method="post" action="{% url 'cart:add' product.id %}">
-        {% csrf_token %}
-        <button type="submit">
-            🛒 Add to Cart
-        </button>
-    </form>
-{% endif %}
-
 
         </nav>
 
@@ -246,7 +218,24 @@
                 <div class="product-category">
                     {{ product.category.name }}
                 </div>
+{% if user.is_authenticated %}
+{% if is_wishlisted %}
+<form method="post" action="{% url 'wishlists:remove' product.id %}">
+    {% csrf_token %}
+    <button type="submit">
+        💔 Remove from Wishlist
+    </button>
+</form>
+{% else %}
+<form method="post" action="{% url 'wishlists:add' product.id %}">
+    {% csrf_token %}
+    <button type="submit">
+        ❤️ Add to Wishlist
+    </button>
+</form>
+{% endif %}
 
+{% endif %}
                 <a href="#reviews" class="review-quick-link">See {{ review_count }} reviews ★{{ average_rating|floatformat:1 }}</a>
 
 
@@ -412,76 +401,65 @@
                      PURCHASE AREA
                      ================================================= -->
 
-                <div class="product-purchase">
+<div class="product-purchase">
 
+    <div class="product-quantity">
 
-                    <!-- =================================================
-                         QUANTITY
-                         ================================================= -->
+        <button
+            type="button"
+            id="decreaseQuantity"
+            class="quantity-button"
+            aria-label="Decrease quantity"
+        >
+            −
+        </button>
 
-                    <div class="product-quantity">
+        <span
+            id="quantityValue"
+            class="quantity-value"
+            aria-live="polite"
+        >
+            1
+        </span>
 
-                        <button
-                            type="button"
-                            id="decreaseQuantity"
-                            class="quantity-button"
-                            aria-label="Decrease quantity"
-                        >
-                            −
-                        </button>
+        <button
+            type="button"
+            id="increaseQuantity"
+            class="quantity-button"
+            data-stock="{{ product.stock }}"
+            aria-label="Increase quantity"
 
+            {% if product.stock <= 0 %}
+                disabled
+            {% endif %}
+        >
+            +
+        </button>
 
-                        <span
-                            id="quantityValue"
-                            class="quantity-value"
-                            aria-live="polite"
-                        >
-                            1
-                        </span>
+    </div>
 
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'cart:add' product.id %}">
+            {% csrf_token %}
 
-                        <button
-                            type="button"
-                            id="increaseQuantity"
-                            class="quantity-button"
-                            data-stock="{{ product.stock }}"
-                            aria-label="Increase quantity"
+            <input
+                type="hidden"
+                name="quantity"
+                id="cartQuantity"
+                value="1"
+            >
 
-                            {% if product.stock <= 0 %}
-                                disabled
-                            {% endif %}
-                        >
-                            +
-                        </button>
+            <button
+                type="submit"
+                class="add-to-cart-button"
+                {% if product.stock <= 0 %}disabled{% endif %}
+            >
+                🛒 Add to Cart
+            </button>
+        </form>
+    {% endif %}
 
-                    </div>
-
-
-                    <!-- =================================================
-                         ADD TO CART
-                         ================================================= -->
-
-                    <button
-                        type="button"
-                        id="addToCartButton"
-                        class="add-to-cart-button"
-                        data-product-id="{{ product.pk }}"
-
-                        {% if product.stock <= 0 %}
-                            disabled
-                        {% endif %}
-                    >
-
-                        {% if product.stock > 0 %}
-                            Add to Cart
-                        {% else %}
-                            Out of Stock
-                        {% endif %}
-
-                    </button>
-
-
-                </div>
+</div>
 
 
             </section>
