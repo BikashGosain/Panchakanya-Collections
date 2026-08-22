@@ -18,6 +18,11 @@ class User(AbstractUser):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     is_email_verified = models.BooleanField(default=False)
+    profile_picture = models.ImageField(
+        upload_to="profile_pictures/",
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return self.username

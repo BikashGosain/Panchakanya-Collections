@@ -41,7 +41,7 @@ class RegistrationAndVerificationTests(TestCase):
 
         user.refresh_from_db()
         self.assertTrue(user.is_email_verified)
-        self.assertRedirects(response, reverse("accounts:profile"))
+        self.assertRedirects(response, reverse("dashboard:profile"))
 
     def test_verify_with_wrong_code_shows_error(self):
         self.client.post(reverse("accounts:register"), self.register_data)

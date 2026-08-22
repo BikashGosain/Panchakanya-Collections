@@ -37,11 +37,18 @@
                                 <strong>Hello, {{ user.first_name|default:user.username }}</strong>
                             </div>
                             <hr class="pk-dropdown-divider">
-                            <a href="dashboard.html" class="pk-dropdown-item">
+                            <a href="{% url 'dashboard:home' %}" class="pk-dropdown-item">
                                 <i data-lucide="layout-dashboard"></i> Dashboard
                             </a>
-                            <a href="{% url 'accounts:profile' %}" class="pk-dropdown-item">
-                                <i data-lucide="layout-dashboard"></i> Profile
+                            <a href="{% url 'dashboard:profile' %}" class="pk-dropdown-item">
+                                <i data-lucide="user"></i> Profile
+                            </a>
+                            <a href="{% url 'dashboard:wishlist' %}" class="pk-dropdown-item">
+                                <i data-lucide="heart"></i> Wishlist
+                            </a>
+                            <a href="{% url 'dashboard:cart' %}" class="pk-dropdown-item
+">
+                                <i data-lucide="shopping-cart"></i> Cart
                             </a>
                             <a href="#" class="pk-dropdown-item">
                                 <i data-lucide="package"></i> My Orders

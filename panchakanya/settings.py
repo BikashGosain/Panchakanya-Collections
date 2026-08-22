@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     "apps.products",
     "apps.core",
     "apps.reviews",
+    "apps.wishlists",
+    "apps.cart",
+    "apps.dashboard",
 ]
 
 SITE_ID = 1
@@ -69,7 +72,7 @@ SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 SOCIALACCOUNT_ADAPTER = "apps.accounts.adapters.CustomSocialAccountAdapter"
 
-LOGIN_REDIRECT_URL = "accounts:profile"
+LOGIN_REDIRECT_URL = "dashboard:profile"
 
 
 AUTH_USER_MODEL = "accounts.User"

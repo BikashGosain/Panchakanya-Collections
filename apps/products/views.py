@@ -2,7 +2,13 @@ from django.core.paginator import Paginator
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, render
 
+from apps.wishlists.models import Wishlist
+
 from .models import Category, Product, ProductImage
+
+PRODUCTS_PER_PAGE = 12
+CATEGORY_PRODUCTS_PER_PAGE = 6
+CATEGORIES_PER_PAGE = 12
 
 
 def get_category_and_descendants(category):
@@ -35,6 +41,37 @@ def get_category_ancestors(category):
     return ancestors
 
 
+def apply_common_filters(products, request):
+    """
+    Apply search, price range, and metal type filters shared
+    between product_list_view and category_view.
+    """
+    search_query = request.GET.get("q", "")
+    if search_query:
+        products = products.filter(name__icontains=search_query)
+
+    min_price = request.GET.get("min_price", "")
+    if min_price:
+        products = products.filter(price__gte=min_price)
+
+    max_price = request.GET.get("max_price", "")
+    if max_price:
+        products = products.filter(price__lte=max_price)
+
+    metal_type = request.GET.get("metal", "")
+    if metal_type:
+        products = products.filter(metal_type=metal_type)
+
+    filter_context = {
+        "search_query": search_query,
+        "min_price": min_price,
+        "max_price": max_price,
+        "selected_metal": metal_type,
+    }
+
+    return products, filter_context
+
+
 def product_list_view(request):
     products = (
         Product.objects.filter(status="active")
@@ -49,11 +86,6 @@ def product_list_view(request):
     )
 
     category_slug = request.GET.get("category", "")
-    search_query = request.GET.get("q", "")
-    min_price = request.GET.get("min_price", "")
-    max_price = request.GET.get("max_price", "")
-    metal_type = request.GET.get("metal", "")
-
     selected_category = None
 
     # -----------------------------------------
@@ -61,42 +93,15 @@ def product_list_view(request):
     # -----------------------------------------
 
     if category_slug:
-        selected_category = get_object_or_404(
-            Category,
-            slug=category_slug,
-        )
-
+        selected_category = get_object_or_404(Category, slug=category_slug)
         category_tree = get_category_and_descendants(selected_category)
-
         products = products.filter(category__in=category_tree)
 
     # -----------------------------------------
-    # SEARCH FILTER
+    # SHARED FILTERS (search, price, metal)
     # -----------------------------------------
 
-    if search_query:
-        products = products.filter(name__icontains=search_query)
-
-    # -----------------------------------------
-    # MIN PRICE
-    # -----------------------------------------
-
-    if min_price:
-        products = products.filter(price__gte=min_price)
-
-    # -----------------------------------------
-    # MAX PRICE
-    # -----------------------------------------
-
-    if max_price:
-        products = products.filter(price__lte=max_price)
-
-    # -----------------------------------------
-    # METAL FILTER
-    # -----------------------------------------
-
-    if metal_type:
-        products = products.filter(metal_type=metal_type)
+    products, filter_context = apply_common_filters(products, request)
 
     # -----------------------------------------
     # ROOT CATEGORIES
@@ -113,27 +118,20 @@ def product_list_view(request):
     # -----------------------------------------
 
     selected_category_ancestors = []
-
     if selected_category:
         selected_category_ancestors = get_category_ancestors(selected_category)
-
-    # -----------------------------------------
-    # CATEGORIES THAT SHOULD BE OPEN
-    # -----------------------------------------
 
     expanded_category_slugs = [
         category.slug for category in selected_category_ancestors
     ]
 
     # -----------------------------------------
-    # CONTEXT
+    # PAGINATION
     # -----------------------------------------
 
     products = products.order_by("-created_at")
-
-    paginator = Paginator(products, 12)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+    paginator = Paginator(products, PRODUCTS_PER_PAGE)
+    page_obj = paginator.get_page(request.GET.get("page"))
 
     return render(
         request,
@@ -143,34 +141,35 @@ def product_list_view(request):
             "page_obj": page_obj,
             "root_categories": root_categories,
             "metal_choices": Product.METAL_CHOICES,
-            "search_query": search_query,
-            "min_price": min_price,
-            "max_price": max_price,
-            "selected_metal": metal_type,
             "selected_category": category_slug,
             "selected_category_obj": selected_category,
             "selected_category_ancestors": selected_category_ancestors,
             "expanded_category_slugs": expanded_category_slugs,
+            **filter_context,
         },
     )
 
 
 def product_detail_view(request, slug):
-
     product = get_object_or_404(
         Product.objects.prefetch_related("images"),
         slug=slug,
         status="active",
     )
 
-    images = list(product.images.all())
+    is_wishlisted = False
+    if request.user.is_authenticated:
+        is_wishlisted = Wishlist.objects.filter(
+            user=request.user, product=product
+        ).exists()
 
     return render(
         request,
         "products/product_detail.html",
         {
             "product": product,
-            "images": images,
+            "images": product.images.all(),
+            "is_wishlisted": is_wishlisted,
         },
     )
 
@@ -192,11 +191,9 @@ def category_view(request, slug):
         )
     )
 
-    search_query = request.GET.get("q", "")
-    if search_query:
-        products = products.filter(name__icontains=search_query)
+    products, filter_context = apply_common_filters(products, request)
 
-    paginator = Paginator(products, 6)
+    paginator = Paginator(products, CATEGORY_PRODUCTS_PER_PAGE)
     page_obj = paginator.get_page(request.GET.get("page"))
 
     ancestors = get_category_ancestors(category)
@@ -209,8 +206,8 @@ def category_view(request, slug):
             "subcategories": subcategories,
             "products": page_obj,
             "page_obj": page_obj,
-            "search_query": search_query,
             "ancestors": ancestors,
+            **filter_context,
         },
     )
 
@@ -222,9 +219,8 @@ def category_overview_view(request):
     if search_query:
         categories = categories.filter(name__icontains=search_query)
 
-    paginator = Paginator(categories, 12)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+    paginator = Paginator(categories, CATEGORIES_PER_PAGE)
+    page_obj = paginator.get_page(request.GET.get("page"))
 
     return render(
         request,

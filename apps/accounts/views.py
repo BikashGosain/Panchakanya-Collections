@@ -187,7 +187,7 @@ def verify_email_view(request):
             backend="django.contrib.auth.backends.ModelBackend",
         )
         request.session.pop("pending_user_id", None)
-        return redirect("accounts:profile")
+        return redirect("dashboard:profile")
 
     return render(request, "accounts/verify_email.html")
 
@@ -230,7 +230,7 @@ class CustomLogoutView(LogoutView):
 
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = "accounts/password_change.html"
-    success_url = reverse_lazy("accounts:profile")
+    success_url = reverse_lazy("dashboard:profile")
 
 
 def forgot_password_view(request):
@@ -355,18 +355,31 @@ def resend_reset_otp_view(request):
     )
 
 
-@login_required
-def profile_view(request):
-    return render(request, "accounts/profile.html", {"user": request.user})
+# @login_required
+# def profile_view(request):
+#     return render(request, "accounts/profile.html", {"user": request.user})
 
 
 @login_required
 def edit_profile_view(request):
     if request.method == "POST":
-        form = ProfileEditForm(request.POST, instance=request.user)
+        form = ProfileEditForm(
+            request.POST,
+            request.FILES,
+            instance=request.user,
+        )
+
         if form.is_valid():
             form.save()
-            return redirect("accounts:profile")
+            return redirect("dashboard:profile")
+
     else:
-        form = ProfileEditForm(instance=request.user)
-    return render(request, "accounts/edit_profile.html", {"form": form})
+        form = ProfileEditForm(
+            instance=request.user,
+        )
+
+    return render(
+        request,
+        "accounts/edit_profile.html",
+        {"form": form},
+    )

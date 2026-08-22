@@ -1,0 +1,25 @@
+<h2 class="pk-db-card-title">My Wishlist: Total Items - {{ wishlist_items|length }}</h2>
+
+{% if wishlist_items %}
+    {% for item in wishlist_items %}
+        <div class="pk-db-wishlist-item">
+            <div>
+                <h3>{{ item.product.name }}</h3>
+                <p>{{ item.product.price }}</p>
+            </div>
+
+            <form
+                method="post"
+                action="{% url 'dashboard:wishlist_remove' item.product.id %}"
+            >
+                {% csrf_token %}
+                <button type="submit">Remove</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    {% include "includes/pagination.html" with page_obj=wishlist_page %}
+
+{% else %}
+    <p>Your wishlist is empty.</p>
+{% endif %}

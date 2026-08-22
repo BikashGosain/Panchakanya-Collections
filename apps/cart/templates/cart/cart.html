@@ -1,0 +1,49 @@
+<!-- {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart | Panchakanya Collections{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% if cart_items %}
+    {% for item in cart_items %}
+        <div>
+            <h2>{{ item.product.name }}</h2>
+            <p>Price: {{ item.product.price }}</p>
+            <p>Subtotal: {{ item.subtotal }}</p>
+
+            <form method="post" action="{% url 'cart:update' item.product.id %}">
+                {% csrf_token %}
+
+                <label for="quantity-{{ item.id }}">Quantity:</label>
+
+                <input
+                    type="number"
+                    id="quantity-{{ item.id }}"
+                    name="quantity"
+                    value="{{ item.quantity }}"
+                    min="1"
+                >
+
+                <button type="submit">Update</button>
+            </form>
+
+            <form method="post" action="{% url 'cart:remove' item.product.id %}">
+                {% csrf_token %}
+                <button type="submit">Remove</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <h2>Total: {{ cart.total_price }}</h2>
+
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+
+
+{% endblock %} -->
