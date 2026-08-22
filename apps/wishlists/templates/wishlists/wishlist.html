@@ -1,3 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Wishlist | Panchakanya Collections{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'wishlists/css/wishlist.css' %}">
+{% endblock %}
+
+{% block content %}
+
 <h1>My Wishlist</h1>
 
 {% for item in wishlist_items %}
@@ -20,3 +31,6 @@
 {% empty %}
     <p>Your wishlist is empty.</p>
 {% endfor %}
+
+
+{% endblock %}

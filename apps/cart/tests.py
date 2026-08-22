@@ -52,6 +52,17 @@ class CartModelTest(TestCase):
                 quantity=2,
             )
 
+    def test_cart_item_subtotal(self):
+        cart = Cart.objects.create(user=self.user)
+
+        item = CartItem.objects.create(
+            cart=cart,
+            product=self.product,
+            quantity=2,
+        )
+
+        self.assertEqual(item.subtotal, 90000)
+
     def test_cart_total_price(self):
         cart = Cart.objects.create(user=self.user)
 
