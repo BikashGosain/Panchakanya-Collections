@@ -20,4 +20,21 @@ urlpatterns = [
     path(
         "cart/update/<int:product_id>/", views.dashboard_update_cart, name="cart_update"
     ),
+    path("products/", views.dashboard_products, name="products"),
+    path("products/add/", views.dashboard_add_product, name="products_add"),
+    path(
+        "products/edit/<int:product_id>/",
+        views.dashboard_edit_product,
+        name="products_edit",
+    ),
+    path(
+        "products/delete/<int:product_id>/",
+        views.dashboard_delete_product,
+        name="products_delete",
+    ),
+    path(
+        "products/restore/<int:product_id>/",
+        views.dashboard_restore_product,
+        name="products_restore",
+    ),
 ]

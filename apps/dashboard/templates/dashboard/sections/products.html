@@ -1,0 +1,122 @@
+<div class="pk-products-management">
+
+    <div class="pk-products-management-header">
+        <div>
+            <h2 class="pk-db-card-title">Product Management</h2>
+            <p>Manage your store products.</p>
+        </div>
+
+        <a href="{% url 'dashboard:products_add' %}" class="pk-products-add-button">
+            Add Product
+        </a>
+    </div>
+
+    <form method="get" class="pk-products-search">
+        <input type="text" name="q" placeholder="Search by name or SKU..." value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if products %}
+
+        <div class="pk-products-table-wrapper">
+            <table class="pk-products-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Featured</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+
+                            <td>
+                                <div class="pk-products-product">
+
+                                    {% if product.cover_images %}
+                                        <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="pk-products-thumbnail">
+                                    {% else %}
+                                        <div class="pk-products-thumbnail-placeholder">
+                                        No image
+                                        </div>
+                                    {% endif %}
+
+                                    <div>
+                                        <strong>{{ product.name }}</strong>
+
+                                        {% if product.is_deleted %}
+                                            <span class="pk-products-deleted">
+                                                Deleted
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            </td>
+
+                            <td>
+                                {{ product.sku }}
+                            </td>
+
+                            <td>
+                                {{ product.category.name }}
+                            </td>
+
+                            <td>
+                                NPR {{ product.price }}
+                            </td>
+
+                            <td>
+                                {{ product.stock }}
+                            </td>
+
+                            <td>
+                                {{ product.get_status_display }}
+                            </td>
+
+                            <td>
+                                {% if product.featured %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a href="{% url 'dashboard:products_edit' product.pk %}">Edit</a>
+
+                                {% if product.is_deleted %}
+                                <form method="post" action="{% url 'dashboard:products_restore' product.pk %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit">Restore</button>
+                                </form>
+                                {% else %}
+                                <form method="post" action="{% url 'dashboard:products_delete' product.pk %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query %}
+
+    {% else %}
+
+        <p>No products found.</p>
+
+    {% endif %}
+
+</div>

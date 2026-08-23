@@ -1,0 +1,34 @@
+<div class="pk-products-management">
+    <h2 class="pk-db-card-title">Add Product</h2>
+
+    <form method="post" enctype="multipart/form-data" class="pk-product-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h3>Product Images</h3>
+        {{ formset.management_form }}
+        <div id="image-formset-container">
+            {% for image_form in formset %}
+            <div class="pk-image-form-row">
+                {{ image_form.id }}
+                {{ image_form.image.label_tag }} {{ image_form.image }}
+                {{ image_form.is_primary.label_tag }} {{ image_form.is_primary }}
+                {% if image_form.instance.pk %}
+                {{ image_form.DELETE.label_tag }} {{ image_form.DELETE }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-image-form" class="pk-btn-secondary">Add another image</button>
+
+        <template id="image-form-template">
+            <div class="pk-image-form-row">
+                {{ formset.empty_form.image.label_tag }} {{ formset.empty_form.image }}
+                {{ formset.empty_form.is_primary.label_tag }} {{ formset.empty_form.is_primary }}
+            </div>
+        </template>
+
+        <button type="submit" class="pk-btn-primary">Create Product</button>
+        <a href="{% url 'dashboard:products' %}" class="pk-btn-secondary">Cancel</a>
+    </form>
+</div>
