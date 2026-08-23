@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from .models import Product, ProductImage
+from .models import Category, Product, ProductImage
 
 
 class ProductForm(forms.ModelForm):
@@ -29,3 +29,9 @@ ProductImageFormSet = inlineformset_factory(
     extra=1,
     can_delete=True,
 )
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["name", "parent", "image", "show_on_home"]

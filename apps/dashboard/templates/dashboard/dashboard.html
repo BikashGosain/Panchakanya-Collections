@@ -54,6 +54,10 @@
     <i data-lucide="package"></i>
     Products
 </a>
+<a href="{% url 'dashboard:categories' %}" class="pk-db-nav-item {% if dashboard_section == 'categories' %}pk-db-active{% endif %}">
+    <i data-lucide="layers"></i>
+    Categories
+</a>
             <!-- Users -->
         </div>
     {% endif %}
@@ -78,6 +82,13 @@
         {% include "dashboard/sections/products_add.html" %}
         {% elif dashboard_section == "products_edit" %}
             {% include "dashboard/sections/products_edit.html" %}
+
+        {% elif dashboard_section == "categories" %}
+            {% include "dashboard/sections/categories.html" %}
+        {% elif dashboard_section == "categories_add" %}
+            {% include "dashboard/sections/categories_add.html" %}
+        {% elif dashboard_section == "categories_edit" %}
+            {% include "dashboard/sections/categories_edit.html" %}
 
         {% else %}
             <h2 class="pk-db-card-title">Dashboard</h2>

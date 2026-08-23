@@ -37,4 +37,21 @@ urlpatterns = [
         views.dashboard_restore_product,
         name="products_restore",
     ),
+    path("categories/", views.dashboard_categories, name="categories"),
+    path("categories/add/", views.dashboard_add_category, name="categories_add"),
+    path(
+        "categories/edit/<int:category_id>/",
+        views.dashboard_edit_category,
+        name="categories_edit",
+    ),
+    path(
+        "categories/delete/<int:category_id>/",
+        views.dashboard_delete_category,
+        name="categories_delete",
+    ),
+    path(
+        "categories/restore/<int:category_id>/",
+        views.dashboard_restore_category,
+        name="categories_restore",
+    ),
 ]

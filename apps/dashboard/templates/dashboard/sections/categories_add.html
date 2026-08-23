@@ -1,0 +1,10 @@
+<div class="pk-products-management">
+    <h2 class="pk-db-card-title">Add Category</h2>
+    <form method="post" enctype="multipart/form-data" class="pk-product-form">
+        {% csrf_token %}
+        {% if form.errors %}<div class="pk-form-errors">{{ form.errors }}</div>{% endif %}
+        {{ form.as_p }}
+        <button type="submit" class="pk-btn-primary">Create Category</button>
+        <a href="{% url 'dashboard:categories' %}" class="pk-btn-secondary">Cancel</a>
+    </form>
+</div>

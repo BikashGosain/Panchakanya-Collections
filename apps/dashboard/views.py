@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.cart.models import Cart, CartItem
-from apps.products.forms import ProductForm, ProductImageFormSet
+from apps.products.forms import CategoryForm, ProductForm, ProductImageFormSet
 from apps.products.models import Category, Product, ProductImage
 from apps.wishlists.models import Wishlist
 
@@ -312,3 +312,119 @@ def dashboard_restore_product(request, product_id):
     product.restore()
     messages.success(request, f"{product.name} was restored.")
     return redirect("dashboard:products")
+
+
+@login_required
+def dashboard_categories(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    categories = Category.all_objects.select_related("parent").order_by("name")
+
+    search_query = request.GET.get("q", "")
+    if search_query:
+        categories = categories.filter(name__icontains=search_query)
+
+    parent_filter = request.GET.get("parent", "")
+    if parent_filter == "root":
+        categories = categories.filter(parent__isnull=True)
+    elif parent_filter == "sub":
+        categories = categories.filter(parent__isnull=False)
+
+    deleted_filter = request.GET.get("deleted", "")
+    if deleted_filter == "active":
+        categories = categories.filter(is_deleted=False)
+    elif deleted_filter == "deleted":
+        categories = categories.filter(is_deleted=True)
+
+    show_on_home_filter = request.GET.get("show_on_home", "")
+    if show_on_home_filter == "yes":
+        categories = categories.filter(show_on_home=True)
+    elif show_on_home_filter == "no":
+        categories = categories.filter(show_on_home=False)
+
+    paginator = Paginator(categories, 10)
+    page_number = request.GET.get("page")
+    categories_page = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "dashboard/dashboard.html",
+        {
+            "dashboard_section": "categories",
+            "categories": categories_page,
+            "page_obj": categories_page,
+            "search_query": search_query,
+            "parent_filter": parent_filter,
+            "deleted_filter": deleted_filter,
+            "show_on_home_filter": show_on_home_filter,
+        },
+    )
+
+
+@login_required
+def dashboard_add_category(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            category = form.save()
+            messages.success(request, f"{category.name} was created.")
+            return redirect("dashboard:categories")
+    else:
+        form = CategoryForm()
+
+    return render(
+        request,
+        "dashboard/dashboard.html",
+        {"dashboard_section": "categories_add", "form": form},
+    )
+
+
+@login_required
+def dashboard_edit_category(request, category_id):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    category = get_object_or_404(Category.all_objects, pk=category_id)
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"{category.name} was updated.")
+            return redirect("dashboard:categories")
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(
+        request,
+        "dashboard/dashboard.html",
+        {"dashboard_section": "categories_edit", "form": form, "category": category},
+    )
+
+
+@login_required
+@require_POST
+def dashboard_delete_category(request, category_id):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    category = get_object_or_404(Category.all_objects, pk=category_id)
+    category.soft_delete()
+    messages.success(request, f"{category.name} was deleted.")
+    return redirect("dashboard:categories")
+
+
+@login_required
+@require_POST
+def dashboard_restore_category(request, category_id):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    category = get_object_or_404(Category.all_objects, pk=category_id)
+    category.restore()
+    messages.success(request, f"{category.name} was restored.")
+    return redirect("dashboard:categories")

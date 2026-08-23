@@ -1,0 +1,82 @@
+<div class="pk-products-management">
+    <div class="pk-products-management-header">
+        <div>
+            <h2 class="pk-db-card-title">Category Management</h2>
+            <p>Manage your store categories.</p>
+        </div>
+        <a href="{% url 'dashboard:categories_add' %}" class="pk-products-add-button">Add Category</a>
+    </div>
+
+    <form method="get" class="pk-products-filters">
+        <input type="text" name="q" placeholder="Search by name..." value="{{ search_query }}">
+
+        <select name="parent">
+            <option value="">All Categories</option>
+            <option value="root" {% if parent_filter == "root" %}selected{% endif %}>Top-Level Only</option>
+            <option value="sub" {% if parent_filter == "sub" %}selected{% endif %}>Subcategories Only</option>
+        </select>
+
+        <select name="show_on_home">
+            <option value="">Homepage: Any</option>
+            <option value="yes" {% if show_on_home_filter == "yes" %}selected{% endif %}>Shown on Home</option>
+            <option value="no" {% if show_on_home_filter == "no" %}selected{% endif %}>Not on Home</option>
+        </select>
+
+        <select name="deleted">
+            <option value="">All Categories</option>
+            <option value="active" {% if deleted_filter == "active" %}selected{% endif %}>Active Only</option>
+            <option value="deleted" {% if deleted_filter == "deleted" %}selected{% endif %}>Deleted Only</option>
+        </select>
+
+        <button type="submit">Filter</button>
+        <a href="{% url 'dashboard:categories' %}">Clear</a>
+    </form>
+
+    {% if categories %}
+        <div class="pk-products-table-wrapper">
+            <table class="pk-products-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Parent</th>
+                        <th>Products</th>
+                        <th>Show on Home</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>
+                                {{ category.name }}
+                                {% if category.is_deleted %}<span class="pk-products-deleted">Deleted</span>{% endif %}
+                            </td>
+                            <td>{{ category.parent.name|default:"—" }}</td>
+                            <td>{{ category.product_count }}</td>
+                            <td>{% if category.show_on_home %}Yes{% else %}No{% endif %}</td>
+                            <td>{% if category.is_deleted %}Deleted{% else %}Active{% endif %}</td>
+                            <td>
+                                <a href="{% url 'dashboard:categories_edit' category.pk %}">Edit</a>
+                                {% if category.is_deleted %}
+                                    <form method="post" action="{% url 'dashboard:categories_restore' category.pk %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit">Restore</button>
+                                    </form>
+                                {% else %}
+                                    <form method="post" action="{% url 'dashboard:categories_delete' category.pk %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include "includes/pagination.html" with page_obj=page_obj %}
+    {% else %}
+        <p>No categories found.</p>
+    {% endif %}
+</div>
