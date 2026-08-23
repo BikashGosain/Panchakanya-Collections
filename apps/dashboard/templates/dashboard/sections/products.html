@@ -11,10 +11,47 @@
         </a>
     </div>
 
-    <form method="get" class="pk-products-search">
-        <input type="text" name="q" placeholder="Search by name or SKU..." value="{{ search_query }}">
-        <button type="submit">Search</button>
-    </form>
+<form method="get" class="pk-products-filters">
+    <input type="text" name="q" placeholder="Search by name or SKU..." value="{{ search_query }}">
+
+    <select name="category">
+        <option value="">All Categories</option>
+        {% for category in all_categories %}
+            <option value="{{ category.slug }}" {% if category.slug == category_filter %}selected{% endif %}>
+                {{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <select name="status">
+        <option value="">All Statuses</option>
+        {% for value, label in status_choices %}
+            <option value="{{ value }}" {% if value == status_filter %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="metal">
+        <option value="">All Metals</option>
+        {% for value, label in metal_choices %}
+            <option value="{{ value }}" {% if value == metal_filter %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="featured">
+        <option value="">Featured: Any</option>
+        <option value="yes" {% if featured_filter == "yes" %}selected{% endif %}>Featured Only</option>
+        <option value="no" {% if featured_filter == "no" %}selected{% endif %}>Not Featured</option>
+    </select>
+
+    <select name="deleted">
+        <option value="">All Products</option>
+        <option value="active" {% if deleted_filter == "active" %}selected{% endif %}>Active Only</option>
+        <option value="deleted" {% if deleted_filter == "deleted" %}selected{% endif %}>Deleted Only</option>
+    </select>
+
+    <button type="submit">Filter/Search</button>
+    <a href="{% url 'dashboard:products' %}">Clear</a>
+</form>
 
     {% if products %}
 
@@ -111,7 +148,7 @@
             </table>
         </div>
 
-        {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query %}
+        {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query extra_params=request.GET.urlencode %}
 
     {% else %}
 

@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 from apps.cart.models import Cart, CartItem
 from apps.products.forms import ProductForm, ProductImageFormSet
-from apps.products.models import Product, ProductImage
+from apps.products.models import Category, Product, ProductImage
 from apps.wishlists.models import Wishlist
 
 
@@ -186,6 +186,30 @@ def dashboard_products(request):
             sku__icontains=search_query
         )
 
+    category_filter = request.GET.get("category", "")
+    if category_filter:
+        products = products.filter(category__slug=category_filter)
+
+    status_filter = request.GET.get("status", "")
+    if status_filter:
+        products = products.filter(status=status_filter)
+
+    metal_filter = request.GET.get("metal", "")
+    if metal_filter:
+        products = products.filter(metal_type=metal_filter)
+
+    featured_filter = request.GET.get("featured", "")
+    if featured_filter == "yes":
+        products = products.filter(featured=True)
+    elif featured_filter == "no":
+        products = products.filter(featured=False)
+
+    deleted_filter = request.GET.get("deleted", "")
+    if deleted_filter == "active":
+        products = products.filter(is_deleted=False)
+    elif deleted_filter == "deleted":
+        products = products.filter(is_deleted=True)
+
     paginator = Paginator(products, 10)
     page_number = request.GET.get("page")
     products_page = paginator.get_page(page_number)
@@ -198,6 +222,14 @@ def dashboard_products(request):
             "products": products_page,
             "page_obj": products_page,
             "search_query": search_query,
+            "category_filter": category_filter,
+            "status_filter": status_filter,
+            "metal_filter": metal_filter,
+            "featured_filter": featured_filter,
+            "deleted_filter": deleted_filter,
+            "all_categories": Category.objects.all().order_by("name"),
+            "metal_choices": Product.METAL_CHOICES,
+            "status_choices": Product.STATUS_CHOICES,
         },
     )
 
