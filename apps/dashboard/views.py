@@ -558,12 +558,203 @@ def dashboard_recycle_bin(request):
         .order_by("-deleted_at")
     )
 
+    # Products and categories have completely independent pagination.
+    product_paginator = Paginator(deleted_products, 2)
+    category_paginator = Paginator(deleted_categories, 2)
+
+    product_page_number = request.GET.get("product_page", 1)
+    category_page_number = request.GET.get("category_page", 1)
+
+    products_page = product_paginator.get_page(product_page_number)
+    categories_page = category_paginator.get_page(category_page_number)
+
     return render(
         request,
         "dashboard/dashboard.html",
         {
             "dashboard_section": "recycle_bin",
-            "deleted_products": deleted_products,
-            "deleted_categories": deleted_categories,
+            "deleted_products": products_page,
+            "deleted_categories": categories_page,
+            "product_page": products_page,
+            "category_page": categories_page,
         },
     )
+
+
+@login_required
+@require_POST
+def dashboard_bulk_restore_products(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    product_ids = request.POST.getlist("product_ids")
+
+    products = Product.all_objects.filter(
+        id__in=product_ids,
+        is_deleted=True,
+    )
+
+    restored_count = products.update(
+        is_deleted=False,
+        deleted_at=None,
+    )
+
+    messages.success(
+        request,
+        f"{restored_count} product(s) restored successfully.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
+
+
+@login_required
+@require_POST
+def dashboard_bulk_restore_categories(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    category_ids = request.POST.getlist("category_ids")
+
+    categories = Category.all_objects.filter(
+        id__in=category_ids,
+        is_deleted=True,
+    )
+
+    restored_count = categories.update(
+        is_deleted=False,
+        deleted_at=None,
+    )
+
+    messages.success(
+        request,
+        f"{restored_count} categor(ies) restored successfully.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
+
+
+@login_required
+@require_POST
+def permanently_delete_product(request, product_id):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    product = get_object_or_404(
+        Product.all_objects,
+        id=product_id,
+        is_deleted=True,
+    )
+
+    product_name = product.name
+    product.delete()
+
+    messages.success(
+        request,
+        f"{product_name} permanently deleted.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
+
+
+@login_required
+@require_POST
+def permanently_delete_category(request, category_id):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    category = get_object_or_404(
+        Category.all_objects,
+        id=category_id,
+        is_deleted=True,
+    )
+
+    category_name = category.name
+
+    category.delete()
+
+    messages.success(
+        request,
+        f"{category_name} permanently deleted.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
+
+
+@login_required
+@require_POST
+def bulk_permanently_delete_products(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    product_ids = request.POST.getlist("product_ids")
+
+    products = Product.all_objects.filter(
+        id__in=product_ids,
+        is_deleted=True,
+    )
+
+    deleted_count = products.count()
+
+    products.delete()
+
+    messages.success(
+        request,
+        f"{deleted_count} product(s) permanently deleted.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
+
+
+@login_required
+@require_POST
+def bulk_permanently_delete_categories(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    category_ids = request.POST.getlist("category_ids")
+
+    categories = Category.all_objects.filter(
+        id__in=category_ids,
+        is_deleted=True,
+    )
+
+    deleted_count = categories.count()
+
+    categories.delete()
+
+    messages.success(
+        request,
+        f"{deleted_count} categor(ies) permanently deleted.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")

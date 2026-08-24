@@ -64,4 +64,34 @@ urlpatterns = [
         views.dashboard_restore_category,
         name="restore_category",
     ),
+    path(
+        "recycle-bin/products/restore/",
+        views.dashboard_bulk_restore_products,
+        name="bulk_restore_products",
+    ),
+    path(
+        "recycle-bin/categories/restore/",
+        views.dashboard_bulk_restore_categories,
+        name="bulk_restore_categories",
+    ),
+    path(
+        "recycle-bin/products/<int:product_id>/delete/",
+        views.permanently_delete_product,
+        name="permanently_delete_product",
+    ),
+    path(
+        "recycle-bin/categories/<int:category_id>/delete/",
+        views.permanently_delete_category,
+        name="permanently_delete_category",
+    ),
+    path(
+        "recycle-bin/products/delete/",
+        views.bulk_permanently_delete_products,
+        name="bulk_permanently_delete_products",
+    ),
+    path(
+        "recycle-bin/categories/delete/",
+        views.bulk_permanently_delete_categories,
+        name="bulk_permanently_delete_categories",
+    ),
 ]
