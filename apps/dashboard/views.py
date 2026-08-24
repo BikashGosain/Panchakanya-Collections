@@ -559,8 +559,8 @@ def dashboard_recycle_bin(request):
     )
 
     # Products and categories have completely independent pagination.
-    product_paginator = Paginator(deleted_products, 2)
-    category_paginator = Paginator(deleted_categories, 2)
+    product_paginator = Paginator(deleted_products, 10)
+    category_paginator = Paginator(deleted_categories, 10)
 
     product_page_number = request.GET.get("product_page", 1)
     category_page_number = request.GET.get("category_page", 1)
