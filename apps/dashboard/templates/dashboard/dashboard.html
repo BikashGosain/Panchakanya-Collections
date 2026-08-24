@@ -41,6 +41,11 @@
             <i data-lucide="shopping-cart"></i>
             Cart
         </a>
+        <a href="{% url 'dashboard:reviews' %}"
+   class="pk-db-nav-item {% if dashboard_section == 'reviews' %}pk-db-active{% endif %}">
+    <i data-lucide="star"></i>
+    Reviews
+</a>
     </div>
 
     {% if user.is_staff %}
@@ -75,6 +80,8 @@
 
         {% elif dashboard_section == "cart" %}
             {% include "dashboard/sections/cart.html" %}
+        {% elif dashboard_section == "reviews" %}
+            {% include "dashboard/sections/reviews.html" %}
             <!-- for admin/staff -->
         {% elif dashboard_section == "products" %}
             {% include "dashboard/sections/products.html" %}

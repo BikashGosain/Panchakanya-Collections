@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.db.models import Avg, Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -119,24 +120,29 @@ def submit_review(request, product_id):
     )
 
 
+from django.shortcuts import redirect
+
+
 @login_required
 @require_POST
 def delete_review(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
 
-    review = get_object_or_404(
-        Review,
-        pk=review_id,
-        user=request.user,
-    )
+    is_owner = review.user_id == request.user.id
+    if not is_owner and not request.user.is_staff:
+        raise PermissionDenied
 
     review.is_deleted = True
     review.save()
 
-    return JsonResponse(
-        {
-            "success": True,
-        }
-    )
+    is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
+    if is_ajax:
+        return JsonResponse({"success": True})
+
+    next_url = request.POST.get("next")
+    if next_url:
+        return redirect(next_url)
+    return redirect("dashboard:reviews")
 
 
 @login_required

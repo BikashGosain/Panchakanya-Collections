@@ -2,13 +2,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.db.models import Prefetch
+from django.db.models import Count, Prefetch, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.cart.models import Cart, CartItem
 from apps.products.forms import CategoryForm, ProductForm, ProductImageFormSet
 from apps.products.models import Category, Product, ProductImage
+from apps.reviews.models import Review
 from apps.wishlists.models import Wishlist
 
 
@@ -161,6 +162,75 @@ def dashboard_update_cart(request, product_id):
         )
 
     return redirect("dashboard:cart")
+
+
+@login_required
+def reviews(request):
+    search_query = request.GET.get("q", "").strip()
+
+    # -------------------------
+    # My Reviews
+    # -------------------------
+    my_reviews_qs = (
+        Review.objects.filter(
+            user=request.user,
+            is_deleted=False,
+        )
+        .select_related("product")
+        .annotate(like_count=Count("likes"))
+        .order_by("-created_at")
+    )
+
+    if search_query:
+        my_reviews_qs = my_reviews_qs.filter(
+            Q(product__name__icontains=search_query)
+            | Q(comment__icontains=search_query)
+        )
+
+    my_reviews_paginator = Paginator(my_reviews_qs, 5)
+
+    my_reviews_page = request.GET.get("my_page", 1)
+
+    my_reviews = my_reviews_paginator.get_page(my_reviews_page)
+
+    # -------------------------
+    # All Reviews for staff
+    # -------------------------
+    all_reviews = None
+
+    if request.user.is_staff:
+        all_reviews_qs = (
+            Review.objects.filter(is_deleted=False)
+            .select_related("user", "product")
+            .annotate(like_count=Count("likes"))
+            .order_by("-created_at")
+        )
+
+        if search_query:
+            all_reviews_qs = all_reviews_qs.filter(
+                Q(product__name__icontains=search_query)
+                | Q(comment__icontains=search_query)
+                | Q(user__username__icontains=search_query)
+                | Q(user__first_name__icontains=search_query)
+                | Q(user__last_name__icontains=search_query)
+            )
+
+        all_reviews_paginator = Paginator(all_reviews_qs, 10)
+
+        all_reviews_page = request.GET.get("all_page", 1)
+
+        all_reviews = all_reviews_paginator.get_page(all_reviews_page)
+
+    return render(
+        request,
+        "dashboard/dashboard.html",
+        {
+            "dashboard_section": "reviews",
+            "my_reviews": my_reviews,
+            "all_reviews": all_reviews,
+            "search_query": search_query,
+        },
+    )
 
 
 @login_required
@@ -413,6 +483,17 @@ def dashboard_delete_category(request, category_id):
         raise PermissionDenied
 
     category = get_object_or_404(Category.all_objects, pk=category_id)
+
+    total_product_count = category.product_count
+    if total_product_count > 0:
+        messages.error(
+            request,
+            f"Cannot delete {category.name} — it (or its subcategories) still has "
+            f"{total_product_count} active product{'s' if total_product_count != 1 else ''}. "
+            "Move or delete those products first.",
+        )
+        return redirect("dashboard:categories")
+
     category.soft_delete()
     messages.success(request, f"{category.name} was deleted.")
     return redirect("dashboard:categories")

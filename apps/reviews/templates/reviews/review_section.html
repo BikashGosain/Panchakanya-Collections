@@ -261,7 +261,12 @@
                     </p>
 
                 {% endif %}
-
+        <form method="post" action="{% url 'reviews:toggle_like' user_review.pk %}" class="mrv-like-form">
+            {% csrf_token %}
+            <button type="submit" class="mrv-like-btn {% if user_review.pk in liked_review_ids %}is-liked{% endif %}">
+                ♥ <span class="mrv-like-count">{{ user_review.likes.count }}</span>
+            </button>
+        </form>
             </div>
 
         {% endif %}
