@@ -37,11 +37,6 @@ urlpatterns = [
         views.dashboard_delete_product,
         name="products_delete",
     ),
-    path(
-        "products/restore/<int:product_id>/",
-        views.dashboard_restore_product,
-        name="products_restore",
-    ),
     path("categories/", views.dashboard_categories, name="categories"),
     path("categories/add/", views.dashboard_add_category, name="categories_add"),
     path(
@@ -55,8 +50,18 @@ urlpatterns = [
         name="categories_delete",
     ),
     path(
-        "categories/restore/<int:category_id>/",
+        "recycle-bin/",
+        views.dashboard_recycle_bin,
+        name="recycle_bin",
+    ),
+    path(
+        "recycle-bin/products/<int:product_id>/restore/",
+        views.dashboard_restore_product,
+        name="restore_product",
+    ),
+    path(
+        "recycle-bin/categories/<int:category_id>/restore/",
         views.dashboard_restore_category,
-        name="categories_restore",
+        name="restore_category",
     ),
 ]

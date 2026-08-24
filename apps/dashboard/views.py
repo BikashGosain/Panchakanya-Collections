@@ -378,10 +378,25 @@ def dashboard_restore_product(request, product_id):
     if not request.user.is_staff:
         raise PermissionDenied
 
-    product = get_object_or_404(Product.all_objects, pk=product_id)
+    product = get_object_or_404(
+        Product.all_objects,
+        id=product_id,
+        is_deleted=True,
+    )
+
     product.restore()
-    messages.success(request, f"{product.name} was restored.")
-    return redirect("dashboard:products")
+
+    messages.success(
+        request,
+        f"{product.name} restored successfully.",
+    )
+
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
 
 
 @login_required
@@ -505,7 +520,50 @@ def dashboard_restore_category(request, category_id):
     if not request.user.is_staff:
         raise PermissionDenied
 
-    category = get_object_or_404(Category.all_objects, pk=category_id)
+    category = get_object_or_404(
+        Category.all_objects,
+        id=category_id,
+        is_deleted=True,
+    )
+
     category.restore()
-    messages.success(request, f"{category.name} was restored.")
-    return redirect("dashboard:categories")
+
+    messages.success(
+        request,
+        f"{category.name} was restored.",
+    )
+    next_url = request.POST.get("next")
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect("dashboard:recycle_bin")
+
+
+@login_required
+def dashboard_recycle_bin(request):
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    deleted_products = (
+        Product.all_objects.filter(is_deleted=True)
+        .select_related("category")
+        .prefetch_related("images")
+        .order_by("-deleted_at")
+    )
+
+    deleted_categories = (
+        Category.all_objects.filter(is_deleted=True)
+        .select_related("parent")
+        .order_by("-deleted_at")
+    )
+
+    return render(
+        request,
+        "dashboard/dashboard.html",
+        {
+            "dashboard_section": "recycle_bin",
+            "deleted_products": deleted_products,
+            "deleted_categories": deleted_categories,
+        },
+    )

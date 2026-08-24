@@ -6,6 +6,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 <link rel="stylesheet" href="{% static 'css/dashboard-profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard-recycle-bin.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -63,6 +64,13 @@
     <i data-lucide="layers"></i>
     Categories
 </a>
+<a
+    href="{% url 'dashboard:recycle_bin' %}"
+    class="pk-db-nav-item {% if dashboard_section == 'recycle_bin' %}pk-db-active{% endif %}"
+>
+    <i data-lucide="trash-2"></i>
+    Recycle Bin
+</a>
             <!-- Users -->
         </div>
     {% endif %}
@@ -96,6 +104,8 @@
             {% include "dashboard/sections/categories_add.html" %}
         {% elif dashboard_section == "categories_edit" %}
             {% include "dashboard/sections/categories_edit.html" %}
+        {% elif dashboard_section == "recycle_bin" %}
+            {% include "dashboard/sections/recycle_bin.html" %}
 
         {% else %}
             <h2 class="pk-db-card-title">Dashboard</h2>

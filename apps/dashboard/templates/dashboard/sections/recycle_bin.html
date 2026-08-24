@@ -1,0 +1,181 @@
+<div class="pk-recycle-bin">
+
+    <div class="pk-recycle-bin-header">
+        <div>
+            <h2 class="pk-db-card-title">Recycle Bin</h2>
+            <p>Restore products and categories that have been deleted.</p>
+        </div>
+    </div>
+
+
+    <!-- Deleted Products -->
+
+    <section class="pk-recycle-section">
+
+        <div class="pk-recycle-section-header">
+            <h3>Deleted Products</h3>
+            <span>{{ deleted_products|length }}</span>
+        </div>
+
+        {% if deleted_products %}
+
+            <div class="pk-recycle-list">
+
+                {% for product in deleted_products %}
+
+                    <div class="pk-recycle-item">
+
+                        <div class="pk-recycle-item-info">
+
+                            {% with primary_image=product.images.all|first %}
+
+                                {% if primary_image %}
+                                    <img
+                                        src="{{ primary_image.image.url }}"
+                                        alt="{{ product.name }}"
+                                        class="pk-recycle-image"
+                                    >
+                                {% else %}
+                                    <div class="pk-recycle-image-placeholder">
+                                        No image
+                                    </div>
+                                {% endif %}
+
+                            {% endwith %}
+
+                            <div>
+                                <h4>{{ product.name }}</h4>
+
+                                <p>
+                                    SKU: {{ product.sku }}
+                                </p>
+
+                                <p>
+                                    Category: {{ product.category.name }}
+                                </p>
+
+                                {% if product.deleted_at %}
+                                    <small>
+                                        Deleted:
+                                        {{ product.deleted_at|date:"M d, Y H:i" }}
+                                    </small>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <form
+                            method="post"
+                            action="{% url 'dashboard:restore_product' product.id %}"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="pk-recycle-restore-button"
+                                onclick="return confirm('Restore this product?');"
+                            >
+                                Restore
+                            </button>
+                        </form>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="pk-recycle-empty">
+                No deleted products.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- Deleted Categories -->
+
+    <section class="pk-recycle-section">
+
+        <div class="pk-recycle-section-header">
+            <h3>Deleted Categories</h3>
+            <span>{{ deleted_categories|length }}</span>
+        </div>
+
+        {% if deleted_categories %}
+
+            <div class="pk-recycle-list">
+
+                {% for category in deleted_categories %}
+
+                    <div class="pk-recycle-item">
+
+                        <div class="pk-recycle-item-info">
+
+                            {% if category.image %}
+                                <img
+                                    src="{{ category.image.url }}"
+                                    alt="{{ category.name }}"
+                                    class="pk-recycle-image"
+                                >
+                            {% else %}
+                                <div class="pk-recycle-image-placeholder">
+                                    No image
+                                </div>
+                            {% endif %}
+
+                            <div>
+                                <h4>{{ category.name }}</h4>
+
+                                {% if category.parent %}
+                                    <p>
+                                        Parent:
+                                        {{ category.parent.name }}
+                                    </p>
+                                {% endif %}
+
+                                {% if category.deleted_at %}
+                                    <small>
+                                        Deleted:
+                                        {{ category.deleted_at|date:"M d, Y H:i" }}
+                                    </small>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <form
+                            method="post"
+                            action="{% url 'dashboard:restore_category' category.id %}"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="pk-recycle-restore-button"
+                                onclick="return confirm('Restore this category?');"
+                            >
+                                Restore
+                            </button>
+                        </form>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="pk-recycle-empty">
+                No deleted categories.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+</div>
