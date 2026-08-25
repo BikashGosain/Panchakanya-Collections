@@ -52,11 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (navBar) {
-        const scrollThreshold = 12;
         let lastScrollY = window.scrollY;
-        let downwardDistance = 0;
-        let upwardDistance = 0;
-        let animationFrame = null;
 
         const updateNavigationVisibility = () => {
             const currentScrollY = Math.max(window.scrollY, 0);
@@ -64,40 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!desktopNavigation.matches || currentScrollY <= 80) {
                 navBar.classList.remove('pk-hdr-nav-bar--hidden');
-                downwardDistance = 0;
-                upwardDistance = 0;
             } else if (scrollDifference > 0) {
-                downwardDistance += scrollDifference;
-                upwardDistance = 0;
-
-                if (downwardDistance >= scrollThreshold) {
-                    navBar.classList.add('pk-hdr-nav-bar--hidden');
-                }
+                navBar.classList.add('pk-hdr-nav-bar--hidden');
             } else if (scrollDifference < 0) {
-                upwardDistance += Math.abs(scrollDifference);
-                downwardDistance = 0;
-
-                if (upwardDistance >= scrollThreshold) {
-                    navBar.classList.remove('pk-hdr-nav-bar--hidden');
-                }
+                navBar.classList.remove('pk-hdr-nav-bar--hidden');
             }
 
             lastScrollY = currentScrollY;
-            animationFrame = null;
         };
 
-        window.addEventListener('scroll', () => {
-            if (animationFrame === null) {
-                animationFrame = window.requestAnimationFrame(updateNavigationVisibility);
-            }
-        }, { passive: true });
+        window.addEventListener('scroll', updateNavigationVisibility, { passive: true });
 
         const resetNavigationOnViewportChange = () => {
             navBar.classList.remove('pk-hdr-nav-bar--hidden');
             setMobileMenu(false);
             lastScrollY = window.scrollY;
-            downwardDistance = 0;
-            upwardDistance = 0;
         };
 
         if (desktopNavigation.addEventListener) {

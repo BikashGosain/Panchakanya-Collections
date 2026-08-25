@@ -16,6 +16,10 @@
     --pk-hdr-sans: var(--pk-font-sans, system-ui, sans-serif);
     --pk-hdr-transition: 180ms ease-in-out;
     --pk-hdr-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    flex: 0 0 auto;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .pk-hdr-component *,
@@ -44,9 +48,8 @@
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--pk-hdr-border);
     box-shadow: var(--pk-hdr-shadow);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    position: relative;
+    z-index: 0;
 }
 
 .pk-hdr-component .pk-hdr-container {
