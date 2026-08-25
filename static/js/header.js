@@ -1,29 +1,60 @@
-   document.addEventListener('DOMContentLoaded', function() {
-        // Mobile menu toggle
-        const toggleBtn = document.getElementById('pk-js-mobile-toggle');
-        const navBar = document.getElementById('pk-js-nav-bar');
+   (function () {
+       "use strict";
 
-        if (toggleBtn && navBar) {
-            toggleBtn.addEventListener('click', function() {
-                navBar.classList.toggle('pk-nav-mobile-open');
-            });
-        }
+       document.addEventListener("DOMContentLoaded", function () {
+           const headerRoot = document.getElementById("pk-js-header-root");
+           const toggleBtn = document.getElementById("pk-js-mobile-toggle");
+           const navBar = document.getElementById("pk-js-nav-bar");
+           const userBtn = document.getElementById("pk-js-user-btn");
+           const userDropdown = document.getElementById("pk-js-user-dropdown");
+           let lastScrollY = window.scrollY;
+           const hideThreshold = 40;
 
-        // Account dropdown toggle for logged-in users
-        const userBtn = document.getElementById('pk-js-user-btn');
-        const userDropdown = document.getElementById('pk-js-user-dropdown');
+           if (toggleBtn && navBar) {
+               toggleBtn.addEventListener("click", function () {
+                   const isOpen = navBar.classList.toggle("pk-nav-mobile-open");
+                   toggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+               });
+           }
 
-        if (userBtn && userDropdown) {
-            userBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                userDropdown.classList.toggle('pk-dropdown-open');
-            });
+           if (userBtn && userDropdown) {
+               userBtn.addEventListener("click", function (event) {
+                   event.stopPropagation();
+                   userDropdown.classList.toggle("pk-dropdown-open");
+               });
 
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!userDropdown.contains(e.target) && !userBtn.contains(e.target)) {
-                    userDropdown.classList.remove('pk-dropdown-open');
-                }
-            });
-        }
-    });
+               document.addEventListener("click", function (event) {
+                   if (!userDropdown.contains(event.target) && !userBtn.contains(event.target)) {
+                       userDropdown.classList.remove("pk-dropdown-open");
+                   }
+               });
+           }
+
+           const syncHeaderNavVisibility = function () {
+               if (!headerRoot) {
+                   return;
+               }
+
+               if (window.innerWidth <= 991) {
+                   headerRoot.classList.remove("pk-hdr-nav-hidden");
+                   lastScrollY = window.scrollY;
+                   return;
+               }
+
+               const currentScrollY = window.scrollY;
+               const isScrollingDown = currentScrollY > lastScrollY;
+
+               if (isScrollingDown && currentScrollY > hideThreshold) {
+                   headerRoot.classList.add("pk-hdr-nav-hidden");
+               } else {
+                   headerRoot.classList.remove("pk-hdr-nav-hidden");
+               }
+
+               lastScrollY = currentScrollY;
+           };
+
+           window.addEventListener("scroll", syncHeaderNavVisibility, { passive: true });
+           window.addEventListener("resize", syncHeaderNavVisibility);
+           syncHeaderNavVisibility();
+       });
+   })();

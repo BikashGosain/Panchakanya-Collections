@@ -3,19 +3,31 @@
     Complimentary Insured Delivery Across Nepal on Orders Over NPR 50,000
 </div>
 
-<header class="pk-hdr-sticky-wrapper">
-    <div class="pk-container">
+<header class="pk-hdr-sticky-wrapper pk-hdr-root" id="pk-js-header-root">
+    <div class="pk-hdr-container">
         <div class="pk-hdr-main-row">
 
-            <button type="button" class="pk-hdr-mobile-toggle" id="pk-js-mobile-toggle" aria-label="Toggle Navigation">
-                <i data-lucide="menu"></i>
+            <button type="button" class="pk-hdr-mobile-toggle" id="pk-js-mobile-toggle" aria-label="Toggle Navigation" aria-controls="pk-js-nav-bar" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
             </button>
 
             <div class="pk-hdr-search-col">
-                <div class="pk-hdr-search-box">
-                    <input type="text" placeholder="Search jewelry..." class="pk-hdr-search-input" id="pk-js-search-input">
-                    <i data-lucide="search" class="pk-hdr-search-icon"></i>
-                </div>
+                <form class="pk-hdr-search-form" action="{% url 'products:list' %}" method="get" role="search">
+                    <div class="pk-hdr-search-box">
+                        <span class="pk-hdr-search-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2" />
+                                <path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </span>
+                        <input type="text" name="q" placeholder="Search jewelry..." class="pk-hdr-search-input" id="pk-js-search-input" value="{{ request.GET.q|default:'' }}">
+                        <button type="submit" class="pk-hdr-search-submit" aria-label="Search">
+                            Search
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <a href="{% url 'core:home' %}" class="pk-hdr-brand-col">
@@ -28,7 +40,11 @@
                 <div class="pk-hdr-user-dropdown-wrapper">
                     {% if user.is_authenticated %}
                         <button type="button" class="pk-hdr-action-btn" id="pk-js-user-btn" title="Account ({{ user.username }})">
-                            <i data-lucide="user-check"></i>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M14 19a8 8 0 0 0-10 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                                <path d="m16 11 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                         </button>
 
                         <!-- Dropdown Menu for Logged In User -->
@@ -38,44 +54,73 @@
                             </div>
                             <hr class="pk-dropdown-divider">
                             <a href="{% url 'dashboard:home' %}" class="pk-dropdown-item">
-                                <i data-lucide="layout-dashboard"></i> Dashboard
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3" y="3" width="8" height="8" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <rect x="13" y="3" width="8" height="5" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <rect x="13" y="10" width="8" height="11" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <rect x="3" y="13" width="8" height="8" fill="none" stroke="currentColor" stroke-width="2" />
+                                </svg> Dashboard
                             </a>
                             <a href="{% url 'dashboard:profile' %}" class="pk-dropdown-item">
-                                <i data-lucide="user"></i> Profile
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <path d="M5 20a7 7 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg> Profile
                             </a>
                             <a href="{% url 'dashboard:wishlist' %}" class="pk-dropdown-item">
-                                <i data-lucide="heart"></i> Wishlist
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 21s-7-4.35-9-8.35C1.7 10.2 3.1 6.5 6.4 5.5c2.3-.7 4.4.35 5.6 2.1 1.2-1.75 3.3-2.8 5.6-2.1 3.3 1 4.7 4.7 3.4 7.15C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                </svg> Wishlist
                             </a>
-                            <a href="{% url 'dashboard:cart' %}" class="pk-dropdown-item
-">
-                                <i data-lucide="shopping-cart"></i> Cart
+                            <a href="{% url 'dashboard:cart' %}" class="pk-dropdown-item">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="9" cy="20" r="1.8" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <circle cx="18" cy="20" r="1.8" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg> Cart
                             </a>
                             <a href="#" class="pk-dropdown-item">
-                                <i data-lucide="package"></i> My Orders
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M3 7 12 3l9 4-9 4-9-4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                    <path d="M3 7v10l9 4 9-4V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                    <path d="M12 11v10" fill="none" stroke="currentColor" stroke-width="2" />
+                                </svg> My Orders
                             </a>
                             <hr class="pk-dropdown-divider">
                             <form action="{% url 'accounts:logout' %}" method="post" class="pk-logout-form">
                                 {% csrf_token %}
                                 <button type="submit" class="pk-dropdown-item pk-logout-btn">
-                                    <i data-lucide="log-out"></i> Log Out
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                        <path d="m16 17 5-5-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M21 12H9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    </svg> Log Out
                                 </button>
                             </form>
                         </div>
                     {% else %}
                         <a href="{% url 'accounts:login' %}" class="pk-hdr-action-btn" title="Sign In / Register">
-                            <i data-lucide="user"></i><small>Sign Up</small>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                                <path d="M5 20a7 7 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg><small>Sign Up</small>
                         </a>
                     {% endif %}
                 </div>
 
                 <!-- Wishlist -->
                 <a href="#" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist">
-                    <i data-lucide="heart"></i>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 21s-7-4.35-9-8.35C1.7 10.2 3.1 6.5 6.4 5.5c2.3-.7 4.4.35 5.6 2.1 1.2-1.75 3.3-2.8 5.6-2.1 3.3 1 4.7 4.7 3.4 7.15C19 16.65 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                    </svg>
                 </a>
 
                 <!-- Shopping Bag -->
                 <a href="#" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag">
-                    <i data-lucide="shopping-bag"></i>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 7h12l-1 13H7L6 7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        <path d="M9 7a3 3 0 1 1 6 0" fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
                     <span class="pk-badge pk-hdr-cart-badge" id="pk-js-cart-count">2</span>
                 </a>
             </div>
@@ -83,14 +128,9 @@
         </div>
 
         <nav class="pk-nav-bar" id="pk-js-nav-bar">
-            <a href="{% url 'core:home' %}" class="pk-nav-link pk-active">Home</a>
-
-
-            <a href="{% url 'products:category_overview' %}" class="pk-nav-link pk-active">Categories</a>
-            <a href="{% url 'products:list' %}" class="pk-nav-link pk-active">Collections</a>
-
-
-
+            <a href="{% url 'core:home' %}" class="pk-nav-link{% if request.resolver_match and request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'home' %} pk-active{% endif %}">Home</a>
+            <a href="{% url 'products:category_overview' %}" class="pk-nav-link{% if request.resolver_match and request.resolver_match.namespace == 'products' %}{% if request.resolver_match.url_name == 'category_overview' or request.resolver_match.url_name == 'category' %} pk-active{% endif %}{% endif %}">Categories</a>
+            <a href="{% url 'products:list' %}" class="pk-nav-link{% if request.resolver_match and request.resolver_match.namespace == 'products' %}{% if request.resolver_match.url_name == 'list' or request.resolver_match.url_name == 'detail' %} pk-active{% endif %}{% endif %}">Collections</a>
             <a href="#" class="pk-nav-link">Bridal Sets</a>
             <a href="#" class="pk-nav-link">Necklaces & Pendants</a>
             <a href="#" class="pk-nav-link">Rings</a>
