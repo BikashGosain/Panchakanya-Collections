@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.shortcuts import get_object_or_404, render
 
 from apps.wishlists.models import Wishlist
@@ -73,80 +73,237 @@ def apply_common_filters(products, request):
 
 
 def product_list_view(request):
+    """
+    Product listing page.
+
+    Category behavior:
+    - Selecting a parent category includes all descendant categories.
+    - Selecting a child category includes that child and its descendants.
+    - Only the selected category path is expanded.
+    - Manually opening a parent does not automatically open all children.
+    """
+
+    # ==============================================================
+    # GET PARAMETERS
+    # ==============================================================
+
+    search_query = request.GET.get("q", "").strip()
+
+    selected_category = request.GET.get(
+        "category",
+        "",
+    ).strip()
+
+    selected_metal = request.GET.get(
+        "metal",
+        "",
+    ).strip()
+
+    min_price = request.GET.get(
+        "min_price",
+        "",
+    ).strip()
+
+    max_price = request.GET.get(
+        "max_price",
+        "",
+    ).strip()
+
+    # ==============================================================
+    # BASE PRODUCT QUERY
+    # ==============================================================
+
     products = (
-        Product.objects.filter(status="active")
-        .select_related("category")
+        Product.objects.filter(
+            status="active",
+        )
+        .select_related(
+            "category",
+        )
         .prefetch_related(
             Prefetch(
                 "images",
-                queryset=ProductImage.objects.filter(is_primary=True),
-                to_attr="cover_images",
+                queryset=ProductImage.objects.filter(
+                    is_primary=True,
+                ),
+                to_attr="primary_images",
             )
+        )
+        .order_by(
+            "-created_at",
         )
     )
 
-    category_slug = request.GET.get("category", "")
-    selected_category = None
+    # ==============================================================
+    # SEARCH
+    # ==============================================================
 
-    # -----------------------------------------
-    # CATEGORY FILTER
-    # -----------------------------------------
+    if search_query:
+        products = products.filter(
+            Q(name__icontains=search_query)
+            | Q(description__icontains=search_query)
+            | Q(sku__icontains=search_query)
+        )
 
-    if category_slug:
-        selected_category = get_object_or_404(Category, slug=category_slug)
-        category_tree = get_category_and_descendants(selected_category)
-        products = products.filter(category__in=category_tree)
+    # ==============================================================
+    # CATEGORY
+    # ==============================================================
 
-    # -----------------------------------------
-    # SHARED FILTERS (search, price, metal)
-    # -----------------------------------------
+    selected_category_obj = None
 
-    products, filter_context = apply_common_filters(products, request)
+    selected_category_ids = set()
 
-    # -----------------------------------------
+    descendant_category_ids = set()
+
+    if selected_category:
+        selected_category_obj = Category.objects.filter(
+            slug=selected_category,
+        ).first()
+
+    if selected_category_obj:
+        # ==========================================================
+        # 1. FIND THE SELECTED CATEGORY + ALL PARENTS
+        #
+        # Used ONLY for keeping the category tree open.
+        # ==========================================================
+
+        current_category = selected_category_obj
+
+        while current_category:
+            selected_category_ids.add(
+                current_category.id,
+            )
+
+            current_category = current_category.parent
+
+        # ==========================================================
+        # 2. FIND SELECTED CATEGORY + ALL DESCENDANTS
+        #
+        # Used for PRODUCT FILTERING.
+        # ==========================================================
+
+        categories_to_check = [
+            selected_category_obj,
+        ]
+
+        while categories_to_check:
+            current_category = categories_to_check.pop()
+
+            descendant_category_ids.add(
+                current_category.id,
+            )
+
+            children = list(current_category.subcategories.all())
+
+            categories_to_check.extend(children)
+
+        # ==========================================================
+        # FILTER PRODUCTS
+        # ==========================================================
+
+        products = products.filter(
+            category_id__in=descendant_category_ids,
+        )
+
+    # ==============================================================
+    # METAL
+    # ==============================================================
+
+    if selected_metal:
+        products = products.filter(
+            metal_type=selected_metal,
+        )
+
+    # ==============================================================
+    # MIN PRICE
+    # ==============================================================
+
+    if min_price:
+        try:
+            products = products.filter(
+                price__gte=min_price,
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            pass
+
+    # ==============================================================
+    # MAX PRICE
+    # ==============================================================
+
+    if max_price:
+        try:
+            products = products.filter(
+                price__lte=max_price,
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            pass
+
+    # ==============================================================
     # ROOT CATEGORIES
-    # -----------------------------------------
+    # ==============================================================
 
     root_categories = (
-        Category.objects.filter(parent__isnull=True)
-        .prefetch_related("subcategories")
-        .order_by("name")
+        Category.objects.filter(
+            parent__isnull=True,
+        )
+        .prefetch_related(
+            "subcategories",
+        )
+        .order_by(
+            "name",
+        )
     )
 
-    # -----------------------------------------
-    # SELECTED CATEGORY ANCESTORS
-    # -----------------------------------------
-
-    selected_category_ancestors = []
-    if selected_category:
-        selected_category_ancestors = get_category_ancestors(selected_category)
-
-    expanded_category_slugs = [
-        category.slug for category in selected_category_ancestors
-    ]
-
-    # -----------------------------------------
+    # ==============================================================
     # PAGINATION
-    # -----------------------------------------
+    # ==============================================================
 
-    products = products.order_by("-created_at")
-    paginator = Paginator(products, PRODUCTS_PER_PAGE)
-    page_obj = paginator.get_page(request.GET.get("page"))
+    paginator = Paginator(
+        products,
+        12,
+    )
+
+    page_number = request.GET.get(
+        "page",
+    )
+
+    products_page = paginator.get_page(
+        page_number,
+    )
+
+    # ==============================================================
+    # CONTEXT
+    # ==============================================================
+
+    context = {
+        "products": products_page,
+        "root_categories": root_categories,
+        "selected_category": selected_category,
+        "selected_category_obj": (selected_category_obj),
+        # Category + all parents.
+        #
+        # This controls which branches are automatically
+        # expanded after selecting a category.
+        "selected_category_ids": (selected_category_ids),
+        "search_query": search_query,
+        "selected_metal": selected_metal,
+        "min_price": min_price,
+        "max_price": max_price,
+        "metal_choices": Product.METAL_CHOICES,
+    }
 
     return render(
         request,
         "products/product_list.html",
-        {
-            "products": page_obj,
-            "page_obj": page_obj,
-            "root_categories": root_categories,
-            "metal_choices": Product.METAL_CHOICES,
-            "selected_category": category_slug,
-            "selected_category_obj": selected_category,
-            "selected_category_ancestors": selected_category_ancestors,
-            "expanded_category_slugs": expanded_category_slugs,
-            **filter_context,
-        },
+        context,
     )
 
 

@@ -1,83 +1,675 @@
 {% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+
 
 {% block title %}
-        Panchakanya Collections
-    {% endblock %}
+
+    Panchakanya Collections
+
+{% endblock %}
+
 
 {% block content %}
 
-    <style>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-
-        body {
-            margin: 0;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background: #f8f8f8;
-
-            color: #222;
-        }
+/* ==========================================================================
+   PANCHAKANYA COLLECTIONS
+   PRODUCT LIST PAGE
+   Namespace:
+   pk-pl-
+   ========================================================================== */
 
 
-        a {
-            color: inherit;
-        }
+/* ==========================================================================
+   PAGE
+   ========================================================================== */
+
+.pk-pl-page {
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 30px;
+}
 
 
-        /* =========================================
-           PAGE
-           ========================================= */
+.pk-pl-page *,
+.pk-pl-page *::before,
+.pk-pl-page *::after {
 
-        .page-container {
+    box-sizing: border-box;
 
-            max-width: 1400px;
-
-            margin: 0 auto;
-
-            padding: 30px;
-        }
+}
 
 
-        .page-title {
+.pk-pl-page a {
 
-            margin: 0 0 30px;
+    color: inherit;
 
-            font-size: 30px;
-        }
-
-
-        /* =========================================
-           SHOP LAYOUT
-           ========================================= */
-
-        .shop-layout {
-
-            display: flex;
-
-            align-items: flex-start;
-
-            gap: 30px;
-        }
+}
 
 
-        /* =========================================
-           SIDEBAR
-           ========================================= */
+.pk-pl-page-title {
 
-        .sidebar {
+    margin: 0 0 30px;
+
+    color: #222;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+}
+
+
+/* ==========================================================================
+   SHOP LAYOUT
+   ========================================================================== */
+
+.pk-pl-shop-layout {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 30px;
+
+}
+
+
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+
+.pk-pl-sidebar {
+
     width: 280px;
+
+    min-width: 280px;
+
     flex-shrink: 0;
+
+    position: sticky;
+
+    position: -webkit-sticky;
+
+    top: 20px;
+
+    max-height: calc(100vh - 40px);
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    background: #fff;
+
+    border: 1px solid #e1e1e1;
+
+    border-radius: 10px;
+
+    scrollbar-width: thin;
+
+}
+
+
+.pk-pl-sidebar::-webkit-scrollbar {
+
+    width: 5px;
+
+}
+
+
+.pk-pl-sidebar::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+
+.pk-pl-sidebar::-webkit-scrollbar-thumb {
+
+    background: #ccc;
+
+    border-radius: 20px;
+
+}
+
+
+.pk-pl-sidebar::-webkit-scrollbar-thumb:hover {
+
+    background: #aaa;
+
+}
+
+
+/* ==========================================================================
+   FILTER SECTION
+   ========================================================================== */
+
+.pk-pl-filter-section {
+
+    margin-bottom: 30px;
+
+}
+
+
+.pk-pl-filter-section:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.pk-pl-filter-title {
+
+    margin-bottom: 15px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #eee;
+
+    color: #222;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+
+}
+
+
+/* ==========================================================================
+   CATEGORY CONTAINER
+   ========================================================================== */
+
+.pk-pl-category-tree-container {
+
+    max-height: 350px;
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    padding-right: 5px;
+
+    scrollbar-width: thin;
+
+}
+
+
+.pk-pl-category-tree-container::-webkit-scrollbar {
+
+    width: 5px;
+
+}
+
+
+.pk-pl-category-tree-container::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+
+.pk-pl-category-tree-container::-webkit-scrollbar-thumb {
+
+    background: #ccc;
+
+    border-radius: 20px;
+
+}
+
+
+.pk-pl-category-tree-container::-webkit-scrollbar-thumb:hover {
+
+    background: #999;
+
+}
+
+
+/* ==========================================================================
+   CATEGORY TREE
+   ========================================================================== */
+
+.pk-pl-category-tree {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+.pk-pl-category-item {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+.pk-pl-category-row {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 40px;
+
+}
+
+
+/* ==========================================================================
+   CATEGORY TOGGLE
+   ========================================================================== */
+
+.pk-pl-category-toggle {
+
+    width: 30px;
+
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 5px;
+
+    background: transparent;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 10px;
+
+    line-height: 1;
+
+}
+
+
+.pk-pl-category-toggle:hover {
+
+    background: #eee;
+
+}
+
+
+.pk-pl-category-toggle-placeholder {
+
+    width: 30px;
+
+    height: 30px;
+
+    flex: 0 0 30px;
+
+}
+
+
+/* ==========================================================================
+   CATEGORY LINK
+   ========================================================================== */
+
+.pk-pl-category-link {
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    padding: 8px 7px;
+
+    border-radius: 6px;
+
+    color: #333;
+
+    font-size: 14px;
+
+    text-decoration: none;
+
+    transition:
+
+        background 0.15s ease,
+
+        color 0.15s ease;
+
+}
+
+
+.pk-pl-category-link:hover {
+
+    background: #f4f4f4;
+
+}
+
+
+.pk-pl-category-link.pk-pl-selected {
+
+    background: #f0f0f0;
+
+    color: #111;
+
+    font-weight: 700;
+
+}
+
+
+.pk-pl-category-name {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.pk-pl-category-count {
+
+    flex-shrink: 0;
+
+    color: #999;
+
+    font-size: 11px;
+
+    font-weight: 400;
+
+}
+
+
+/* ==========================================================================
+   SUBCATEGORY
+   ========================================================================== */
+
+.pk-pl-subcategory-list {
+
+    list-style: none;
+
+    margin: 0 0 0 15px;
+
+    padding: 0 0 0 12px;
+
+    border-left: 1px solid #ddd;
+
+}
+
+
+/* ==========================================================================
+   FILTER FORM
+   ========================================================================== */
+
+.pk-pl-filter-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+
+.pk-pl-filter-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+.pk-pl-filter-label {
+
+    color: #222;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.pk-pl-filter-input,
+.pk-pl-filter-select {
+
+    width: 100%;
+
+    padding: 9px 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 14px;
+
+    outline: none;
+
+}
+
+
+.pk-pl-filter-input:focus,
+.pk-pl-filter-select:focus {
+
+    border-color: #888;
+
+}
+
+
+.pk-pl-price-row {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.pk-pl-price-row .pk-pl-filter-input {
+
+    width: 50%;
+
+}
+
+
+.pk-pl-filter-button {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: 0;
+
+    border-radius: 5px;
+
+    background: #222;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+
+        background 0.15s ease;
+
+}
+
+
+.pk-pl-filter-button:hover {
+
+    background: #444;
+
+}
+
+
+.pk-pl-clear-button {
+
+    display: block;
+
+    padding: 8px;
+
+    color: #555;
+
+    font-size: 14px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+}
+
+
+.pk-pl-clear-button:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* ==========================================================================
+   PRODUCTS AREA
+   ========================================================================== */
+
+.pk-pl-products-area {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+/* ==========================================================================
+   SEARCH
+   ========================================================================== */
+
+.pk-pl-search-bar {
+
+    margin-bottom: 20px;
+
+    padding: 15px;
+
+    background: #fff;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+}
+
+
+.pk-pl-search-form {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.pk-pl-search-input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+
+    color: #222;
+
+    font-size: 14px;
+
+    outline: none;
+
+}
+
+
+.pk-pl-search-input:focus {
+
+    border-color: #888;
+
+}
+
+
+.pk-pl-search-button {
+
+    padding: 10px 20px;
+
+    border: 0;
+
+    border-radius: 5px;
+
+    background: #222;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+}
+
+
+.pk-pl-search-button:hover {
+
+    background: #444;
+
+}
+
+
+/* ==========================================================================
+   ACTIVE CATEGORY
+   ========================================================================== */
+
+.pk-pl-active-filter {
+
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
 
     background: #fff;
 
@@ -85,760 +677,1063 @@
 
     border-radius: 8px;
 
-    padding: 20px;
+    color: #555;
 
-    position: sticky;
+    font-size: 14px;
 
-    top: 20px;
-
-    max-height: calc(100vh - 40px);
-
-    overflow-y: auto;
 }
 
-.category-tree-container {
-    max-height: 350px;
 
-    overflow-y: auto;
+.pk-pl-active-filter strong {
 
-    padding-right: 5px;
+    color: #222;
+
+    font-weight: 700;
+
 }
 
-        .filter-section {
 
-            margin-bottom: 30px;
-        }
+/* ==========================================================================
+   PRODUCT GRID
+   ========================================================================== */
 
+.pk-pl-products-grid {
 
-        .filter-section:last-child {
+    display: grid;
 
-            margin-bottom: 0;
-        }
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
+    gap: 24px;
 
-        .filter-title {
+}
 
-            margin-bottom: 15px;
 
-            padding-bottom: 10px;
+/* ==========================================================================
+   PRODUCT CARD
+   ========================================================================== */
 
-            border-bottom: 1px solid #eee;
+.pk-pl-product-card {
 
-            font-size: 14px;
+    position: relative;
 
-            font-weight: bold;
+    min-width: 0;
 
-            text-transform: uppercase;
+    overflow: hidden;
 
-            letter-spacing: 0.5px;
-        }
+    background: #fff;
 
+    border: 1px solid #e6e6e6;
 
-        /* =========================================
-           CATEGORY TREE
-           ========================================= */
+    border-radius: 14px;
 
-        .category-tree {
+    transition:
 
-            list-style: none;
+        transform 0.25s ease,
 
-            margin: 0;
+        box-shadow 0.25s ease,
 
-            padding: 0;
-        }
+        border-color 0.25s ease;
 
+}
 
-        .category-item {
 
-            list-style: none;
+.pk-pl-product-card:hover {
 
-            margin: 0;
+    transform: translateY(-5px);
 
-            padding: 0;
-        }
+    border-color: #d8d8d8;
 
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.10);
 
-        .category-row {
+}
 
-            display: flex;
 
-            align-items: center;
+.pk-pl-product-card-link {
 
-            min-height: 40px;
-        }
+    display: block;
 
+    color: inherit;
 
-        .category-link {
+    text-decoration: none;
 
-            flex: 1;
+}
 
-            display: block;
 
-            padding: 8px 5px;
+/* ==========================================================================
+   PRODUCT IMAGE
+   ========================================================================== */
 
-            border-radius: 5px;
+.pk-pl-product-image-wrapper {
 
-            text-decoration: none;
+    position: relative;
 
-            color: #333;
+    width: 100%;
 
-            font-size: 14px;
-        }
+    aspect-ratio: 1 / 1;
 
+    overflow: hidden;
 
-        .category-link:hover {
+    background: #f7f7f7;
 
-            background: #f2f2f2;
-        }
+}
 
 
-        .category-link.selected {
+.pk-pl-product-image {
 
-            font-weight: bold;
+    display: block;
 
-            background: #f2f2f2;
-        }
+    width: 100%;
 
+    height: 100%;
 
-        .category-toggle {
+    object-fit: cover;
 
-            width: 30px;
+    transition:
 
-            height: 30px;
+        transform 0.45s ease;
 
-            flex-shrink: 0;
+}
 
-            border: none;
 
-            background: transparent;
+.pk-pl-product-card:hover
+.pk-pl-product-image {
 
-            cursor: pointer;
+    transform: scale(1.06);
 
-            border-radius: 5px;
+}
 
-            font-size: 11px;
-        }
 
+/* ==========================================================================
+   IMAGE PLACEHOLDER
+   ========================================================================== */
 
-        .category-toggle:hover {
+.pk-pl-product-image-placeholder {
 
-            background: #eee;
-        }
+    width: 100%;
 
+    height: 100%;
 
-        .subcategory-list {
+    display: flex;
 
-            list-style: none;
+    align-items: center;
 
-            margin: 0 0 0 12px;
+    justify-content: center;
 
-            padding: 0 0 0 12px;
+    background: #f5f5f5;
 
-            border-left: 1px solid #ddd;
-        }
+}
 
 
-        /* =========================================
-           FILTER FORM
-           ========================================= */
+.pk-pl-default-image {
 
-        .filter-form {
+    width: 100%;
 
-            display: flex;
+    height: 100%;
 
-            flex-direction: column;
+    padding: 25px;
 
-            gap: 15px;
-        }
+    object-fit: contain;
 
+    opacity: 0.75;
 
-        .filter-group {
+}
 
-            display: flex;
 
-            flex-direction: column;
+/* ==========================================================================
+   PRODUCT BADGES
+   ========================================================================== */
 
-            gap: 7px;
-        }
+.pk-pl-product-badges {
 
+    position: absolute;
 
-        .filter-label {
+    top: 12px;
 
-            font-size: 13px;
+    left: 12px;
 
-            font-weight: bold;
-        }
+    z-index: 2;
 
+    display: flex;
 
-        .filter-input,
-        .filter-select {
+    flex-direction: column;
 
-            width: 100%;
+    align-items: flex-start;
 
-            padding: 9px 10px;
+    gap: 6px;
 
-            border: 1px solid #ccc;
+}
 
-            border-radius: 5px;
 
-            background: #fff;
+.pk-pl-product-badge {
 
-            font-size: 14px;
-        }
+    display: inline-flex;
 
+    align-items: center;
 
-        .price-row {
+    min-height: 26px;
 
-            display: flex;
+    padding: 5px 9px;
 
-            gap: 8px;
-        }
+    border-radius: 6px;
 
+    background: #222;
 
-        .price-row .filter-input {
+    color: #fff;
 
-            width: 50%;
-        }
+    font-size: 10px;
 
+    font-weight: 700;
 
-        .filter-button {
+    letter-spacing: 0.4px;
 
-            width: 100%;
+    text-transform: uppercase;
 
-            padding: 10px;
+}
 
-            border: none;
 
-            border-radius: 5px;
+.pk-pl-product-badge-featured {
 
-            background: #222;
+    background: #b8860b;
 
-            color: white;
+}
 
-            cursor: pointer;
 
-            font-size: 14px;
-        }
+/* ==========================================================================
+   WISHLIST
+   ========================================================================== */
 
+.pk-pl-wishlist-button {
 
-        .filter-button:hover {
+    position: absolute;
 
-            background: #444;
-        }
+    top: 12px;
 
+    right: 12px;
 
-        .clear-button {
+    z-index: 3;
 
-            display: block;
+    width: 38px;
 
-            text-align: center;
+    height: 38px;
 
-            padding: 8px;
+    display: flex;
 
-            color: #555;
+    align-items: center;
 
-            text-decoration: none;
+    justify-content: center;
 
-            font-size: 14px;
-        }
+    padding: 0;
 
+    border: 1px solid rgba(0, 0, 0, 0.08);
 
-        .clear-button:hover {
+    border-radius: 50%;
 
-            text-decoration: underline;
-        }
+    background: rgba(255, 255, 255, 0.94);
 
+    color: #333;
 
-        /* =========================================
-           PRODUCTS AREA
-           ========================================= */
+    cursor: pointer;
 
-        .products-area {
+    font-size: 20px;
 
-            flex: 1;
+    line-height: 1;
 
-            min-width: 0;
-        }
+    transition:
 
+        background 0.2s ease,
 
-        /* =========================================
-           SEARCH
-           ========================================= */
+        color 0.2s ease,
 
-        .search-bar {
+        transform 0.2s ease;
 
-            background: #fff;
+}
 
-            border: 1px solid #ddd;
 
-            border-radius: 8px;
+.pk-pl-wishlist-button:hover {
 
-            padding: 15px;
+    transform: scale(1.08);
 
-            margin-bottom: 20px;
-        }
+    background: #222;
 
+    color: #fff;
 
-        .search-form {
+}
 
-            display: flex;
 
-            gap: 10px;
-        }
+/* ==========================================================================
+   PRODUCT CONTENT
+   ========================================================================== */
 
+.pk-pl-product-content {
 
-        .search-input {
+    padding: 16px 17px 18px;
 
-            flex: 1;
+}
 
-            min-width: 0;
 
-            padding: 10px;
+/* ==========================================================================
+   PRODUCT CATEGORY
+   ========================================================================== */
 
-            border: 1px solid #ccc;
+.pk-pl-product-category {
 
-            border-radius: 5px;
+    margin: 0 0 6px;
 
-            font-size: 14px;
-        }
+    color: #888;
 
+    font-size: 11px;
 
-        .search-button {
+    font-weight: 600;
 
-            padding: 10px 18px;
+    letter-spacing: 0.7px;
 
-            border: none;
+    text-transform: uppercase;
 
-            border-radius: 5px;
+}
 
-            background: #222;
 
-            color: white;
+/* ==========================================================================
+   PRODUCT NAME
+   ========================================================================== */
 
-            cursor: pointer;
-        }
+.pk-pl-product-name {
 
+    display: -webkit-box;
 
-        .search-button:hover {
+    margin: 0 0 9px;
 
-            background: #444;
-        }
+    overflow: hidden;
 
+    color: #222;
 
-        /* =========================================
-           ACTIVE FILTER
-           ========================================= */
+    font-size: 16px;
 
-        .active-filter {
+    font-weight: 600;
 
-            margin-bottom: 20px;
+    line-height: 1.4;
 
-            padding: 12px 15px;
+    -webkit-box-orient: vertical;
 
-            background: #fff;
+    -webkit-line-clamp: 2;
 
-            border: 1px solid #ddd;
+}
 
-            border-radius: 8px;
 
-            font-size: 14px;
-        }
+/* ==========================================================================
+   PRICE
+   ========================================================================== */
 
+.pk-pl-product-price {
 
-        .active-filter strong {
+    margin: 0 0 12px;
 
-            font-weight: bold;
-        }
+    color: #181818;
 
+    font-size: 19px;
 
-        /* =========================================
-           PRODUCTS
-           ========================================= */
+    font-weight: 700;
 
-        .products-grid {
+    line-height: 1.2;
 
-            display: grid;
+}
 
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
 
-            gap: 20px;
-        }
+/* ==========================================================================
+   DETAILS
+   ========================================================================== */
 
+.pk-pl-product-details {
 
-        .product-card {
+    display: flex;
 
-            background: #fff;
+    flex-wrap: wrap;
 
-            border: 1px solid #ddd;
+    gap: 6px;
 
-            border-radius: 8px;
+    margin-bottom: 14px;
 
-            overflow: hidden;
+}
 
-            transition:
-                transform 0.15s ease,
-                box-shadow 0.15s ease;
-        }
 
+.pk-pl-product-detail {
 
-        .product-card:hover {
+    display: inline-flex;
 
-            transform: translateY(-2px);
+    align-items: center;
 
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.08);
-        }
+    padding: 5px 8px;
 
+    border-radius: 5px;
 
-        .product-image {
+    background: #f5f5f5;
 
-            width: 100%;
+    color: #666;
 
-            height: 220px;
+    font-size: 11px;
 
-            object-fit: cover;
+    line-height: 1.2;
 
-            background: #eee;
-        }
+}
 
 
-        .product-image-placeholder {
+/* ==========================================================================
+   PRODUCT BOTTOM
+   ========================================================================== */
 
-            width: 100%;
+.pk-pl-product-bottom {
 
-            height: 220px;
+    display: flex;
 
-            display: flex;
+    align-items: center;
 
-            align-items: center;
+    justify-content: space-between;
 
-            justify-content: center;
+    gap: 10px;
 
-            background: #eee;
+    padding-top: 12px;
 
-            color: #777;
+    border-top: 1px solid #eee;
 
-            font-size: 14px;
-        }
+}
 
 
-        .product-content {
+/* ==========================================================================
+   STOCK
+   ========================================================================== */
 
-            padding: 15px;
-        }
+.pk-pl-stock-status {
 
+    display: inline-flex;
 
-        .product-name {
+    align-items: center;
 
-            margin: 0 0 10px;
+    gap: 6px;
 
-            font-size: 17px;
-        }
+    color: #333;
 
+    font-size: 12px;
 
-        .product-price {
+    font-weight: 600;
 
-            margin: 0 0 8px;
+}
 
-            font-size: 18px;
 
-            font-weight: bold;
-        }
+.pk-pl-stock-dot {
 
+    width: 7px;
 
-        .product-meta {
+    height: 7px;
 
-            margin: 4px 0;
+    flex-shrink: 0;
 
-            color: #666;
+    border-radius: 50%;
 
-            font-size: 13px;
-        }
+    background: #28a745;
 
+}
 
-        /* =========================================
-           EMPTY PRODUCTS
-           ========================================= */
 
-        .empty-products {
+.pk-pl-stock-out {
 
-            padding: 40px;
+    color: #999;
 
-            background: #fff;
+}
 
-            border: 1px solid #ddd;
 
-            border-radius: 8px;
+.pk-pl-stock-out
+.pk-pl-stock-dot {
 
-            text-align: center;
+    background: #aaa;
 
-            color: #666;
-        }
+}
 
 
-        /* =========================================
-           MOBILE
-           ========================================= */
+/* ==========================================================================
+   VIEW PRODUCT
+   ========================================================================== */
 
-        @media (max-width: 900px) {
+.pk-pl-view-product {
 
-            .shop-layout {
+    color: #333;
 
-                flex-direction: column;
-            }
+    font-size: 12px;
 
+    font-weight: 600;
 
-            .sidebar {
+    transition:
 
-                width: 100%;
+        color 0.2s ease;
 
-                position: static;
-            }
+}
 
 
-            .products-grid {
+.pk-pl-product-card:hover
+.pk-pl-view-product {
 
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
+    color: #b8860b;
 
-        }
+}
 
 
-        @media (max-width: 600px) {
+/* ==========================================================================
+   EMPTY
+   ========================================================================== */
 
-            .page-container {
+.pk-pl-empty-products {
 
-                padding: 15px;
-            }
+    padding: 40px;
 
+    background: #fff;
 
-            .page-title {
+    border: 1px solid #ddd;
 
-                font-size: 24px;
-            }
+    border-radius: 10px;
 
+    color: #666;
 
-            .search-form {
+    text-align: center;
 
-                flex-direction: column;
-            }
+}
 
 
-            .search-button {
+.pk-pl-empty-products a {
 
-                width: 100%;
-            }
+    color: #222;
 
+    font-weight: 600;
 
-            .products-grid {
+}
 
-                grid-template-columns: 1fr;
-            }
 
-        }
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
 
-    </style>
+@media (max-width: 1100px) {
 
+    .pk-pl-page {
 
-<div class="page-container">
+        padding: 25px;
 
+    }
 
-    <!-- =====================================
+
+    .pk-pl-shop-layout {
+
+        gap: 20px;
+
+    }
+
+
+    .pk-pl-sidebar {
+
+        width: 250px;
+
+        min-width: 250px;
+
+    }
+
+
+    .pk-pl-products-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 20px;
+
+    }
+
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .pk-pl-shop-layout {
+
+        flex-direction: column;
+
+    }
+
+
+    .pk-pl-sidebar {
+
+        width: 100%;
+
+        min-width: 0;
+
+        position: static;
+
+        max-height: none;
+
+        overflow: visible;
+
+    }
+
+
+    .pk-pl-category-tree-container {
+
+        max-height: 300px;
+
+        overflow-x: hidden;
+
+        overflow-y: auto;
+
+    }
+
+
+    .pk-pl-products-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 16px;
+
+    }
+
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 600px) {
+
+    .pk-pl-page {
+
+        padding: 15px;
+
+    }
+
+
+    .pk-pl-page-title {
+
+        margin-bottom: 20px;
+
+        font-size: 24px;
+
+    }
+
+
+    .pk-pl-sidebar {
+
+        padding: 15px;
+
+    }
+
+
+    .pk-pl-search-form {
+
+        flex-direction: column;
+
+    }
+
+
+    .pk-pl-search-button {
+
+        width: 100%;
+
+    }
+
+
+    .pk-pl-products-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+    }
+
+
+    .pk-pl-product-content {
+
+        padding: 12px;
+
+    }
+
+
+    .pk-pl-product-name {
+
+        font-size: 14px;
+
+    }
+
+
+    .pk-pl-product-price {
+
+        font-size: 16px;
+
+    }
+
+
+    .pk-pl-product-category {
+
+        font-size: 9px;
+
+    }
+
+
+    .pk-pl-product-detail {
+
+        padding: 4px 6px;
+
+        font-size: 9px;
+
+    }
+
+
+    .pk-pl-product-bottom {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+    }
+
+
+    .pk-pl-product-badge {
+
+        padding: 4px 7px;
+
+        font-size: 8px;
+
+    }
+
+
+    .pk-pl-wishlist-button {
+
+        top: 8px;
+
+        right: 8px;
+
+        width: 32px;
+
+        height: 32px;
+
+        font-size: 17px;
+
+    }
+
+}
+
+
+/* ==========================================================================
+   VERY SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 380px) {
+
+    .pk-pl-page {
+
+        padding: 10px;
+
+    }
+
+
+    .pk-pl-sidebar {
+
+        padding: 12px;
+
+    }
+
+
+    .pk-pl-products-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
+
+
+<div class="pk-pl-page">
+
+
+    <!-- ==============================================================
          PAGE TITLE
-         ===================================== -->
+         ============================================================== -->
 
-    <h1 class="page-title">
+    <h1 class="pk-pl-page-title">
+
         Panchakanya Collections
+
     </h1>
 
 
-    <div class="shop-layout">
+    <!-- ==============================================================
+         SHOP LAYOUT
+         ============================================================== -->
+
+    <div class="pk-pl-shop-layout">
 
 
-        <!-- =====================================
+        <!-- ==========================================================
              SIDEBAR
-             ===================================== -->
+             ========================================================== -->
 
-        <aside class="sidebar">
+        <aside class="pk-pl-sidebar">
 
 
-            <!-- =================================
+            <!-- ======================================================
                  CATEGORY
-                 ================================= -->
+                 ====================================================== -->
 
-            <div class="filter-section">
+            <div class="pk-pl-filter-section">
 
-                <div class="filter-title">
+
+                <div class="pk-pl-filter-title">
+
                     Category
+
                 </div>
 
 
-                <div class="category-tree-container">
-
-    <ul class="category-tree">
+                <div class="pk-pl-category-tree-container">
 
 
-                    <!-- ALL PRODUCTS -->
-
-                    <li class="category-item">
-
-                        <div class="category-row">
-
-                            <a
-                                href="{% url 'products:list' %}"
-                                class="category-link
-                                {% if not selected_category %}
-                                    selected
-                                {% endif %}"
-                            >
-                                All Jewellery
-                            </a>
-
-                        </div>
-
-                    </li>
+                    <ul class="pk-pl-category-tree">
 
 
-                    <!-- RECURSIVE CATEGORY TREE -->
+                        <!-- ==================================================
+                             ALL PRODUCTS
+                             ================================================== -->
 
-                    {% include "products/category_tree.html" with categories=root_categories %}
+                        <li class="pk-pl-category-item">
+
+                            <div class="pk-pl-category-row">
 
 
-                </ul>
-</div>
+                                <span
+                                    class="pk-pl-category-toggle-placeholder"
+                                ></span>
+
+
+                                <a
+                                    href="{% url 'products:list' %}"
+                                    class="
+                                        pk-pl-category-link
+                                        {% if not selected_category %}
+                                            pk-pl-selected
+                                        {% endif %}
+                                    "
+                                >
+
+                                    <span class="pk-pl-category-name">
+
+                                        All Jewellery
+
+                                    </span>
+
+                                </a>
+
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- ==================================================
+                             CATEGORY TREE
+                             ================================================== -->
+
+                        {% include "products/category_tree.html" with categories=root_categories %}
+
+
+                    </ul>
+
+
+                </div>
+
+
             </div>
 
 
-            <!-- =================================
-                 OTHER FILTERS
-                 ================================= -->
+            <!-- ======================================================
+                 FILTERS
+                 ====================================================== -->
 
-            <div class="filter-section">
+            <div class="pk-pl-filter-section">
 
-                <div class="filter-title">
+
+                <div class="pk-pl-filter-title">
+
                     Filters
+
                 </div>
 
 
-<form
-    method="get"
-    class="filter-form"
->
-
-    <div class="filter-group">
-
-        <label
-            class="filter-label"
-            for="sidebar-search"
-        >
-            Search
-        </label>
-
-        <input
-            id="sidebar-search"
-            class="filter-input"
-            type="text"
-            name="q"
-            placeholder="Search jewellery..."
-            value="{{ search_query }}"
-        >
-
-    </div>
-
-
-    <div class="filter-group">
-
-        <label
-            class="filter-label"
-            for="metal"
-        >
-            Metal Type
-        </label>
-
-        <select
-            id="metal"
-            name="metal"
-            class="filter-select"
-        >
-
-            <option value="">
-                All Metals
-            </option>
-
-            {% for value, label in metal_choices %}
-
-                <option
-                    value="{{ value }}"
-                    {% if value == selected_metal %}
-                        selected
-                    {% endif %}
+                <form
+                    method="get"
+                    class="pk-pl-filter-form"
                 >
-                    {{ label }}
-                </option>
-
-            {% endfor %}
-
-        </select>
-
-    </div>
 
 
-    <div class="filter-group">
+                    <!-- SEARCH -->
 
-        <label class="filter-label">
-            Price
-        </label>
-
-        <div class="price-row">
-
-            <input
-                class="filter-input"
-                type="number"
-                name="min_price"
-                placeholder="Min"
-                value="{{ min_price }}"
-            >
-
-            <input
-                class="filter-input"
-                type="number"
-                name="max_price"
-                placeholder="Max"
-                value="{{ max_price }}"
-            >
-
-        </div>
-
-    </div>
+                    <div class="pk-pl-filter-group">
 
 
-    <!-- KEEP SELECTED CATEGORY -->
+                        <label
+                            class="pk-pl-filter-label"
+                            for="pk-pl-sidebar-search"
+                        >
 
-    <input
-        type="hidden"
-        name="category"
-        value="{{ selected_category }}"
-    >
+                            Search
 
-
-    <button
-        type="submit"
-        class="filter-button"
-    >
-        Apply Filters
-    </button>
+                        </label>
 
 
-    <a
-        href="{% url 'products:list' %}"
-        class="clear-button"
-    >
-        Clear All Filters
-    </a>
+                        <input
+                            id="pk-pl-sidebar-search"
+                            class="pk-pl-filter-input"
+                            type="text"
+                            name="q"
+                            placeholder="Search jewellery..."
+                            value="{{ search_query }}"
+                        >
 
-</form>
+
+                    </div>
+
+
+                    <!-- METAL -->
+
+                    <div class="pk-pl-filter-group">
+
+
+                        <label
+                            class="pk-pl-filter-label"
+                            for="pk-pl-metal"
+                        >
+
+                            Metal Type
+
+                        </label>
+
+
+                        <select
+                            id="pk-pl-metal"
+                            name="metal"
+                            class="pk-pl-filter-select"
+                        >
+
+
+                            <option value="">
+
+                                All Metals
+
+                            </option>
+
+
+                            {% for value, label in metal_choices %}
+
+
+                                <option
+                                    value="{{ value }}"
+                                    {% if value == selected_metal %}
+                                        selected
+                                    {% endif %}
+                                >
+
+                                    {{ label }}
+
+                                </option>
+
+
+                            {% endfor %}
+
+
+                        </select>
+
+
+                    </div>
+
+
+                    <!-- PRICE -->
+
+                    <div class="pk-pl-filter-group">
+
+
+                        <label class="pk-pl-filter-label">
+
+                            Price
+
+                        </label>
+
+
+                        <div class="pk-pl-price-row">
+
+
+                            <input
+                                class="pk-pl-filter-input"
+                                type="number"
+                                name="min_price"
+                                placeholder="Min"
+                                value="{{ min_price }}"
+                            >
+
+
+                            <input
+                                class="pk-pl-filter-input"
+                                type="number"
+                                name="max_price"
+                                placeholder="Max"
+                                value="{{ max_price }}"
+                            >
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- KEEP CATEGORY -->
+
+                    <input
+                        type="hidden"
+                        name="category"
+                        value="{{ selected_category }}"
+                    >
+
+
+                    <!-- APPLY -->
+
+                    <button
+                        type="submit"
+                        class="pk-pl-filter-button"
+                    >
+
+                        Apply Filters
+
+                    </button>
+
+
+                    <!-- CLEAR -->
+
+                    <a
+                        href="{% url 'products:list' %}"
+                        class="pk-pl-clear-button"
+                    >
+
+                        Clear All Filters
+
+                    </a>
+
+
+                </form>
+
 
             </div>
 
@@ -846,27 +1741,28 @@
         </aside>
 
 
-        <!-- =====================================
+        <!-- ==========================================================
              PRODUCTS AREA
-             ===================================== -->
+             ========================================================== -->
 
-        <main class="products-area">
+        <main class="pk-pl-products-area">
 
 
-            <!-- =================================
-                 SEARCH BAR
-                 ================================= -->
+            <!-- ======================================================
+                 SEARCH
+                 ====================================================== -->
 
-            <div class="search-bar">
+            <div class="pk-pl-search-bar">
+
 
                 <form
                     method="get"
-                    class="search-form"
+                    class="pk-pl-search-form"
                 >
 
 
                     <input
-                        class="search-input"
+                        class="pk-pl-search-input"
                         type="text"
                         name="q"
                         placeholder="Search jewellery..."
@@ -903,129 +1799,367 @@
 
 
                     <button
-                        class="search-button"
+                        class="pk-pl-search-button"
                         type="submit"
                     >
+
                         Search
+
                     </button>
 
 
                 </form>
 
+
             </div>
 
 
-            <!-- =================================
+            <!-- ======================================================
                  ACTIVE CATEGORY
-                 ================================= -->
+                 ====================================================== -->
 
             {% if selected_category_obj %}
 
-                <div class="active-filter">
+
+                <div class="pk-pl-active-filter">
 
                     Category:
 
                     <strong>
+
                         {{ selected_category_obj.name }}
+
                     </strong>
 
                 </div>
 
+
             {% endif %}
 
 
-            <!-- =================================
-                 PRODUCT GRID
-                 ================================= -->
+            <!-- ======================================================
+                 PRODUCTS
+                 ====================================================== -->
 
             {% if products %}
 
-                <div class="products-grid">
+
+                <div class="pk-pl-products-grid">
 
 
                     {% for product in products %}
 
-                        <article class="product-card">
+
+                        <article class="pk-pl-product-card">
 
 
                             <a
                                 href="{% url 'products:detail' product.slug %}"
+                                class="pk-pl-product-card-link"
                             >
 
 
-                                <!-- PRODUCT IMAGE -->
+                                <!-- ==========================================
+                                     IMAGE
+                                     ========================================== -->
 
-{% if product.cover_images %}
-
-    {% with primary_image=product.cover_images.0 %}
-
-        <img
-            src="{{ primary_image.image.url }}"
-            alt="{{ product.name }}"
-            class="product-image"
-            onerror="
-                this.onerror=null;
-                this.src='{% static 'images/products/default.png' %}';
-            "
-        >
-
-    {% endwith %}
-
-{% else %}
-
-    <div class="product-image-placeholder">
-
-        <img
-            src="{% static 'images/products/default.png' %}"
-            alt="{{ product.name }}"
-            class="default-image"
-        >
-
-    </div>
-
-{% endif %}
+                                <div
+                                    class="
+                                        pk-pl-product-image-wrapper
+                                    "
+                                >
 
 
-                                <!-- PRODUCT INFORMATION -->
-
-                                <div class="product-content">
+                                    {% if product.primary_images %}
 
 
-                                    <h3 class="product-name">
-                                        {{ product.name }}
-                                    </h3>
+                                        {% with primary_image=product.primary_images.0 %}
 
 
-                                    <p class="product-price">
-                                        Rs. {{ product.price }}
-                                    </p>
+                                            <img
+                                                src="{{ primary_image.image.url }}"
+                                                alt="{{ product.name }}"
+                                                class="pk-pl-product-image"
+                                                loading="lazy"
+                                                onerror="
+                                                    this.onerror=null;
+                                                    this.src='{% static 'images/products/default.png' %}';
+                                                "
+                                            >
 
 
-                                    <p class="product-meta">
-                                        Category:
-                                        {{ product.category.name }}
-                                    </p>
+                                        {% endwith %}
 
-
-                                    <p class="product-meta">
-                                        Metal:
-                                        {{ product.get_metal_type_display }}
-                                    </p>
-
-
-                                    {% if product.stock > 0 %}
-
-                                        <p class="product-meta">
-                                            In Stock
-                                        </p>
 
                                     {% else %}
 
-                                        <p class="product-meta">
-                                            Out of Stock
-                                        </p>
+
+                                        <div
+                                            class="
+                                                pk-pl-product-image-placeholder
+                                            "
+                                        >
+
+
+                                            <img
+                                                src="{% static 'images/products/default.png' %}"
+                                                alt="{{ product.name }}"
+                                                class="pk-pl-default-image"
+                                                loading="lazy"
+                                            >
+
+
+                                        </div>
+
 
                                     {% endif %}
+
+
+                                    <!-- ======================================
+                                         BADGES
+                                         ====================================== -->
+
+                                    <div
+                                        class="
+                                            pk-pl-product-badges
+                                        "
+                                    >
+
+
+                                        {% if product.featured %}
+
+
+                                            <span
+                                                class="
+                                                    pk-pl-product-badge
+                                                    pk-pl-product-badge-featured
+                                                "
+                                            >
+
+                                                Featured
+
+                                            </span>
+
+
+                                        {% endif %}
+
+
+                                        {% if product.stock == 0 %}
+
+
+                                            <span
+                                                class="
+                                                    pk-pl-product-badge
+                                                "
+                                            >
+
+                                                Sold Out
+
+                                            </span>
+
+
+                                        {% endif %}
+
+
+                                    </div>
+
+
+                                    <!-- ======================================
+                                         WISHLIST
+                                         ====================================== -->
+
+                                    <button
+                                        type="button"
+                                        class="pk-pl-wishlist-button"
+                                        aria-label="Add {{ product.name }} to wishlist"
+                                        onclick="
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        "
+                                    >
+
+                                        ♡
+
+                                    </button>
+
+
+                                </div>
+
+
+                                <!-- ==========================================
+                                     CONTENT
+                                     ========================================== -->
+
+                                <div
+                                    class="
+                                        pk-pl-product-content
+                                    "
+                                >
+
+
+                                    <!-- CATEGORY -->
+
+                                    <p
+                                        class="
+                                            pk-pl-product-category
+                                        "
+                                    >
+
+                                        {{ product.category.name }}
+
+                                    </p>
+
+
+                                    <!-- NAME -->
+
+                                    <h3
+                                        class="
+                                            pk-pl-product-name
+                                        "
+                                    >
+
+                                        {{ product.name }}
+
+                                    </h3>
+
+
+                                    <!-- PRICE -->
+
+                                    <p
+                                        class="
+                                            pk-pl-product-price
+                                        "
+                                    >
+
+                                        Rs. {{ product.price }}
+
+                                    </p>
+
+
+                                    <!-- DETAILS -->
+
+                                    <div
+                                        class="
+                                            pk-pl-product-details
+                                        "
+                                    >
+
+
+                                        {% if product.metal_type %}
+
+                                            <span
+                                                class="
+                                                    pk-pl-product-detail
+                                                "
+                                            >
+
+                                                {{ product.get_metal_type_display }}
+
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        {% if product.purity %}
+
+                                            <span
+                                                class="
+                                                    pk-pl-product-detail
+                                                "
+                                            >
+
+                                                {{ product.purity }}
+
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        {% if product.weight_grams %}
+
+                                            <span
+                                                class="
+                                                    pk-pl-product-detail
+                                                "
+                                            >
+
+                                                {{ product.weight_grams }}g
+
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    </div>
+
+
+                                    <!-- ======================================
+                                         BOTTOM
+                                         ====================================== -->
+
+                                    <div
+                                        class="
+                                            pk-pl-product-bottom
+                                        "
+                                    >
+
+
+                                        {% if product.stock > 0 %}
+
+
+                                            <span
+                                                class="
+                                                    pk-pl-stock-status
+                                                "
+                                            >
+
+                                                <span
+                                                    class="
+                                                        pk-pl-stock-dot
+                                                    "
+                                                ></span>
+
+                                                In Stock
+
+                                            </span>
+
+
+                                        {% else %}
+
+
+                                            <span
+                                                class="
+                                                    pk-pl-stock-status
+                                                    pk-pl-stock-out
+                                                "
+                                            >
+
+                                                <span
+                                                    class="
+                                                        pk-pl-stock-dot
+                                                    "
+                                                ></span>
+
+                                                Out of Stock
+
+                                            </span>
+
+
+                                        {% endif %}
+
+
+                                        <span
+                                            class="
+                                                pk-pl-view-product
+                                            "
+                                        >
+
+                                            View Product →
+
+                                        </span>
+
+
+                                    </div>
 
 
                                 </div>
@@ -1036,6 +2170,7 @@
 
                         </article>
 
+
                     {% endfor %}
 
 
@@ -1044,20 +2179,36 @@
 
             {% else %}
 
-                <div class="empty-products">
+
+                <!-- ==================================================
+                     EMPTY PRODUCTS
+                     ================================================== -->
+
+                <div
+                    class="
+                        pk-pl-empty-products
+                    "
+                >
+
 
                     <p>
+
                         No products match your filters.
+
                     </p>
 
 
                     <a
                         href="{% url 'products:list' %}"
                     >
+
                         Clear all filters
+
                     </a>
 
+
                 </div>
+
 
             {% endif %}
 
@@ -1071,47 +2222,125 @@
 </div>
 
 
-<!-- =========================================
+<!-- ==========================================================================
      CATEGORY TREE JAVASCRIPT
-     ========================================= -->
+     ========================================================================== -->
 
 <script>
+(function () {
 
-    function toggleCategory(categoryId) {
+    "use strict";
+
+
+    window.pkToggleCategory = function (categoryId) {
 
         const category =
             document.getElementById(categoryId);
 
-        const icon =
-            document.getElementById(
-                "icon-" + categoryId
-            );
 
-        if (!category || !icon) {
+        if (!category) {
             return;
         }
 
 
-        const isHidden =
-            category.style.display === "none";
+        const categoryNumber =
+            categoryId.replace(
+                "pk-pl-category-",
+                ""
+            );
 
 
-        if (isHidden) {
+        const icon =
+            document.getElementById(
+                "pk-pl-icon-category-" +
+                categoryNumber
+            );
 
-            category.style.display = "block";
 
-            icon.textContent = "▼";
+        const toggleButton =
+            category.parentElement
+                ?.querySelector(
+                    ".pk-pl-category-toggle"
+                );
 
-        } else {
 
-            category.style.display = "none";
+        const isOpen =
+            category.style.display === "block";
 
-            icon.textContent = "▶";
+
+        /*
+         * ==========================================================
+         * CLOSE
+         * ==========================================================
+         */
+
+        if (isOpen) {
+
+            category.style.display =
+                "none";
+
+
+            if (icon) {
+
+                icon.textContent =
+                    "▶";
+
+            }
+
+
+            if (toggleButton) {
+
+                toggleButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+
+            return;
+        }
+
+
+        /*
+         * ==========================================================
+         * OPEN
+         * ==========================================================
+         */
+
+        category.style.display =
+            "block";
+
+
+        if (icon) {
+
+            icon.textContent =
+                "▼";
 
         }
 
-    }
 
+        if (toggleButton) {
+
+            toggleButton.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+        }
+
+    };
+
+
+})();
 </script>
+
+
+<!-- ==========================================================================
+     PAGINATION
+     ========================================================================== -->
+
 {% include "includes/pagination.html" %}
+
+
 {% endblock %}
