@@ -21,7 +21,7 @@
                 </button>
 
                 <div class="pk-hdr-search-col">
-                    <form method="get" class="pk-hdr-search-box">
+                    <form method="get"  action="{% url 'core:home' %}#featured" class="pk-hdr-search-box">
                         <svg class="pk-hdr-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                             <circle cx="11" cy="11" r="6" />
                             <path d="m16 16 4 4" />
@@ -29,9 +29,9 @@
                         <input
                             class="pk-hdr-search-input"
                             type="text"
-                            name="q"
+                            name="featured_q"
                             placeholder="Search jewellery..."
-                            value="{{ search_query }}"
+                            value="{{ featured_search }}"
                         >
                         <input type="hidden" name="category" value="{{ selected_category }}">
                         <input type="hidden" name="metal" value="{{ selected_metal }}">
