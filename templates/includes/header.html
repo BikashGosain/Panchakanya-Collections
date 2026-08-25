@@ -12,10 +12,63 @@
             </button>
 
             <div class="pk-hdr-search-col">
-                <div class="pk-hdr-search-box">
-                    <input type="text" placeholder="Search jewelry..." class="pk-hdr-search-input" id="pk-js-search-input">
-                    <i data-lucide="search" class="pk-hdr-search-icon"></i>
-                </div>
+
+                <form
+                    method="get"
+                    class="pk-hdr-search-box"
+                >
+
+
+                    <input
+                        class="pk-hdr-search-input"
+                        type="text"
+                        name="q"
+                        placeholder="Search jewellery..."
+                        value="{{ search_query }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="category"
+                        value="{{ selected_category }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="metal"
+                        value="{{ selected_metal }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="min_price"
+                        value="{{ min_price }}"
+                    >
+
+
+                    <input
+                        type="hidden"
+                        name="max_price"
+                        value="{{ max_price }}"
+                    >
+
+
+                    <button
+                        class="pk-hdr-search-button"
+                        type="submit"
+                    >
+                        Search
+                    </button>
+
+
+                </form>
+
+
+
+
             </div>
 
             <a href="{% url 'core:home' %}" class="pk-hdr-brand-col">
@@ -51,7 +104,7 @@
                                 <i data-lucide="shopping-cart"></i> Cart
                             </a>
                             <a href="#" class="pk-dropdown-item">
-                                <i data-lucide="package"></i> My Orders
+                                <i data-lucide="package"></i> Home
                             </a>
                             <hr class="pk-dropdown-divider">
                             <form action="{% url 'accounts:logout' %}" method="post" class="pk-logout-form">
@@ -69,14 +122,14 @@
                 </div>
 
                 <!-- Wishlist -->
-                <a href="#" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist">
+                <a href="{% url 'dashboard:wishlist' %}" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist">
                     <i data-lucide="heart"></i>
                 </a>
 
                 <!-- Shopping Bag -->
-                <a href="#" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag">
+                <a href="{% url 'dashboard:cart' %}" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag">
                     <i data-lucide="shopping-bag"></i>
-                    <span class="pk-badge pk-hdr-cart-badge" id="pk-js-cart-count">2</span>
+                    <span class="pk-badge pk-hdr-cart-badge" id="pk-js-cart-count">{% if cart_items %}{{ cart_items|length }}{% else %}0{% endif %}</span>
                 </a>
             </div>
 
@@ -89,14 +142,14 @@
             <a href="{% url 'products:category_overview' %}" class="pk-nav-link pk-active">Categories</a>
             <a href="{% url 'products:list' %}" class="pk-nav-link pk-active">Collections</a>
 
-
-
-            <a href="#" class="pk-nav-link">Bridal Sets</a>
-            <a href="#" class="pk-nav-link">Necklaces & Pendants</a>
-            <a href="#" class="pk-nav-link">Rings</a>
-            <a href="#" class="pk-nav-link">Earrings</a>
-            <a href="#" class="pk-nav-link">Bangles & Bracelets</a>
-            <a href="#" class="pk-nav-link pk-nav-link-highlight">24K Gold Collections</a>
+{% for category in header_categories %}
+    <a
+        href="{% url 'products:category' category.slug %}"
+        class="pk-nav-link"
+    >
+        {{ category.name }}
+    </a>
+{% endfor %}
         </nav>
     </div>
 </header>
