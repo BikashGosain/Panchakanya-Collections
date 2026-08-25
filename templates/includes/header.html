@@ -1,155 +1,162 @@
 {% load static %}
-<div id="pk-header-announcement">
-    Complimentary Insured Delivery Across Nepal on Orders Over NPR 50,000
-</div>
+<div class="pk-hdr-component" id="pk-js-header-component">
+    <div class="pk-hdr-announcement">
+        Complimentary Insured Delivery Across Nepal on Orders Over NPR 50,000
+    </div>
 
-<header class="pk-hdr-sticky-wrapper">
-    <div class="pk-container">
-        <div class="pk-hdr-main-row">
-
-            <button type="button" class="pk-hdr-mobile-toggle" id="pk-js-mobile-toggle" aria-label="Toggle Navigation">
-                <i data-lucide="menu"></i>
-            </button>
-
-            <div class="pk-hdr-search-col">
-
-                <form
-                    method="get"
-                    class="pk-hdr-search-box"
+    <header class="pk-hdr-sticky-wrapper" id="pk-js-header">
+        <div class="pk-container pk-hdr-container">
+            <div class="pk-hdr-main-row">
+                <button
+                    type="button"
+                    class="pk-hdr-mobile-toggle"
+                    id="pk-js-mobile-toggle"
+                    aria-label="Open navigation menu"
+                    aria-controls="pk-js-nav-bar"
+                    aria-expanded="false"
                 >
+                    <svg class="pk-hdr-icon pk-hdr-icon--menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M4 7h16M4 12h16M4 17h16" />
+                    </svg>
+                </button>
 
-
-                    <input
-                        class="pk-hdr-search-input"
-                        type="text"
-                        name="q"
-                        placeholder="Search jewellery..."
-                        value="{{ search_query }}"
-                    >
-
-
-                    <input
-                        type="hidden"
-                        name="category"
-                        value="{{ selected_category }}"
-                    >
-
-
-                    <input
-                        type="hidden"
-                        name="metal"
-                        value="{{ selected_metal }}"
-                    >
-
-
-                    <input
-                        type="hidden"
-                        name="min_price"
-                        value="{{ min_price }}"
-                    >
-
-
-                    <input
-                        type="hidden"
-                        name="max_price"
-                        value="{{ max_price }}"
-                    >
-
-
-                    <button
-                        class="pk-hdr-search-button"
-                        type="submit"
-                    >
-                        Search
-                    </button>
-
-
-                </form>
-
-
-
-
-            </div>
-
-            <a href="{% url 'core:home' %}" class="pk-hdr-brand-col">
-                <span class="pk-hdr-brand-title">PANCHAKANYA</span>
-                <span class="pk-hdr-brand-subtitle">C o l l e c t i o n s</span>
-            </a>
-
-            <div class="pk-hdr-actions-col">
-                <!-- User Account / Auth Section -->
-                <div class="pk-hdr-user-dropdown-wrapper">
-                    {% if user.is_authenticated %}
-                        <button type="button" class="pk-hdr-action-btn" id="pk-js-user-btn" title="Account ({{ user.username }})">
-                            <i data-lucide="user-check"></i>
-                        </button>
-
-                        <!-- Dropdown Menu for Logged In User -->
-                        <div class="pk-hdr-dropdown-menu" id="pk-js-user-dropdown">
-                            <div class="pk-dropdown-header">
-                                <strong>Hello, {{ user.first_name|default:user.username }}</strong>
-                            </div>
-                            <hr class="pk-dropdown-divider">
-                            <a href="{% url 'dashboard:home' %}" class="pk-dropdown-item">
-                                <i data-lucide="layout-dashboard"></i> Dashboard
-                            </a>
-                            <a href="{% url 'dashboard:profile' %}" class="pk-dropdown-item">
-                                <i data-lucide="user"></i> Profile
-                            </a>
-                            <a href="{% url 'dashboard:wishlist' %}" class="pk-dropdown-item">
-                                <i data-lucide="heart"></i> Wishlist
-                            </a>
-                            <a href="{% url 'dashboard:cart' %}" class="pk-dropdown-item
-">
-                                <i data-lucide="shopping-cart"></i> Cart
-                            </a>
-                            <a href="#" class="pk-dropdown-item">
-                                <i data-lucide="package"></i> Home
-                            </a>
-                            <hr class="pk-dropdown-divider">
-                            <form action="{% url 'accounts:logout' %}" method="post" class="pk-logout-form">
-                                {% csrf_token %}
-                                <button type="submit" class="pk-dropdown-item pk-logout-btn">
-                                    <i data-lucide="log-out"></i> Log Out
-                                </button>
-                            </form>
-                        </div>
-                    {% else %}
-                        <a href="{% url 'accounts:login' %}" class="pk-hdr-action-btn" title="Sign In / Register">
-                            <i data-lucide="user"></i><small>Sign Up</small>
-                        </a>
-                    {% endif %}
+                <div class="pk-hdr-search-col">
+                    <form method="get" class="pk-hdr-search-box">
+                        <svg class="pk-hdr-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <circle cx="11" cy="11" r="6" />
+                            <path d="m16 16 4 4" />
+                        </svg>
+                        <input
+                            class="pk-hdr-search-input"
+                            type="text"
+                            name="q"
+                            placeholder="Search jewellery..."
+                            value="{{ search_query }}"
+                        >
+                        <input type="hidden" name="category" value="{{ selected_category }}">
+                        <input type="hidden" name="metal" value="{{ selected_metal }}">
+                        <input type="hidden" name="min_price" value="{{ min_price }}">
+                        <input type="hidden" name="max_price" value="{{ max_price }}">
+                        <button class="pk-hdr-search-button" type="submit">Search</button>
+                    </form>
                 </div>
 
-                <!-- Wishlist -->
-                <a href="{% url 'dashboard:wishlist' %}" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist">
-                    <i data-lucide="heart"></i>
+                <a href="{% url 'core:home' %}" class="pk-hdr-brand-col" aria-label="Panchakanya Collections home">
+                    <span class="pk-hdr-brand-title">PANCHAKANYA</span>
+                    <span class="pk-hdr-brand-subtitle">C o l l e c t i o n s</span>
                 </a>
 
-                <!-- Shopping Bag -->
-                <a href="{% url 'dashboard:cart' %}" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag">
-                    <i data-lucide="shopping-bag"></i>
-                    <span class="pk-badge pk-hdr-cart-badge" id="pk-js-cart-count">{% if cart_items %}{{ cart_items|length }}{% else %}0{% endif %}</span>
-                </a>
+                <div class="pk-hdr-actions-col">
+                    <div class="pk-hdr-user-dropdown-wrapper">
+                        {% if user.is_authenticated %}
+                            <button
+                                type="button"
+                                class="pk-hdr-action-btn"
+                                id="pk-js-user-btn"
+                                title="Account ({{ user.username }})"
+                                aria-label="Open account menu"
+                                aria-controls="pk-js-user-dropdown"
+                                aria-expanded="false"
+                            >
+                                <span class="pk-hdr-account-avatar pk-hdr-account-avatar--trigger">
+                                    {% if user.profile_picture %}
+                                        <img
+                                            src="{{ user.profile_picture.url }}"
+                                            alt=""
+                                            onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+                                        >
+                                        <span class="pk-hdr-account-avatar-fallback" hidden aria-hidden="true">{{ user.get_full_name|default:user.username|first|upper }}</span>
+                                    {% else %}
+                                        <span class="pk-hdr-account-avatar-fallback" aria-hidden="true">{{ user.get_full_name|default:user.username|first|upper }}</span>
+                                    {% endif %}
+                                </span>
+                            </button>
+
+                            <div class="pk-hdr-dropdown-menu" id="pk-js-user-dropdown">
+                                <a href="{% url 'dashboard:profile' %}" class="pk-hdr-account-summary">
+                                    <span class="pk-hdr-account-avatar">
+                                        {% if user.profile_picture %}
+                                            <img
+                                                src="{{ user.profile_picture.url }}"
+                                                alt="Profile picture"
+                                                onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+                                            >
+                                            <span class="pk-hdr-account-avatar-fallback" hidden aria-hidden="true">{{ user.get_full_name|default:user.username|first|upper }}</span>
+                                        {% else %}
+                                            <span class="pk-hdr-account-avatar-fallback" aria-hidden="true">{{ user.get_full_name|default:user.username|first|upper }}</span>
+                                        {% endif %}
+                                    </span>
+                                    <span class="pk-hdr-account-details">
+                                        <strong class="pk-hdr-account-name">{{ user.get_full_name|default:user.username }}</strong>
+                                        <span class="pk-hdr-account-username">@{{ user.username }}</span>
+                                        <span class="pk-hdr-account-email">{{ user.email }}</span>
+                                    </span>
+                                </a>
+                                <hr class="pk-hdr-dropdown-divider">
+                                <a href="{% url 'dashboard:home' %}" class="pk-hdr-dropdown-item">
+                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
+                                    Dashboard
+                                </a>
+                                <a href="{% url 'dashboard:profile' %}" class="pk-hdr-dropdown-item">
+                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+                                    Profile
+                                </a>
+                                <a href="{% url 'dashboard:wishlist' %}" class="pk-hdr-dropdown-item">
+                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z" /></svg>
+                                    Wishlist
+                                </a>
+                                <a href="{% url 'dashboard:cart' %}" class="pk-hdr-dropdown-item">
+                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4h2l2.3 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.5L20 8H7" /><circle cx="10" cy="20" r="1" /><circle cx="17" cy="20" r="1" /></svg>
+                                    Cart
+                                </a>
+                                <a href="{% url 'core:home' %}" class="pk-hdr-dropdown-item">
+                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" /><path d="M9 21v-6h6v6" /></svg>
+                                    Home
+                                </a>
+                                <hr class="pk-hdr-dropdown-divider">
+                                <form action="{% url 'accounts:logout' %}" method="post" class="pk-hdr-logout-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="pk-hdr-dropdown-item pk-hdr-logout-btn">
+                                        <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 17l5-5-5-5M15 12H3" /><path d="M21 3v18a1 1 0 0 1-1 1h-7" /></svg>
+                                        Log Out
+                                    </button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}" class="pk-hdr-action-btn" title="Sign In / Register" aria-label="Sign in or register">
+                                <svg class="pk-hdr-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <circle cx="12" cy="8" r="4" />
+                                    <path d="M4 21a8 8 0 0 1 16 0" />
+                                </svg>
+                                <small>Sign Up</small>
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <a href="{% url 'dashboard:wishlist' %}" class="pk-hdr-action-btn" id="pk-js-wishlist-btn" title="Wishlist" aria-label="Wishlist">
+                        <svg class="pk-hdr-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z" />
+                        </svg>
+                    </a>
+
+                    <a href="{% url 'dashboard:cart' %}" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag" aria-label="Shopping bag">
+                        <svg class="pk-hdr-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M6 8h12l-1 13H7L6 8ZM9 8V6a3 3 0 0 1 6 0v2" />
+                        </svg>
+                        <span class="pk-hdr-cart-badge" id="pk-js-cart-count">{% if cart_items %}{{ cart_items|length }}{% else %}0{% endif %}</span>
+                    </a>
+                </div>
             </div>
 
+            <nav class="pk-hdr-nav-bar" id="pk-js-nav-bar" aria-label="Primary navigation">
+                <a href="{% url 'core:home' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'home' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'home' %} aria-current="page"{% endif %}>Home</a>
+                <a href="{% url 'products:category_overview' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category_overview' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category_overview' %} aria-current="page"{% endif %}>Categories</a>
+                <a href="{% url 'products:list' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'list' or request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'detail' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'list' or request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'detail' %} aria-current="page"{% endif %}>Collections</a>
+
+                {% for category in header_categories %}
+                    <a href="{% url 'products:category' category.slug %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category' and request.resolver_match.kwargs.slug == category.slug %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category' and request.resolver_match.kwargs.slug == category.slug %} aria-current="page"{% endif %}>{{ category.name }}</a>
+                {% endfor %}
+            </nav>
         </div>
-
-        <nav class="pk-nav-bar" id="pk-js-nav-bar">
-            <a href="{% url 'core:home' %}" class="pk-nav-link pk-active">Home</a>
-
-
-            <a href="{% url 'products:category_overview' %}" class="pk-nav-link pk-active">Categories</a>
-            <a href="{% url 'products:list' %}" class="pk-nav-link pk-active">Collections</a>
-
-{% for category in header_categories %}
-    <a
-        href="{% url 'products:category' category.slug %}"
-        class="pk-nav-link"
-    >
-        {{ category.name }}
-    </a>
-{% endfor %}
-        </nav>
-    </div>
-</header>
+    </header>
+</div>

@@ -1,329 +1,542 @@
-/* ==========================================================================
-   Panchakanya Collections - Header Stylesheet (header.css)
-   Namespace Prefix: pk-hdr- / pk-nav-
-   ========================================================================== */
+/* ===========================================================================
+   Panchakanya Collections header component
+   Every selector is scoped to .pk-hdr-component to prevent style collisions.
+   =========================================================================== */
 
-/* 1. Global / Fallback CSS Variables */
-:root {
-    --pk-color-primary: #1a2a22;
-    --pk-color-gold-base: #d4af37;
-    --pk-color-gold-light: #f4e8c1;
-    --pk-color-gold-dark: #aa8625;
-    --pk-color-text-main: #2c2c2c;
-    --pk-color-text-muted: #777777;
-    --pk-color-border: #e6dfd3;
-    --pk-font-serif: 'Playfair Display', Georgia, serif;
-    --pk-transition-fast: all 0.2s ease-in-out;
-    --pk-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+.pk-hdr-component {
+    --pk-hdr-primary: var(--pk-color-primary, #121110);
+    --pk-hdr-gold: var(--pk-color-gold-base, #d4af37);
+    --pk-hdr-gold-light: var(--pk-color-gold-light, #f4e8c1);
+    --pk-hdr-gold-dark: var(--pk-color-gold-dark, #a8841a);
+    --pk-hdr-text: var(--pk-color-text-main, #2b2825);
+    --pk-hdr-muted: var(--pk-color-text-muted, #736d65);
+    --pk-hdr-border: var(--pk-color-border, #e6dfd3);
+    --pk-hdr-surface: var(--pk-color-surface, #ffffff);
+    --pk-hdr-serif: var(--pk-font-serif, Georgia, serif);
+    --pk-hdr-sans: var(--pk-font-sans, system-ui, sans-serif);
+    --pk-hdr-transition: 180ms ease-in-out;
+    --pk-hdr-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* 2. Layout Container Wrapper */
-.pk-container {
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+.pk-hdr-component *,
+.pk-hdr-component *::before,
+.pk-hdr-component *::after {
+    box-sizing: border-box;
 }
 
-/* 3. Announcement Bar */
-#pk-header-announcement {
-    background-color: var(--pk-color-primary);
-    color: var(--pk-color-gold-light);
-    font-size: 0.6875rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 0.5rem 1rem;
-    font-weight: 500;
+.pk-hdr-component .pk-hdr-announcement {
+    background-color: var(--pk-hdr-primary);
     border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom-color: color-mix(in srgb, var(--pk-hdr-gold) 20%, transparent);
+    color: var(--pk-hdr-gold-light);
+    font-family: var(--pk-hdr-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-/* 4. Sticky Header Wrapper */
-.pk-hdr-sticky-wrapper {
+.pk-hdr-component .pk-hdr-sticky-wrapper {
+    background-color: rgba(255, 255, 255, 0.96);
+    background-color: color-mix(in srgb, var(--pk-hdr-surface) 96%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--pk-hdr-border);
+    box-shadow: var(--pk-hdr-shadow);
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--pk-color-border);
-    box-shadow: var(--pk-shadow-sm);
 }
 
-.pk-hdr-main-row {
-    display: flex;
+.pk-hdr-component .pk-hdr-container {
+    max-width: 1280px;
+}
+
+.pk-hdr-component .pk-hdr-main-row {
     align-items: center;
-    justify-content: space-between;
+    display: flex;
     height: 85px;
+    justify-content: space-between;
 }
 
-/* 5. Mobile Toggle Button */
-.pk-hdr-mobile-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--pk-color-primary);
+.pk-hdr-component .pk-hdr-icon,
+.pk-hdr-component .pk-hdr-search-icon,
+.pk-hdr-component .pk-hdr-dropdown-icon {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.pk-hdr-component .pk-hdr-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.pk-hdr-component .pk-hdr-mobile-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--pk-hdr-primary);
     cursor: pointer;
+    display: none;
+    justify-content: center;
     padding: 0.5rem;
 }
 
-.pk-hdr-mobile-toggle svg {
-    width: 24px;
+.pk-hdr-component .pk-hdr-icon--menu {
     height: 24px;
+    width: 24px;
 }
 
-/* 6. Search Bar Column */
-.pk-hdr-search-col {
-    flex: 1;
-    display: flex;
+.pk-hdr-component .pk-hdr-search-col,
+.pk-hdr-component .pk-hdr-actions-col {
+    flex: 1 1 0;
+}
+
+.pk-hdr-component .pk-hdr-search-col {
     align-items: center;
+    display: flex;
 }
 
-.pk-hdr-search-box {
+.pk-hdr-component .pk-hdr-search-box {
+    max-width: 260px;
     position: relative;
     width: 100%;
-    max-width: 260px;
 }
 
-.pk-hdr-search-input {
-    width: 100%;
+.pk-hdr-component .pk-hdr-search-input {
     background-color: #f4f1ea;
     border: 1px solid transparent;
     border-radius: 20px;
-    padding: 0.5rem 1rem 0.5rem 2.25rem;
+    color: var(--pk-hdr-text);
+    font-family: var(--pk-hdr-sans);
     font-size: 0.75rem;
-    color: var(--pk-color-text-main);
-    transition: var(--pk-transition-fast);
+    padding: 0.5rem 4.5rem 0.5rem 2.25rem;
+    transition: border-color var(--pk-hdr-transition), box-shadow var(--pk-hdr-transition), background-color var(--pk-hdr-transition);
+    width: 100%;
 }
 
-.pk-hdr-search-input:focus {
-    outline: none;
-    background-color: #ffffff;
-    border-color: var(--pk-color-gold-base);
+.pk-hdr-component .pk-hdr-search-input:focus {
+    background-color: var(--pk-hdr-surface);
+    border-color: var(--pk-hdr-gold);
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pk-hdr-gold) 15%, transparent);
+    outline: none;
 }
 
-.pk-hdr-search-icon {
-    position: absolute;
+.pk-hdr-component .pk-hdr-search-icon {
+    color: var(--pk-hdr-muted);
+    height: 14px;
     left: 0.75rem;
+    pointer-events: none;
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 14px;
-    height: 14px;
-    color: var(--pk-color-text-muted);
 }
 
-/* 7. Brand Title & Subtitle */
-.pk-hdr-brand-col {
+.pk-hdr-component .pk-hdr-search-button {
+    background: transparent;
+    border: 0;
+    color: var(--pk-hdr-primary);
+    cursor: pointer;
+    font-family: var(--pk-hdr-sans);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.85rem;
+    position: absolute;
+    right: 0;
+    text-transform: uppercase;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.pk-hdr-component .pk-hdr-brand-col {
+    color: var(--pk-hdr-primary);
+    display: block;
+    flex: 0 0 auto;
     text-align: center;
     text-decoration: none;
 }
 
-.pk-hdr-brand-title {
-    font-family: var(--pk-font-serif);
+.pk-hdr-component .pk-hdr-brand-title {
+    display: block;
+    font-family: var(--pk-hdr-serif);
     font-size: 1.75rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: var(--pk-color-primary);
     line-height: 1;
 }
 
-.pk-hdr-brand-subtitle {
-    font-size: 0.55rem;
-    text-transform: uppercase;
-    letter-spacing: 0.35em;
-    color: var(--pk-color-gold-dark);
-    font-weight: 600;
-    margin-top: 3px;
+.pk-hdr-component .pk-hdr-brand-subtitle {
+    color: var(--pk-hdr-gold-dark);
     display: block;
+    font-family: var(--pk-hdr-sans);
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    margin-top: 3px;
+    text-transform: uppercase;
 }
 
-/* 8. Action Buttons & Badges */
-.pk-hdr-actions-col {
-    flex: 1;
-    display: flex;
+.pk-hdr-component .pk-hdr-actions-col {
     align-items: center;
-    justify-content: flex-end;
+    display: flex;
     gap: 1.25rem;
+    justify-content: flex-end;
 }
 
-.pk-hdr-action-btn {
-    position: relative;
-    color: var(--pk-color-text-main);
-    text-decoration: none;
-    transition: var(--pk-transition-fast);
-    display: flex;
+.pk-hdr-component .pk-hdr-action-btn {
     align-items: center;
-    padding: 0.25rem;
-    background: none;
-    border: none;
+    background: transparent;
+    border: 0;
+    color: var(--pk-hdr-text);
     cursor: pointer;
-}
-
-.pk-hdr-action-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
-.pk-hdr-action-btn:hover {
-    color: var(--pk-color-gold-dark);
-}
-
-.pk-badge {
     display: inline-flex;
+    font-family: var(--pk-hdr-sans);
+    gap: 0.3rem;
+    padding: 0.25rem;
+    position: relative;
+    text-decoration: none;
+    transition: color var(--pk-hdr-transition);
+}
+
+.pk-hdr-component .pk-hdr-action-btn:hover,
+.pk-hdr-component .pk-hdr-action-btn:focus-visible {
+    color: var(--pk-hdr-gold-dark);
+}
+
+.pk-hdr-component .pk-hdr-action-btn:focus-visible,
+.pk-hdr-component .pk-hdr-mobile-toggle:focus-visible,
+.pk-hdr-component .pk-hdr-search-button:focus-visible,
+.pk-hdr-component .pk-hdr-dropdown-item:focus-visible,
+.pk-hdr-component .pk-hdr-nav-link:focus-visible {
+    outline: 2px solid var(--pk-hdr-gold);
+    outline-offset: 3px;
+}
+
+.pk-hdr-component .pk-hdr-action-btn small {
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+.pk-hdr-component .pk-hdr-cart-badge {
     align-items: center;
-    justify-content: center;
-    background-color: var(--pk-color-gold-dark);
-    color: #ffffff;
+    background-color: var(--pk-hdr-gold-dark);
+    border-radius: 999px;
+    color: #fff;
+    display: inline-flex;
+    font-family: var(--pk-hdr-sans);
     font-size: 0.625rem;
     font-weight: 700;
-    border-radius: 50%;
-    min-width: 18px;
     height: 18px;
-    padding: 0 4px;
-    line-height: 1;
-}
-
-.pk-hdr-cart-badge {
-    position: absolute;
-    top: -4px;
-    right: -6px;
-}
-
-/* 9. Navigation Bar */
-.pk-nav-bar {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 2.25rem;
-    padding: 0.6rem 0;
-    border-top: 1px solid rgba(230, 223, 211, 0.6);
+    line-height: 1;
+    min-width: 18px;
+    padding: 0 4px;
+    position: absolute;
+    right: -6px;
+    top: -4px;
 }
 
-.pk-nav-link {
+.pk-hdr-component .pk-hdr-nav-bar {
+    align-items: center;
+    border-top: 1px solid rgba(230, 223, 211, 0.6);
+    border-top-color: color-mix(in srgb, var(--pk-hdr-border) 60%, transparent);
+    display: flex;
+    gap: 2.25rem;
+    justify-content: center;
+    max-height: 4rem;
+    overflow: hidden;
+    padding: 0.6rem 0;
+    transition: max-height 240ms ease-in-out, padding 240ms ease-in-out, opacity 160ms ease-in-out, border-color 240ms ease-in-out;
+}
+
+.pk-hdr-component .pk-hdr-nav-bar.pk-hdr-nav-bar--hidden:not(.pk-hdr-nav-bar--mobile-open) {
+    border-top-color: transparent;
+    max-height: 0;
+    opacity: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    pointer-events: none;
+}
+
+.pk-hdr-component .pk-hdr-nav-link {
+    color: var(--pk-hdr-text);
+    font-family: var(--pk-hdr-sans);
     font-size: 0.75rem;
     font-weight: 600;
-    text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--pk-color-text-main);
-    text-decoration: none;
-    position: relative;
     padding: 0.25rem 0;
-    transition: var(--pk-transition-fast);
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color var(--pk-hdr-transition);
 }
 
-.pk-nav-link::after {
-    content: '';
-    position: absolute;
+.pk-hdr-component .pk-hdr-nav-link::after {
+    background-color: var(--pk-hdr-gold);
     bottom: 0;
-    left: 0;
-    width: 0%;
+    content: '';
     height: 2px;
-    background-color: var(--pk-color-gold-base);
-    transition: var(--pk-transition-fast);
+    left: 0;
+    position: absolute;
+    transition: width var(--pk-hdr-transition);
+    width: 0;
 }
 
-.pk-nav-link:hover::after,
-.pk-nav-link.pk-active::after {
+.pk-hdr-component .pk-hdr-nav-link:hover,
+.pk-hdr-component .pk-hdr-nav-link--active {
+    color: var(--pk-hdr-gold-dark);
+}
+
+.pk-hdr-component .pk-hdr-nav-link:hover::after,
+.pk-hdr-component .pk-hdr-nav-link--active::after {
     width: 100%;
 }
 
-.pk-nav-link-highlight {
-    color: var(--pk-color-gold-dark);
-    font-weight: 700;
-}
-
-/* 10. User Dropdown Menu */
-.pk-hdr-user-dropdown-wrapper {
-    position: relative;
+.pk-hdr-component .pk-hdr-user-dropdown-wrapper {
     display: inline-block;
+    position: relative;
 }
 
-.pk-hdr-dropdown-menu {
+.pk-hdr-component .pk-hdr-account-avatar {
+    align-items: center;
+    background: linear-gradient(135deg, #c5a13b, var(--pk-hdr-gold-dark));
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 44px;
+    justify-content: center;
+    overflow: hidden;
+    width: 44px;
+}
+
+.pk-hdr-component .pk-hdr-account-avatar--trigger {
+    height: 28px;
+    width: 28px;
+}
+
+.pk-hdr-component .pk-hdr-account-avatar img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.pk-hdr-component .pk-hdr-account-avatar-fallback {
+    align-items: center;
+    display: inline-flex;
+    font-family: var(--pk-hdr-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    height: 100%;
+    justify-content: center;
+    line-height: 1;
+    width: 100%;
+}
+
+.pk-hdr-component .pk-hdr-account-avatar--trigger .pk-hdr-account-avatar-fallback {
+    font-size: 0.75rem;
+}
+
+.pk-hdr-component .pk-hdr-account-avatar-fallback[hidden] {
     display: none;
+}
+
+.pk-hdr-component .pk-hdr-dropdown-menu {
+    background-color: var(--pk-hdr-surface);
+    border: 1px solid var(--pk-hdr-border);
+    border-radius: 4px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    display: none;
+    min-width: 0;
+    padding: 8px 0;
     position: absolute;
     right: 0;
-    top: 100%;
-    background-color: #ffffff;
-    min-width: 180px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    z-index: 1000;
-    padding: 8px 0;
-    border: 1px solid var(--pk-color-border);
+    top: calc(100% + 0.4rem);
+    width: min(18rem, calc(100vw - 2rem));
+    z-index: 1;
 }
 
-.pk-hdr-dropdown-menu.pk-dropdown-open {
+.pk-hdr-component .pk-hdr-dropdown-menu.pk-hdr-dropdown-menu--open {
     display: block;
 }
 
-.pk-dropdown-header {
-    padding: 8px 16px;
-    font-size: 0.875rem;
-    color: var(--pk-color-text-main);
+.pk-hdr-component .pk-hdr-account-summary {
+    align-items: center;
+    color: var(--pk-hdr-text);
+    display: flex;
+    font-family: var(--pk-hdr-sans);
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    text-decoration: none;
 }
 
-.pk-dropdown-item {
-    display: flex;
+.pk-hdr-component .pk-hdr-account-summary:hover,
+.pk-hdr-component .pk-hdr-account-summary:focus-visible {
+    background-color: #f9f7f2;
+    color: var(--pk-hdr-gold-dark);
+}
+
+.pk-hdr-component .pk-hdr-account-summary:focus-visible {
+    outline: 2px solid var(--pk-hdr-gold);
+    outline-offset: -2px;
+}
+
+.pk-hdr-component .pk-hdr-account-details {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.pk-hdr-component .pk-hdr-account-name,
+.pk-hdr-component .pk-hdr-account-username,
+.pk-hdr-component .pk-hdr-account-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pk-hdr-component .pk-hdr-account-name {
+    font-size: 0.8125rem;
+}
+
+.pk-hdr-component .pk-hdr-account-username,
+.pk-hdr-component .pk-hdr-account-email {
+    color: var(--pk-hdr-muted);
+    font-size: 0.7rem;
+}
+
+.pk-hdr-component .pk-hdr-account-summary:hover .pk-hdr-account-username,
+.pk-hdr-component .pk-hdr-account-summary:hover .pk-hdr-account-email {
+    color: currentColor;
+}
+
+.pk-hdr-component .pk-hdr-dropdown-item {
     align-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--pk-hdr-text);
+    cursor: pointer;
+    display: flex;
+    font-family: var(--pk-hdr-sans);
+    font-size: 0.875rem;
     gap: 8px;
     padding: 8px 16px;
-    color: var(--pk-color-text-main);
-    text-decoration: none;
-    font-size: 0.875rem;
-    width: 100%;
-    border: none;
-    background: none;
-    cursor: pointer;
     text-align: left;
-    transition: var(--pk-transition-fast);
+    text-decoration: none;
+    transition: background-color var(--pk-hdr-transition), color var(--pk-hdr-transition);
+    width: 100%;
 }
 
-.pk-dropdown-item svg {
-    width: 16px;
-    height: 16px;
-}
-
-.pk-dropdown-item:hover {
+.pk-hdr-component .pk-hdr-dropdown-item:hover,
+.pk-hdr-component .pk-hdr-dropdown-item:focus-visible {
     background-color: #f9f7f2;
-    color: var(--pk-color-gold-dark);
+    color: var(--pk-hdr-gold-dark);
 }
 
-.pk-dropdown-divider {
+.pk-hdr-component .pk-hdr-dropdown-icon {
+    flex: 0 0 auto;
+    height: 16px;
+    width: 16px;
+}
+
+.pk-hdr-component .pk-hdr-dropdown-divider {
+    border: 0;
+    border-top: 1px solid var(--pk-hdr-border);
     margin: 4px 0;
-    border: none;
-    border-top: 1px solid var(--pk-color-border);
 }
 
-.pk-logout-form {
+.pk-hdr-component .pk-hdr-logout-form {
     margin: 0;
 }
 
-/* 11. Mobile Responsiveness */
 @media (max-width: 991px) {
-    .pk-hdr-mobile-toggle {
-        display: block;
+    .pk-hdr-component .pk-hdr-main-row {
+        display: grid;
+        grid-template-columns: minmax(2.5rem, 1fr) auto minmax(2.5rem, 1fr);
+        height: 72px;
     }
 
-    .pk-hdr-search-col {
+    .pk-hdr-component .pk-hdr-mobile-toggle {
+        display: inline-flex;
+        justify-self: start;
+    }
+
+    .pk-hdr-component .pk-hdr-search-col {
         display: none;
     }
 
-    .pk-nav-bar {
+    .pk-hdr-component .pk-hdr-brand-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-hdr-component .pk-hdr-actions-col {
+        gap: 0.75rem;
+        justify-self: end;
+    }
+
+    .pk-hdr-component .pk-hdr-action-btn small {
         display: none;
     }
 
-    .pk-nav-bar.pk-nav-mobile-open {
+    .pk-hdr-component .pk-hdr-nav-bar {
+        display: none;
+    }
+
+    .pk-hdr-component .pk-hdr-nav-bar.pk-hdr-nav-bar--mobile-open {
+        align-items: flex-start;
+        background-color: var(--pk-hdr-surface);
+        border-bottom: 1px solid var(--pk-hdr-border);
+        border-top: 0;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
         gap: 1rem;
-        padding: 1.5rem;
-        background-color: #ffffff;
-        border-top: none;
-        border-bottom: 1px solid var(--pk-color-border);
+        max-height: 32rem;
+        opacity: 1;
+        padding: 1.25rem 1.5rem;
+        pointer-events: auto;
     }
 
-    .pk-nav-link::after {
+    .pk-hdr-component .pk-hdr-nav-link::after {
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .pk-hdr-component .pk-hdr-announcement {
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+    }
+
+    .pk-hdr-component .pk-hdr-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .pk-hdr-component .pk-hdr-actions-col {
+        gap: 0.45rem;
+    }
+
+    .pk-hdr-component .pk-hdr-brand-title {
+        font-size: 1.1rem;
+    }
+
+    .pk-hdr-component .pk-hdr-brand-subtitle {
+        font-size: 0.45rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pk-hdr-component *,
+    .pk-hdr-component *::before,
+    .pk-hdr-component *::after {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms !important;
     }
 }

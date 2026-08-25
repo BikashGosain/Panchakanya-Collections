@@ -39,7 +39,9 @@
     {% include 'includes/footer.html' %}
 
     <script>
-        lucide.createIcons();
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
     </script>
     <script src="{% static 'js/includes/header.js' %}"></script>
     {% block extra_js %}{% endblock %}
