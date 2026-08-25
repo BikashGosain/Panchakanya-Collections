@@ -77,17 +77,33 @@ def product_list_view(request):
     Product listing page.
 
     Category behavior:
-    - Selecting a parent category includes all descendant categories.
-    - Selecting a child category includes that child and its descendants.
-    - Only the selected category path is expanded.
-    - Manually opening a parent does not automatically open all children.
+
+    1. Selecting a parent category displays products from:
+       - the parent category
+       - all descendant categories
+
+    2. Selecting a child category displays products from:
+       - the selected child
+       - all of its descendants
+
+    3. The selected category's parents are automatically expanded.
+
+    4. The selected category itself is NOT automatically expanded.
+       Therefore, selecting a parent does not automatically open
+       all of its children.
+
+    5. Manual category toggle opens/closes only that category's
+       immediate children.
     """
 
     # ==============================================================
     # GET PARAMETERS
     # ==============================================================
 
-    search_query = request.GET.get("q", "").strip()
+    search_query = request.GET.get(
+        "q",
+        "",
+    ).strip()
 
     selected_category = request.GET.get(
         "category",
@@ -151,33 +167,42 @@ def product_list_view(request):
 
     selected_category_obj = None
 
-    selected_category_ids = set()
+    # This set is ONLY for opening the parent path in the tree.
+    #
+    # IMPORTANT:
+    # The selected category itself is NOT added.
+    #
+    # Example:
+    #
+    # Jewellery
+    #     └── Rings
+    #           └── Gold Rings
+    #
+    # If Gold Rings is selected:
+    #
+    # selected_category_open_ids =
+    #     Jewellery + Rings
+    #
+    # Gold Rings itself remains closed.
+    selected_category_open_ids = set()
 
-    descendant_category_ids = set()
+    # This set is used for filtering products.
+    selected_category_product_ids = set()
 
     if selected_category:
-        selected_category_obj = Category.objects.filter(
-            slug=selected_category,
-        ).first()
+        selected_category_obj = (
+            Category.objects.filter(
+                slug=selected_category,
+            )
+            .select_related(
+                "parent",
+            )
+            .first()
+        )
 
     if selected_category_obj:
         # ==========================================================
-        # 1. FIND THE SELECTED CATEGORY + ALL PARENTS
-        #
-        # Used ONLY for keeping the category tree open.
-        # ==========================================================
-
-        current_category = selected_category_obj
-
-        while current_category:
-            selected_category_ids.add(
-                current_category.id,
-            )
-
-            current_category = current_category.parent
-
-        # ==========================================================
-        # 2. FIND SELECTED CATEGORY + ALL DESCENDANTS
+        # 1. FIND ALL DESCENDANTS
         #
         # Used for PRODUCT FILTERING.
         # ==========================================================
@@ -189,8 +214,8 @@ def product_list_view(request):
         while categories_to_check:
             current_category = categories_to_check.pop()
 
-            descendant_category_ids.add(
-                current_category.id,
+            selected_category_product_ids.add(
+                current_category.pk,
             )
 
             children = list(current_category.subcategories.all())
@@ -198,15 +223,32 @@ def product_list_view(request):
             categories_to_check.extend(children)
 
         # ==========================================================
-        # FILTER PRODUCTS
+        # 2. FIND ALL PARENTS
+        #
+        # Used ONLY for opening the tree.
+        #
+        # Notice that selected_category_obj itself is NOT added.
+        # ==========================================================
+
+        current_category = selected_category_obj.parent
+
+        while current_category:
+            selected_category_open_ids.add(
+                current_category.pk,
+            )
+
+            current_category = current_category.parent
+
+        # ==========================================================
+        # 3. FILTER PRODUCTS
         # ==========================================================
 
         products = products.filter(
-            category_id__in=descendant_category_ids,
+            category_id__in=selected_category_product_ids,
         )
 
     # ==============================================================
-    # METAL
+    # METAL FILTER
     # ==============================================================
 
     if selected_metal:
@@ -228,7 +270,7 @@ def product_list_view(request):
             TypeError,
             ValueError,
         ):
-            pass
+            min_price = ""
 
     # ==============================================================
     # MAX PRICE
@@ -244,7 +286,7 @@ def product_list_view(request):
             TypeError,
             ValueError,
         ):
-            pass
+            max_price = ""
 
     # ==============================================================
     # ROOT CATEGORIES
@@ -285,14 +327,15 @@ def product_list_view(request):
 
     context = {
         "products": products_page,
+        "page_obj": products_page,
         "root_categories": root_categories,
         "selected_category": selected_category,
         "selected_category_obj": (selected_category_obj),
-        # Category + all parents.
+        # Only parent categories.
         #
-        # This controls which branches are automatically
-        # expanded after selecting a category.
-        "selected_category_ids": (selected_category_ids),
+        # Used to automatically open the path leading
+        # to the selected category.
+        "selected_category_open_ids": (selected_category_open_ids),
         "search_query": search_query,
         "selected_metal": selected_metal,
         "min_price": min_price,

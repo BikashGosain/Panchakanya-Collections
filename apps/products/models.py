@@ -15,7 +15,9 @@ class AllObjectsManager(models.Manager):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        max_length=100,
+    )
 
     slug = models.SlugField(
         max_length=120,
@@ -42,7 +44,9 @@ class Category(models.Model):
         verbose_name="Show on homepage",
     )
 
-    is_deleted = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(
+        default=False,
+    )
 
     deleted_at = models.DateTimeField(
         null=True,
@@ -68,7 +72,12 @@ class Category(models.Model):
 
     @property
     def product_count(self):
-        ids = [self.pk]
+        """
+        Return the number of active products belonging to this
+        category or any descendant category.
+        """
+
+        category_ids = [self.pk]
         stack = [self]
 
         while stack:
@@ -76,13 +85,13 @@ class Category(models.Model):
 
             children = list(current.subcategories.all())
 
-            ids.extend(child.pk for child in children)
+            category_ids.extend(child.pk for child in children)
 
             stack.extend(children)
 
         return Product.objects.filter(
             status="active",
-            category_id__in=ids,
+            category_id__in=category_ids,
         ).count()
 
     def clean(self):
@@ -104,9 +113,8 @@ class Category(models.Model):
                 raise ValidationError(
                     {
                         "parent": (
-                            "Invalid parent. This would "
-                            "create a circular category "
-                            "structure."
+                            "Invalid parent. This would create "
+                            "a circular category structure."
                         )
                     }
                 )
@@ -114,6 +122,7 @@ class Category(models.Model):
             ancestor = ancestor.parent
 
     def save(self, *args, **kwargs):
+
         self.full_clean()
 
         if not self.slug:
@@ -130,13 +139,17 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
     def soft_delete(self):
+
         self.is_deleted = True
         self.deleted_at = timezone.now()
+
         self.save()
 
     def restore(self):
+
         self.is_deleted = False
         self.deleted_at = None
+
         self.save()
 
     def __str__(self):
@@ -243,7 +256,7 @@ class Product(models.Model):
         """
         Return the primary product image.
 
-        The view should prefetch primary_images
+        The product list view prefetches primary_images
         for better performance.
         """
 
@@ -268,13 +281,17 @@ class Product(models.Model):
         super().save(*args, **kwargs)
 
     def soft_delete(self):
+
         self.is_deleted = True
         self.deleted_at = timezone.now()
+
         self.save()
 
     def restore(self):
+
         self.is_deleted = False
         self.deleted_at = None
+
         self.save()
 
     def __str__(self):
@@ -305,8 +322,12 @@ class ProductImage(models.Model):
                     product=self.product,
                     is_primary=True,
                 )
-                .exclude(pk=self.pk)
-                .update(is_primary=False)
+                .exclude(
+                    pk=self.pk,
+                )
+                .update(
+                    is_primary=False,
+                )
             )
 
         super().save(*args, **kwargs)

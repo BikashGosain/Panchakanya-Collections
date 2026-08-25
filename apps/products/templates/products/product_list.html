@@ -17,8 +17,7 @@
 /* ==========================================================================
    PANCHAKANYA COLLECTIONS
    PRODUCT LIST PAGE
-   Namespace:
-   pk-pl-
+   Namespace: pk-pl-
    ========================================================================== */
 
 
@@ -29,7 +28,6 @@
 .pk-pl-page {
 
     width: 100%;
-
     max-width: 1400px;
 
     margin: 0 auto;
@@ -43,16 +41,18 @@
 .pk-pl-page *::after {
 
     box-sizing: border-box;
-
 }
 
 
 .pk-pl-page a {
 
     color: inherit;
-
 }
 
+
+/* ==========================================================================
+   PAGE TITLE
+   ========================================================================== */
 
 .pk-pl-page-title {
 
@@ -61,11 +61,9 @@
     color: #222;
 
     font-size: 30px;
-
     font-weight: 700;
 
     line-height: 1.2;
-
 }
 
 
@@ -80,7 +78,6 @@
     align-items: flex-start;
 
     gap: 30px;
-
 }
 
 
@@ -91,21 +88,19 @@
 .pk-pl-sidebar {
 
     width: 280px;
-
     min-width: 280px;
 
     flex-shrink: 0;
 
-    position: sticky;
-
     position: -webkit-sticky;
+    position: sticky;
 
     top: 20px;
 
+    height: calc(100vh - 40px);
     max-height: calc(100vh - 40px);
 
     overflow-x: hidden;
-
     overflow-y: auto;
 
     padding: 20px;
@@ -114,24 +109,21 @@
 
     border: 1px solid #e1e1e1;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     scrollbar-width: thin;
-
 }
 
 
 .pk-pl-sidebar::-webkit-scrollbar {
 
     width: 5px;
-
 }
 
 
 .pk-pl-sidebar::-webkit-scrollbar-track {
 
     background: transparent;
-
 }
 
 
@@ -140,14 +132,12 @@
     background: #ccc;
 
     border-radius: 20px;
-
 }
 
 
 .pk-pl-sidebar::-webkit-scrollbar-thumb:hover {
 
-    background: #aaa;
-
+    background: #999;
 }
 
 
@@ -158,14 +148,12 @@
 .pk-pl-filter-section {
 
     margin-bottom: 30px;
-
 }
 
 
 .pk-pl-filter-section:last-child {
 
     margin-bottom: 0;
-
 }
 
 
@@ -180,46 +168,40 @@
     color: #222;
 
     font-size: 13px;
-
     font-weight: 700;
 
     letter-spacing: 0.7px;
 
     text-transform: uppercase;
-
 }
 
 
 /* ==========================================================================
-   CATEGORY CONTAINER
+   CATEGORY TREE CONTAINER
    ========================================================================== */
 
 .pk-pl-category-tree-container {
 
-    max-height: 350px;
+    max-height: 360px;
 
     overflow-x: hidden;
-
     overflow-y: auto;
 
     padding-right: 5px;
 
     scrollbar-width: thin;
-
 }
 
 
 .pk-pl-category-tree-container::-webkit-scrollbar {
 
     width: 5px;
-
 }
 
 
 .pk-pl-category-tree-container::-webkit-scrollbar-track {
 
     background: transparent;
-
 }
 
 
@@ -228,14 +210,12 @@
     background: #ccc;
 
     border-radius: 20px;
-
 }
 
 
 .pk-pl-category-tree-container::-webkit-scrollbar-thumb:hover {
 
     background: #999;
-
 }
 
 
@@ -248,9 +228,7 @@
     list-style: none;
 
     margin: 0;
-
     padding: 0;
-
 }
 
 
@@ -259,9 +237,7 @@
     list-style: none;
 
     margin: 0;
-
     padding: 0;
-
 }
 
 
@@ -272,7 +248,6 @@
     align-items: center;
 
     min-height: 40px;
-
 }
 
 
@@ -283,7 +258,6 @@
 .pk-pl-category-toggle {
 
     width: 30px;
-
     height: 30px;
 
     flex: 0 0 30px;
@@ -291,14 +265,13 @@
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 0;
 
     border: 0;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     background: transparent;
 
@@ -310,24 +283,45 @@
 
     line-height: 1;
 
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 }
 
 
 .pk-pl-category-toggle:hover {
 
-    background: #eee;
-
+    background: #f0f0f0;
 }
 
+
+.pk-pl-category-toggle:focus-visible {
+
+    outline: 2px solid #888;
+
+    outline-offset: 2px;
+}
+
+
+.pk-pl-category-icon {
+
+    display: inline-block;
+
+    transition:
+        transform 0.15s ease;
+}
+
+
+/* ==========================================================================
+   CATEGORY PLACEHOLDER
+   ========================================================================== */
 
 .pk-pl-category-toggle-placeholder {
 
     width: 30px;
-
     height: 30px;
 
     flex: 0 0 30px;
-
 }
 
 
@@ -344,14 +338,13 @@
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     gap: 8px;
 
     padding: 8px 7px;
 
-    border-radius: 6px;
+    border-radius: 7px;
 
     color: #333;
 
@@ -360,40 +353,36 @@
     text-decoration: none;
 
     transition:
-
         background 0.15s ease,
-
         color 0.15s ease;
-
 }
 
 
 .pk-pl-category-link:hover {
 
     background: #f4f4f4;
-
 }
 
 
 .pk-pl-category-link.pk-pl-selected {
 
-    background: #f0f0f0;
+    background: #222;
 
-    color: #111;
+    color: #fff;
 
     font-weight: 700;
-
 }
 
 
 .pk-pl-category-name {
+
+    min-width: 0;
 
     overflow: hidden;
 
     text-overflow: ellipsis;
 
     white-space: nowrap;
-
 }
 
 
@@ -406,7 +395,13 @@
     font-size: 11px;
 
     font-weight: 400;
+}
 
+
+.pk-pl-category-link.pk-pl-selected
+.pk-pl-category-count {
+
+    color: rgba(255, 255, 255, 0.7);
 }
 
 
@@ -423,7 +418,6 @@
     padding: 0 0 0 12px;
 
     border-left: 1px solid #ddd;
-
 }
 
 
@@ -438,7 +432,6 @@
     flex-direction: column;
 
     gap: 15px;
-
 }
 
 
@@ -449,7 +442,6 @@
     flex-direction: column;
 
     gap: 7px;
-
 }
 
 
@@ -460,7 +452,6 @@
     font-size: 13px;
 
     font-weight: 600;
-
 }
 
 
@@ -469,11 +460,11 @@
 
     width: 100%;
 
-    padding: 9px 10px;
+    padding: 10px 11px;
 
     border: 1px solid #ccc;
 
-    border-radius: 5px;
+    border-radius: 7px;
 
     background: #fff;
 
@@ -483,14 +474,19 @@
 
     outline: none;
 
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 
 .pk-pl-filter-input:focus,
 .pk-pl-filter-select:focus {
 
-    border-color: #888;
+    border-color: #777;
 
+    box-shadow:
+        0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
 
@@ -499,26 +495,28 @@
     display: flex;
 
     gap: 8px;
-
 }
 
 
 .pk-pl-price-row .pk-pl-filter-input {
 
     width: 50%;
-
 }
 
+
+/* ==========================================================================
+   FILTER BUTTON
+   ========================================================================== */
 
 .pk-pl-filter-button {
 
     width: 100%;
 
-    padding: 10px;
+    padding: 11px;
 
     border: 0;
 
-    border-radius: 5px;
+    border-radius: 7px;
 
     background: #222;
 
@@ -527,20 +525,29 @@
     cursor: pointer;
 
     font-size: 14px;
+    font-weight: 600;
 
     transition:
-
-        background 0.15s ease;
-
+        background 0.15s ease,
+        transform 0.15s ease;
 }
 
 
 .pk-pl-filter-button:hover {
 
     background: #444;
-
 }
 
+
+.pk-pl-filter-button:active {
+
+    transform: scale(0.98);
+}
+
+
+/* ==========================================================================
+   CLEAR BUTTON
+   ========================================================================== */
 
 .pk-pl-clear-button {
 
@@ -555,14 +562,14 @@
     text-align: center;
 
     text-decoration: none;
-
 }
 
 
 .pk-pl-clear-button:hover {
 
-    text-decoration: underline;
+    color: #222;
 
+    text-decoration: underline;
 }
 
 
@@ -575,12 +582,11 @@
     flex: 1;
 
     min-width: 0;
-
 }
 
 
 /* ==========================================================================
-   SEARCH
+   SEARCH BAR
    ========================================================================== */
 
 .pk-pl-search-bar {
@@ -593,8 +599,7 @@
 
     border: 1px solid #ddd;
 
-    border-radius: 10px;
-
+    border-radius: 12px;
 }
 
 
@@ -603,7 +608,6 @@
     display: flex;
 
     gap: 10px;
-
 }
 
 
@@ -613,35 +617,35 @@
 
     min-width: 0;
 
-    padding: 10px;
+    padding: 11px 12px;
 
     border: 1px solid #ccc;
 
-    border-radius: 5px;
+    border-radius: 7px;
+
+    background: #fff;
 
     color: #222;
 
     font-size: 14px;
 
     outline: none;
-
 }
 
 
 .pk-pl-search-input:focus {
 
-    border-color: #888;
-
+    border-color: #777;
 }
 
 
 .pk-pl-search-button {
 
-    padding: 10px 20px;
+    padding: 11px 22px;
 
     border: 0;
 
-    border-radius: 5px;
+    border-radius: 7px;
 
     background: #222;
 
@@ -650,14 +654,13 @@
     cursor: pointer;
 
     font-size: 14px;
-
+    font-weight: 600;
 }
 
 
 .pk-pl-search-button:hover {
 
     background: #444;
-
 }
 
 
@@ -675,12 +678,11 @@
 
     border: 1px solid #ddd;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    color: #555;
+    color: #666;
 
     font-size: 14px;
-
 }
 
 
@@ -689,7 +691,6 @@
     color: #222;
 
     font-weight: 700;
-
 }
 
 
@@ -705,7 +706,6 @@
         repeat(3, minmax(0, 1fr));
 
     gap: 24px;
-
 }
 
 
@@ -723,30 +723,28 @@
 
     background: #fff;
 
-    border: 1px solid #e6e6e6;
+    border: 1px solid #e7e7e7;
 
-    border-radius: 14px;
+    border-radius: 16px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.03);
 
     transition:
-
         transform 0.25s ease,
-
         box-shadow 0.25s ease,
-
         border-color 0.25s ease;
-
 }
 
 
 .pk-pl-product-card:hover {
 
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 
     border-color: #d8d8d8;
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.10);
-
+        0 16px 35px rgba(0, 0, 0, 0.10);
 }
 
 
@@ -757,7 +755,6 @@
     color: inherit;
 
     text-decoration: none;
-
 }
 
 
@@ -775,8 +772,7 @@
 
     overflow: hidden;
 
-    background: #f7f7f7;
-
+    background: #f6f6f6;
 }
 
 
@@ -785,15 +781,12 @@
     display: block;
 
     width: 100%;
-
     height: 100%;
 
     object-fit: cover;
 
     transition:
-
-        transform 0.45s ease;
-
+        transform 0.5s ease;
 }
 
 
@@ -801,7 +794,6 @@
 .pk-pl-product-image {
 
     transform: scale(1.06);
-
 }
 
 
@@ -812,32 +804,27 @@
 .pk-pl-product-image-placeholder {
 
     width: 100%;
-
     height: 100%;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     background: #f5f5f5;
-
 }
 
 
 .pk-pl-default-image {
 
     width: 100%;
-
     height: 100%;
 
     padding: 25px;
 
     object-fit: contain;
 
-    opacity: 0.75;
-
+    opacity: 0.65;
 }
 
 
@@ -850,7 +837,6 @@
     position: absolute;
 
     top: 12px;
-
     left: 12px;
 
     z-index: 2;
@@ -862,7 +848,6 @@
     align-items: flex-start;
 
     gap: 6px;
-
 }
 
 
@@ -878,7 +863,7 @@
 
     border-radius: 6px;
 
-    background: #222;
+    background: rgba(30, 30, 30, 0.92);
 
     color: #fff;
 
@@ -889,14 +874,12 @@
     letter-spacing: 0.4px;
 
     text-transform: uppercase;
-
 }
 
 
 .pk-pl-product-badge-featured {
 
     background: #b8860b;
-
 }
 
 
@@ -909,19 +892,16 @@
     position: absolute;
 
     top: 12px;
-
     right: 12px;
 
-    z-index: 3;
+    z-index: 4;
 
-    width: 38px;
-
-    height: 38px;
+    width: 40px;
+    height: 40px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 0;
@@ -930,24 +910,23 @@
 
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.95);
 
     color: #333;
 
     cursor: pointer;
 
-    font-size: 20px;
+    font-size: 21px;
 
     line-height: 1;
 
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+
     transition:
-
         background 0.2s ease,
-
         color 0.2s ease,
-
         transform 0.2s ease;
-
 }
 
 
@@ -958,7 +937,6 @@
     background: #222;
 
     color: #fff;
-
 }
 
 
@@ -968,8 +946,7 @@
 
 .pk-pl-product-content {
 
-    padding: 16px 17px 18px;
-
+    padding: 17px 18px 18px;
 }
 
 
@@ -983,14 +960,13 @@
 
     color: #888;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    font-weight: 600;
+    font-weight: 700;
 
-    letter-spacing: 0.7px;
+    letter-spacing: 0.8px;
 
     text-transform: uppercase;
-
 }
 
 
@@ -1001,6 +977,8 @@
 .pk-pl-product-name {
 
     display: -webkit-box;
+
+    min-height: 45px;
 
     margin: 0 0 9px;
 
@@ -1017,7 +995,6 @@
     -webkit-box-orient: vertical;
 
     -webkit-line-clamp: 2;
-
 }
 
 
@@ -1027,21 +1004,20 @@
 
 .pk-pl-product-price {
 
-    margin: 0 0 12px;
+    margin: 0 0 13px;
 
     color: #181818;
 
-    font-size: 19px;
+    font-size: 20px;
 
     font-weight: 700;
 
     line-height: 1.2;
-
 }
 
 
 /* ==========================================================================
-   DETAILS
+   PRODUCT DETAILS
    ========================================================================== */
 
 .pk-pl-product-details {
@@ -1053,7 +1029,6 @@
     gap: 6px;
 
     margin-bottom: 14px;
-
 }
 
 
@@ -1065,7 +1040,7 @@
 
     padding: 5px 8px;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     background: #f5f5f5;
 
@@ -1074,7 +1049,6 @@
     font-size: 11px;
 
     line-height: 1.2;
-
 }
 
 
@@ -1087,7 +1061,6 @@
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     gap: 10px;
@@ -1095,7 +1068,6 @@
     padding-top: 12px;
 
     border-top: 1px solid #eee;
-
 }
 
 
@@ -1116,14 +1088,12 @@
     font-size: 12px;
 
     font-weight: 600;
-
 }
 
 
 .pk-pl-stock-dot {
 
     width: 7px;
-
     height: 7px;
 
     flex-shrink: 0;
@@ -1131,14 +1101,12 @@
     border-radius: 50%;
 
     background: #28a745;
-
 }
 
 
 .pk-pl-stock-out {
 
     color: #999;
-
 }
 
 
@@ -1146,7 +1114,6 @@
 .pk-pl-stock-dot {
 
     background: #aaa;
-
 }
 
 
@@ -1163,9 +1130,7 @@
     font-weight: 600;
 
     transition:
-
         color 0.2s ease;
-
 }
 
 
@@ -1173,28 +1138,32 @@
 .pk-pl-view-product {
 
     color: #b8860b;
-
 }
 
 
 /* ==========================================================================
-   EMPTY
+   EMPTY PRODUCTS
    ========================================================================== */
 
 .pk-pl-empty-products {
 
-    padding: 40px;
+    padding: 50px 30px;
 
     background: #fff;
 
     border: 1px solid #ddd;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     color: #666;
 
     text-align: center;
+}
 
+
+.pk-pl-empty-products p {
+
+    margin: 0 0 12px;
 }
 
 
@@ -1203,7 +1172,6 @@
     color: #222;
 
     font-weight: 600;
-
 }
 
 
@@ -1216,14 +1184,12 @@
     .pk-pl-page {
 
         padding: 25px;
-
     }
 
 
     .pk-pl-shop-layout {
 
         gap: 20px;
-
     }
 
 
@@ -1232,7 +1198,6 @@
         width: 250px;
 
         min-width: 250px;
-
     }
 
 
@@ -1242,7 +1207,6 @@
             repeat(2, minmax(0, 1fr));
 
         gap: 20px;
-
     }
 
 }
@@ -1257,7 +1221,6 @@
     .pk-pl-shop-layout {
 
         flex-direction: column;
-
     }
 
 
@@ -1269,10 +1232,11 @@
 
         position: static;
 
+        height: auto;
+
         max-height: none;
 
         overflow: visible;
-
     }
 
 
@@ -1283,17 +1247,17 @@
         overflow-x: hidden;
 
         overflow-y: auto;
-
     }
 
 
     .pk-pl-products-grid {
 
+        width: 100%;
+
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
 
         gap: 16px;
-
     }
 
 }
@@ -1308,7 +1272,6 @@
     .pk-pl-page {
 
         padding: 15px;
-
     }
 
 
@@ -1317,28 +1280,24 @@
         margin-bottom: 20px;
 
         font-size: 24px;
-
     }
 
 
     .pk-pl-sidebar {
 
         padding: 15px;
-
     }
 
 
     .pk-pl-search-form {
 
         flex-direction: column;
-
     }
 
 
     .pk-pl-search-button {
 
         width: 100%;
-
     }
 
 
@@ -1348,35 +1307,32 @@
             repeat(2, minmax(0, 1fr));
 
         gap: 12px;
-
     }
 
 
     .pk-pl-product-content {
 
         padding: 12px;
-
     }
 
 
     .pk-pl-product-name {
 
-        font-size: 14px;
+        min-height: 40px;
 
+        font-size: 14px;
     }
 
 
     .pk-pl-product-price {
 
         font-size: 16px;
-
     }
 
 
     .pk-pl-product-category {
 
         font-size: 9px;
-
     }
 
 
@@ -1385,7 +1341,6 @@
         padding: 4px 6px;
 
         font-size: 9px;
-
     }
 
 
@@ -1396,7 +1351,6 @@
         flex-direction: column;
 
         gap: 7px;
-
     }
 
 
@@ -1405,22 +1359,18 @@
         padding: 4px 7px;
 
         font-size: 8px;
-
     }
 
 
     .pk-pl-wishlist-button {
 
         top: 8px;
-
         right: 8px;
 
         width: 32px;
-
         height: 32px;
 
         font-size: 17px;
-
     }
 
 }
@@ -1435,21 +1385,18 @@
     .pk-pl-page {
 
         padding: 10px;
-
     }
 
 
     .pk-pl-sidebar {
 
         padding: 12px;
-
     }
 
 
     .pk-pl-products-grid {
 
         grid-template-columns: 1fr;
-
     }
 
 }
@@ -1486,7 +1433,7 @@
 
 
             <!-- ======================================================
-                 CATEGORY
+                 CATEGORY SECTION
                  ====================================================== -->
 
             <div class="pk-pl-filter-section">
@@ -1499,15 +1446,21 @@
                 </div>
 
 
+                <!-- ==================================================
+                     IMPORTANT:
+                     This has its own scrollbar.
+                     It does NOT scroll the products.
+                     ================================================== -->
+
                 <div class="pk-pl-category-tree-container">
 
 
                     <ul class="pk-pl-category-tree">
 
 
-                        <!-- ==================================================
+                        <!-- ==========================================
                              ALL PRODUCTS
-                             ================================================== -->
+                             ========================================== -->
 
                         <li class="pk-pl-category-item">
 
@@ -1515,7 +1468,10 @@
 
 
                                 <span
-                                    class="pk-pl-category-toggle-placeholder"
+                                    class="
+                                        pk-pl-category-toggle-placeholder
+                                    "
+                                    aria-hidden="true"
                                 ></span>
 
 
@@ -1529,7 +1485,9 @@
                                     "
                                 >
 
-                                    <span class="pk-pl-category-name">
+                                    <span
+                                        class="pk-pl-category-name"
+                                    >
 
                                         All Jewellery
 
@@ -1537,15 +1495,14 @@
 
                                 </a>
 
-
                             </div>
 
                         </li>
 
 
-                        <!-- ==================================================
-                             CATEGORY TREE
-                             ================================================== -->
+                        <!-- ==========================================
+                             RECURSIVE CATEGORY TREE
+                             ========================================== -->
 
                         {% include "products/category_tree.html" with categories=root_categories %}
 
@@ -1638,7 +1595,6 @@
 
                             {% for value, label in metal_choices %}
 
-
                                 <option
                                     value="{{ value }}"
                                     {% if value == selected_metal %}
@@ -1649,7 +1605,6 @@
                                     {{ label }}
 
                                 </option>
-
 
                             {% endfor %}
 
@@ -1665,7 +1620,10 @@
                     <div class="pk-pl-filter-group">
 
 
-                        <label class="pk-pl-filter-label">
+                        <label
+                            class="pk-pl-filter-label"
+                            for="pk-pl-min-price"
+                        >
 
                             Price
 
@@ -1676,20 +1634,24 @@
 
 
                             <input
+                                id="pk-pl-min-price"
                                 class="pk-pl-filter-input"
                                 type="number"
                                 name="min_price"
                                 placeholder="Min"
                                 value="{{ min_price }}"
+                                min="0"
                             >
 
 
                             <input
+                                id="pk-pl-max-price"
                                 class="pk-pl-filter-input"
                                 type="number"
                                 name="max_price"
                                 placeholder="Max"
                                 value="{{ max_price }}"
+                                min="0"
                             >
 
 
@@ -1749,7 +1711,7 @@
 
 
             <!-- ======================================================
-                 SEARCH
+                 SEARCH BAR
                  ====================================================== -->
 
             <div class="pk-pl-search-bar">
@@ -1820,7 +1782,6 @@
 
             {% if selected_category_obj %}
 
-
                 <div class="pk-pl-active-filter">
 
                     Category:
@@ -1833,12 +1794,11 @@
 
                 </div>
 
-
             {% endif %}
 
 
             <!-- ======================================================
-                 PRODUCTS
+                 PRODUCT GRID
                  ====================================================== -->
 
             {% if products %}
@@ -1850,7 +1810,9 @@
                     {% for product in products %}
 
 
-                        <article class="pk-pl-product-card">
+                        <article
+                            class="pk-pl-product-card"
+                        >
 
 
                             <a
@@ -1859,9 +1821,9 @@
                             >
 
 
-                                <!-- ==========================================
+                                <!-- ==================================
                                      IMAGE
-                                     ========================================== -->
+                                     ================================== -->
 
                                 <div
                                     class="
@@ -1875,7 +1837,6 @@
 
                                         {% with primary_image=product.primary_images.0 %}
 
-
                                             <img
                                                 src="{{ primary_image.image.url }}"
                                                 alt="{{ product.name }}"
@@ -1886,7 +1847,6 @@
                                                     this.src='{% static 'images/products/default.png' %}';
                                                 "
                                             >
-
 
                                         {% endwith %}
 
@@ -1900,7 +1860,6 @@
                                             "
                                         >
 
-
                                             <img
                                                 src="{% static 'images/products/default.png' %}"
                                                 alt="{{ product.name }}"
@@ -1908,70 +1867,74 @@
                                                 loading="lazy"
                                             >
 
-
                                         </div>
 
 
                                     {% endif %}
 
 
-                                    <!-- ======================================
+                                    <!-- ==================================
                                          BADGES
-                                         ====================================== -->
+                                         ================================== -->
 
-                                    <div
-                                        class="
-                                            pk-pl-product-badges
-                                        "
-                                    >
+                                    {% if product.featured or product.stock == 0 %}
 
-
-                                        {% if product.featured %}
-
-
-                                            <span
-                                                class="
-                                                    pk-pl-product-badge
-                                                    pk-pl-product-badge-featured
-                                                "
-                                            >
-
-                                                Featured
-
-                                            </span>
+                                        <div
+                                            class="
+                                                pk-pl-product-badges
+                                            "
+                                        >
 
 
-                                        {% endif %}
+                                            {% if product.featured %}
+
+                                                <span
+                                                    class="
+                                                        pk-pl-product-badge
+                                                        pk-pl-product-badge-featured
+                                                    "
+                                                >
+
+                                                    Featured
+
+                                                </span>
+
+                                            {% endif %}
 
 
-                                        {% if product.stock == 0 %}
+                                            {% if product.stock == 0 %}
+
+                                                <span
+                                                    class="
+                                                        pk-pl-product-badge
+                                                    "
+                                                >
+
+                                                    Sold Out
+
+                                                </span>
+
+                                            {% endif %}
 
 
-                                            <span
-                                                class="
-                                                    pk-pl-product-badge
-                                                "
-                                            >
+                                        </div>
 
-                                                Sold Out
-
-                                            </span>
+                                    {% endif %}
 
 
-                                        {% endif %}
-
-
-                                    </div>
-
-
-                                    <!-- ======================================
+                                    <!-- ==================================
                                          WISHLIST
-                                         ====================================== -->
+                                         ================================== -->
 
                                     <button
                                         type="button"
-                                        class="pk-pl-wishlist-button"
-                                        aria-label="Add {{ product.name }} to wishlist"
+                                        class="
+                                            pk-pl-wishlist-button
+                                        "
+                                        aria-label="
+                                            Add {{ product.name }}
+                                            to wishlist
+                                        "
                                         onclick="
                                             event.preventDefault();
                                             event.stopPropagation();
@@ -1986,9 +1949,9 @@
                                 </div>
 
 
-                                <!-- ==========================================
-                                     CONTENT
-                                     ========================================== -->
+                                <!-- ==================================
+                                     PRODUCT CONTENT
+                                     ================================== -->
 
                                 <div
                                     class="
@@ -2093,9 +2056,9 @@
                                     </div>
 
 
-                                    <!-- ======================================
+                                    <!-- ==================================
                                          BOTTOM
-                                         ====================================== -->
+                                         ================================== -->
 
                                     <div
                                         class="
@@ -2105,7 +2068,6 @@
 
 
                                         {% if product.stock > 0 %}
-
 
                                             <span
                                                 class="
@@ -2123,9 +2085,7 @@
 
                                             </span>
 
-
                                         {% else %}
-
 
                                             <span
                                                 class="
@@ -2143,7 +2103,6 @@
                                                 Out of Stock
 
                                             </span>
-
 
                                         {% endif %}
 
@@ -2180,16 +2139,15 @@
             {% else %}
 
 
-                <!-- ==================================================
-                     EMPTY PRODUCTS
-                     ================================================== -->
+                <!-- ==============================================
+                     EMPTY
+                     ============================================== -->
 
                 <div
                     class="
                         pk-pl-empty-products
                     "
                 >
-
 
                     <p>
 
@@ -2205,7 +2163,6 @@
                         Clear all filters
 
                     </a>
-
 
                 </div>
 
@@ -2227,56 +2184,64 @@
      ========================================================================== -->
 
 <script>
+
 (function () {
 
     "use strict";
 
 
-    window.pkToggleCategory = function (categoryId) {
+    /*
+     * ==============================================================
+     * CATEGORY TOGGLE
+     * ==============================================================
+     *
+     * This function opens/closes ONLY the clicked category.
+     *
+     * It does NOT:
+     *
+     * - open all descendants
+     * - close all descendants
+     * - change the selected category
+     * - reload the page
+     *
+     * Clicking the category NAME is separate and applies the filter.
+     */
 
-        const category =
-            document.getElementById(categoryId);
+    window.pkToggleCategory = function (
+        categoryId,
+        button
+    ) {
+
+        const categoryList =
+            document.getElementById(
+                categoryId
+            );
 
 
-        if (!category) {
+        if (!categoryList) {
+
             return;
+
         }
 
 
-        const categoryNumber =
-            categoryId.replace(
-                "pk-pl-category-",
-                ""
-            );
-
-
         const icon =
-            document.getElementById(
-                "pk-pl-icon-category-" +
-                categoryNumber
+            button.querySelector(
+                ".pk-pl-category-icon"
             );
-
-
-        const toggleButton =
-            category.parentElement
-                ?.querySelector(
-                    ".pk-pl-category-toggle"
-                );
 
 
         const isOpen =
-            category.style.display === "block";
+            categoryList.style.display === "block";
 
-
-        /*
-         * ==========================================================
-         * CLOSE
-         * ==========================================================
-         */
 
         if (isOpen) {
 
-            category.style.display =
+            /*
+             * CLOSE ONLY THIS CATEGORY.
+             */
+
+            categoryList.style.display =
                 "none";
 
 
@@ -2288,27 +2253,22 @@
             }
 
 
-            if (toggleButton) {
-
-                toggleButton.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            }
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
 
 
             return;
+
         }
 
 
         /*
-         * ==========================================================
-         * OPEN
-         * ==========================================================
+         * OPEN ONLY THIS CATEGORY.
          */
 
-        category.style.display =
+        categoryList.style.display =
             "block";
 
 
@@ -2320,19 +2280,16 @@
         }
 
 
-        if (toggleButton) {
-
-            toggleButton.setAttribute(
-                "aria-expanded",
-                "true"
-            );
-
-        }
+        button.setAttribute(
+            "aria-expanded",
+            "true"
+        );
 
     };
 
 
 })();
+
 </script>
 
 

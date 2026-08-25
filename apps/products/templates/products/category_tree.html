@@ -2,16 +2,14 @@
 
     <li class="pk-pl-category-item">
 
-
         <!-- ==========================================================
              CATEGORY ROW
              ========================================================== -->
 
         <div class="pk-pl-category-row">
 
-
             <!-- ======================================================
-                 TOGGLE
+                 TOGGLE BUTTON
                  ====================================================== -->
 
             {% if category.has_children %}
@@ -20,11 +18,12 @@
                     type="button"
                     class="pk-pl-category-toggle"
                     onclick="pkToggleCategory(
-                        'pk-pl-category-{{ category.id }}'
+                        'pk-pl-category-{{ category.id }}',
+                        this
                     )"
                     aria-label="Toggle {{ category.name }}"
                     aria-expanded="
-                        {% if category.id in selected_category_ids %}
+                        {% if category.id in selected_category_open_ids %}
                             true
                         {% else %}
                             false
@@ -34,12 +33,17 @@
 
                     <span
                         id="pk-pl-icon-category-{{ category.id }}"
+                        class="pk-pl-category-icon"
                     >
 
-                        {% if category.id in selected_category_ids %}
+                        {% if category.id in selected_category_open_ids %}
+
                             ▼
+
                         {% else %}
+
                             ▶
+
                         {% endif %}
 
                     </span>
@@ -89,7 +93,6 @@
 
             </a>
 
-
         </div>
 
 
@@ -102,15 +105,10 @@
             <ul
                 id="pk-pl-category-{{ category.id }}"
                 class="pk-pl-subcategory-list"
-
-                {% if category.id in selected_category_ids %}
-
+                {% if category.id in selected_category_open_ids %}
                     style="display: block;"
-
                 {% else %}
-
                     style="display: none;"
-
                 {% endif %}
             >
 
@@ -119,7 +117,6 @@
             </ul>
 
         {% endif %}
-
 
     </li>
 
