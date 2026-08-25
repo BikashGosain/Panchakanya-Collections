@@ -1,161 +1,627 @@
-.pk-db-container {
-    max-width: 1200px;
+.pk-dashboard {
+    --db-border: #e5e5e5;
+    --db-border-light: #eeeeee;
+    --db-text: #333333;
+    --db-text-muted: #777777;
+    --db-bg: #ffffff;
+    --db-hover: #f7f7f7;
+    --db-active: #f1e5c8;
+    --db-active-text: #4b3a1f;
+    --db-accent: #9a7b3f;
+
+    width: min(100% - 32px, 1280px);
     margin: 0 auto;
-    padding: 2rem 1rem 4rem;
+    padding: 32px 0 60px;
 }
 
-.pk-db-header {
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.pk-dashboard .pk-db-header {
+    position: sticky;
+    /* If your site has a fixed top navbar (e.g., 60px height), adjust this to top: 60px; */
+    top: 0;
+    z-index: 99;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2rem;
+
+    gap: 24px;
+
+    margin-bottom: 28px;
+    padding: 18px 0;
+
+    /* Ensures content behind it doesn't bleed through when scrolling */
+    background-color: #ffffff !important;
+
+    border-bottom: 1px solid #eeeeee;
 }
 
-.pk-db-title {
+.pk-dashboard .pk-db-title {
     margin: 0;
-    font-size: 2rem;
+
+    font-size: clamp(1.7rem, 2.5vw, 2.15rem);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+
+    color: var(--db-text);
 }
 
-.pk-db-welcome-msg {
-    margin: 0.4rem 0 0;
+.pk-dashboard .pk-db-welcome-msg {
+    margin: 7px 0 0;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    color: var(--db-text-muted);
 }
 
-.pk-db-user-name {
+.pk-dashboard .pk-db-user-name {
     font-weight: 600;
+    color: var(--db-text);
 }
 
-.pk-db-logout-link {
-    text-decoration: none;
+
+/* =========================================================
+   Logout
+   ========================================================= */
+
+.pk-dashboard .pk-db-logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    padding: 0 18px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #333333;
+
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
 }
 
-.pk-db-grid {
+.pk-dashboard .pk-db-logout-btn:hover {
+    background: #f7f7f7;
+    border-color: #cccccc;
+}
+
+.pk-dashboard .pk-db-logout-btn:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   Main Grid
+   ========================================================= */
+
+.pk-dashboard .pk-db-grid {
     display: grid;
-    grid-template-columns: 240px minmax(0, 1fr);
-    gap: 1.5rem;
+
+    grid-template-columns: 245px minmax(0, 1fr);
+
+    gap: 24px;
+
     align-items: start;
 }
 
-.pk-db-sidebar {
-    padding: 1rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 12px;
+
+/* =========================================================
+   Sidebar
+   ========================================================= */
+
+
+.pk-dashboard .pk-db-sidebar {
+    position: sticky;
+    /* Increase top offset so sidebar sticks BELOW the sticky header height (~90px) */
+    top: 90px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--db-border);
+    border-radius: 14px;
+
+    background: var(--db-bg);
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.03),
+        0 8px 24px rgba(0, 0, 0, 0.04);
+
+    /* Recalculate max-height so overflow scrolling still works properly */
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+
+    scrollbar-width: thin;
 }
 
-.pk-db-nav-section + .pk-db-nav-section {
-    margin-top: 1.5rem;
+/* Sidebar scrollbar */
+
+.pk-dashboard .pk-db-sidebar::-webkit-scrollbar {
+    width: 5px;
 }
 
-.pk-db-nav-heading {
-    margin: 0 0 0.6rem;
-    padding: 0 0.75rem;
-    font-size: 0.75rem;
+.pk-dashboard .pk-db-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.pk-dashboard .pk-db-sidebar::-webkit-scrollbar-thumb {
+    background: #d5d5d5;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   Navigation Sections
+   ========================================================= */
+
+.pk-dashboard .pk-db-nav-section {
+    width: 100%;
+}
+
+.pk-dashboard .pk-db-nav-section + .pk-db-nav-section {
+    margin-top: 20px;
+    padding-top: 18px;
+
+    border-top: 1px solid var(--db-border-light);
+}
+
+
+/* =========================================================
+   Navigation Heading
+   ========================================================= */
+
+.pk-dashboard .pk-db-nav-heading {
+    margin: 0 0 7px;
+    padding: 0 10px;
+
+    font-size: 0.7rem;
+    line-height: 1.4;
     font-weight: 700;
+
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.09em;
+
+    color: #888888;
 }
 
-.pk-db-nav-item {
+
+/* =========================================================
+   Navigation Links
+   ========================================================= */
+
+.pk-dashboard .pk-db-nav-item {
+    position: relative;
+
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+
     width: 100%;
-    padding: 0.75rem;
-    border-radius: 8px;
+    min-height: 44px;
+
+    gap: 11px;
+    padding: 10px 11px;
+
+    border-radius: 9px;
+
+    color: #444444;
     text-decoration: none;
+
+    font-size: 0.92rem;
+    font-weight: 500;
+
+    box-sizing: border-box;
+
     transition:
         background-color 0.2s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        transform 0.15s ease;
 }
 
-.pk-db-nav-item svg {
+
+/* Lucide icons */
+
+.pk-dashboard .pk-db-nav-item svg {
     width: 18px;
     height: 18px;
-    flex-shrink: 0;
+
+    flex: 0 0 18px;
+
+    stroke-width: 1.9;
 }
 
-.pk-db-nav-item:hover {
-    background-color: #f5f5f5;
+
+/* Hover */
+
+.pk-dashboard .pk-db-nav-item:hover {
+    background: var(--db-hover);
+    color: #222222;
 }
 
-.pk-db-nav-item.pk-db-active {
-    font-weight: 600;
-    background-color: #f1e5c8;
+
+/* Click */
+
+.pk-dashboard .pk-db-nav-item:active {
+    transform: scale(0.99);
 }
 
-.pk-db-content {
+
+/* =========================================================
+   Active Navigation
+   ========================================================= */
+
+.pk-dashboard .pk-db-nav-item.pk-db-active {
+    background: var(--db-active);
+    color: var(--db-active-text);
+
+    font-weight: 650;
+}
+
+.pk-dashboard .pk-db-nav-item.pk-db-active svg {
+    stroke-width: 2.2;
+}
+
+
+/* Active indicator */
+
+.pk-dashboard .pk-db-nav-item.pk-db-active::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 9px;
+    bottom: 9px;
+
+    width: 3px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: var(--db-accent);
+}
+
+
+/* =========================================================
+   Main Content
+   ========================================================= */
+
+.pk-dashboard .pk-db-content {
     min-width: 0;
+    width: 100%;
 }
 
-.pk-db-card {
-    padding: 1.5rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 12px;
+
+/* =========================================================
+   Main Dashboard Card
+   ========================================================= */
+
+.pk-dashboard .pk-db-card {
+    min-width: 0;
+
+    padding: clamp(20px, 3vw, 30px);
+
+    border: 1px solid var(--db-border);
+    border-radius: 14px;
+
     background: #ffffff;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.025),
+        0 8px 24px rgba(0, 0, 0, 0.035);
+
+    box-sizing: border-box;
 }
 
-.pk-db-card-title {
-    margin: 0 0 1.25rem;
-    font-size: 1.25rem;
+
+/* =========================================================
+   Card Title
+   ========================================================= */
+
+.pk-dashboard .pk-db-card-title {
+    margin: 0 0 20px;
+
+    font-size: 1.35rem;
+    line-height: 1.3;
+    font-weight: 700;
+
+    color: var(--db-text);
 }
 
-.pk-db-order-card {
+
+/* =========================================================
+   Order Card
+   ========================================================= */
+
+.pk-dashboard .pk-db-order-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-top: 1px solid #e5e5e5;
+
+    gap: 18px;
+
+    padding: 18px 0;
+
+    border-top: 1px solid var(--db-border-light);
 }
 
-.pk-db-order-thumb {
+.pk-dashboard .pk-db-order-thumb {
     width: 64px;
     height: 64px;
+
+    flex: 0 0 64px;
+
     object-fit: cover;
-    border-radius: 8px;
+
+    border-radius: 9px;
 }
 
-.pk-db-order-code {
+.pk-dashboard .pk-db-order-code {
     display: block;
-    margin-bottom: 0.25rem;
+
+    margin-bottom: 4px;
+
     font-size: 0.75rem;
+
+    color: #888888;
 }
 
-.pk-db-order-name {
-    margin: 0 0 0.4rem;
+.pk-dashboard .pk-db-order-name {
+    margin: 0 0 6px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
-.pk-db-status-tag {
-    display: inline-block;
+.pk-dashboard .pk-db-status-tag {
+    display: inline-flex;
+    align-items: center;
+
     font-size: 0.75rem;
     font-weight: 600;
 }
 
-.pk-db-order-price {
-    font-weight: 600;
+.pk-dashboard .pk-db-order-price {
+    font-weight: 700;
+    white-space: nowrap;
 }
+
+
+/* =========================================================
+   Large Desktop
+   ========================================================= */
+
+@media (min-width: 1200px) {
+
+    .pk-dashboard {
+        padding-top: 40px;
+    }
+
+    .pk-dashboard .pk-db-grid {
+        grid-template-columns: 255px minmax(0, 1fr);
+        gap: 28px;
+    }
+}
+
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .pk-dashboard {
+        width: min(100% - 28px, 100%);
+        padding-top: 26px;
+    }
+
+    .pk-dashboard .pk-db-grid {
+        grid-template-columns: 210px minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .pk-dashboard .pk-db-sidebar {
+        top: 18px;
+    }
+
+    .pk-dashboard .pk-db-nav-item {
+        padding: 9px 10px;
+    }
+}
+
+
+/* =========================================================
+   Mobile
+   ========================================================= */
 
 @media (max-width: 768px) {
-    .pk-db-header {
-        align-items: flex-start;
-        flex-direction: column;
+
+    .pk-dashboard {
+        width: min(100% - 24px, 100%);
+        padding: 22px 0 40px;
     }
 
-    .pk-db-grid {
+
+    /* Header */
+
+    .pk-dashboard .pk-db-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 28px;
+        padding: 18px 0;
+        background: #ffffff !important; /* Prevents underlying content from bleeding through */
+        border-bottom: 1px solid #eeeeee;
+    }
+
+
+    /* Logout */
+
+    .pk-dashboard .pk-db-header form {
+        width: 100%;
+        margin: 0;
+    }
+
+    .pk-dashboard .pk-db-logout-btn {
+        width: 100%;
+    }
+
+
+    /* Grid */
+
+    .pk-dashboard .pk-db-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    .pk-db-sidebar {
-        display: grid;
-        gap: 0.25rem;
+
+    /*
+     * Disable sticky on mobile.
+     *
+     * The sidebar becomes part of the normal page flow.
+     * This prevents awkward scrolling and cramped layouts.
+     */
+
+    .pk-dashboard .pk-db-sidebar {
+        position: static;
+
+        max-height: none;
+        overflow: visible;
+
+        padding: 10px;
+
+        border-radius: 12px;
     }
 
-    .pk-db-nav-section + .pk-db-nav-section {
-        margin-top: 1rem;
+
+    /* Sections */
+
+    .pk-dashboard .pk-db-nav-section + .pk-db-nav-section {
+        margin-top: 12px;
+        padding-top: 12px;
     }
 
-    .pk-db-order-card {
+
+    /* Navigation */
+
+    .pk-dashboard .pk-db-nav-item {
+        min-height: 43px;
+    }
+
+
+    /* Card */
+
+    .pk-dashboard .pk-db-card {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .pk-dashboard .pk-db-card-title {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+    }
+
+
+    /* Orders */
+
+    .pk-dashboard .pk-db-order-card {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .pk-dashboard .pk-db-order-price {
+        align-self: flex-end;
+    }
+}
+
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .pk-dashboard {
+        width: min(100% - 20px, 100%);
+        padding-top: 18px;
+    }
+
+    .pk-dashboard .pk-db-title {
+        font-size: 1.55rem;
+    }
+
+    .pk-dashboard .pk-db-welcome-msg {
+        font-size: 0.88rem;
+    }
+
+    .pk-dashboard .pk-db-sidebar {
+        padding: 8px;
+    }
+
+    .pk-dashboard .pk-db-nav-heading {
+        padding-left: 8px;
+    }
+
+    .pk-dashboard .pk-db-nav-item {
+        min-height: 42px;
+        padding: 9px;
+        font-size: 0.88rem;
+    }
+
+    .pk-dashboard .pk-db-card {
+        padding: 18px 14px;
+    }
+}
+
+
+/* =========================================================
+   Very Small Screens
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .pk-dashboard .pk-db-nav-item {
+        gap: 8px;
+        font-size: 0.84rem;
+    }
+
+    .pk-dashboard .pk-db-nav-item svg {
+        width: 17px;
+        height: 17px;
+        flex-basis: 17px;
+    }
+}
+
+
+/* =========================================================
+   Accessibility
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pk-dashboard .pk-db-nav-item,
+    .pk-dashboard .pk-db-logout-btn {
+        transition: none;
     }
 }
