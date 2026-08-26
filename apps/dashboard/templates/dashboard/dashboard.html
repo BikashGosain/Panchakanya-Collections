@@ -4,9 +4,11 @@
 {% block title %}My Account | Panchakanya Collections{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-<link rel="stylesheet" href="{% static 'css/dashboard-profile.css' %}">
-<link rel="stylesheet" href="{% static 'css/dashboard-recycle-bin.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/wishlist.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/cart.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard-profile.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard-recycle-bin.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -42,12 +44,14 @@
         <a href="{% url 'dashboard:wishlist' %}" class="pk-db-nav-item {% if dashboard_section == 'wishlist' %}pk-db-active{% endif %}">
             <i data-lucide="heart"></i>
             Wishlist
+<span>({{ wishlist_count }})</span>
+
         </a>
 
         <a href="{% url 'dashboard:cart' %}" class="pk-db-nav-item {% if dashboard_section == 'cart' %}pk-db-active{% endif %}">
             <i data-lucide="shopping-cart"></i>
             Cart
-        </a>
+<span>({{ cart_count }})</span>        </a>
         <a href="{% url 'dashboard:reviews' %}"
    class="pk-db-nav-item {% if dashboard_section == 'reviews' %}pk-db-active{% endif %}">
     <i data-lucide="star"></i>
@@ -126,4 +130,6 @@
 
 {% block extra_js %}
     <script src="{% static 'product/js/product_form.js' %}"></script>
+    <script src="{% static 'dashboard/js/wishlist.js' %}"></script>
+    <script src="{% static 'dashboard/js/cart.js' %}"></script>
 {% endblock %}

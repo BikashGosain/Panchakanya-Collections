@@ -1,0 +1,669 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Cart Section
+
+   Namespace:
+   pk-db-cart-
+
+   Completely isolated from:
+   - Header
+   - Dashboard sidebar
+   - Wishlist
+   - Product listing
+   ========================================================================== */
+
+
+/* ==========================================================================
+   SECTION
+   ========================================================================== */
+
+.pk-db-cart-section {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.pk-db-cart-header {
+    align-items: flex-end;
+    border-bottom: 1px solid #e6dfd3;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-cart-eyebrow {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-cart-title {
+    color: #121110;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-cart-count {
+    align-items: center;
+    background: #f7f3e9;
+    border: 1px solid #e6dfd3;
+    border-radius: 999px;
+    color: #5f584f;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    gap: 0.3rem;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 0.75rem;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   MAIN LAYOUT
+   ========================================================================== */
+
+.pk-db-cart-layout {
+    align-items: start;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+
+/* ==========================================================================
+   CART LIST
+   ========================================================================== */
+
+.pk-db-cart-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+
+/* ==========================================================================
+   CART ITEM
+   ========================================================================== */
+
+.pk-db-cart-item {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e6dfd3;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(220px, 1fr) auto auto auto;
+    padding: 0.85rem;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+.pk-db-cart-item:hover {
+    border-color: #d4af37;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   PRODUCT
+   ========================================================================== */
+
+.pk-db-cart-product {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    gap: 0.85rem;
+    min-width: 0;
+    text-decoration: none;
+}
+
+.pk-db-cart-image {
+    background: #f7f4ee;
+    flex: 0 0 76px;
+    height: 76px;
+    overflow: hidden;
+}
+
+.pk-db-cart-image img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+    width: 100%;
+}
+
+.pk-db-cart-item:hover .pk-db-cart-image img {
+    transform: scale(1.04);
+}
+
+.pk-db-cart-image-placeholder {
+    align-items: center;
+    color: #9a9389;
+    display: flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    height: 100%;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   PRODUCT INFORMATION
+   ========================================================================== */
+
+.pk-db-cart-info {
+    min-width: 0;
+}
+
+.pk-db-cart-product-name {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pk-db-cart-product-price {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin: 0.3rem 0 0;
+}
+
+.pk-db-cart-view {
+    color: #736d65;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 600;
+    gap: 0.3rem;
+    letter-spacing: 0.08em;
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+}
+
+.pk-db-cart-item:hover .pk-db-cart-view {
+    color: #a8841a;
+}
+
+
+/* ==========================================================================
+   QUANTITY
+   ========================================================================== */
+
+.pk-db-cart-quantity-form {
+    margin: 0;
+}
+
+.pk-db-cart-quantity-label {
+    color: #736d65;
+    display: block;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-cart-quantity-control {
+    align-items: stretch;
+    display: flex;
+}
+
+.pk-db-cart-quantity-input {
+    appearance: textfield;
+    background: #faf8f3;
+    border: 1px solid #ded7ca;
+    border-right: 0;
+    color: #2b2825;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    min-height: 34px;
+    padding: 0.35rem 0.5rem;
+    text-align: center;
+    width: 55px;
+}
+
+.pk-db-cart-quantity-input::-webkit-inner-spin-button,
+.pk-db-cart-quantity-input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+.pk-db-cart-quantity-input:focus {
+    border-color: #d4af37;
+    outline: none;
+}
+
+.pk-db-cart-update {
+    background: #121110;
+    border: 1px solid #121110;
+    color: #fff;
+    cursor: pointer;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    min-height: 34px;
+    padding: 0.35rem 0.6rem;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease;
+}
+
+.pk-db-cart-update:hover {
+    background: #a8841a;
+    border-color: #a8841a;
+}
+
+.pk-db-cart-update:focus-visible,
+.pk-db-cart-remove:focus-visible,
+.pk-db-cart-checkout:focus-visible,
+.pk-db-cart-shop-button:focus-visible {
+    outline: 2px solid #d4af37;
+    outline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   SUBTOTAL
+   ========================================================================== */
+
+.pk-db-cart-subtotal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 85px;
+    text-align: right;
+}
+
+.pk-db-cart-subtotal-label {
+    color: #736d65;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pk-db-cart-subtotal strong {
+    color: #2b2825;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   REMOVE
+   ========================================================================== */
+
+.pk-db-cart-remove-form {
+    margin: 0;
+}
+
+.pk-db-cart-remove {
+    align-items: center;
+    background: transparent;
+    border: 1px solid #ded7ca;
+    color: #736d65;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 700;
+    gap: 0.3rem;
+    letter-spacing: 0.07em;
+    padding: 0.5rem 0.65rem;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease;
+}
+
+.pk-db-cart-remove:hover {
+    background: #fff7f5;
+    border-color: #b86b5c;
+    color: #a34d3e;
+}
+
+.pk-db-cart-remove-icon {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.8;
+}
+
+
+/* ==========================================================================
+   SUMMARY
+   ========================================================================== */
+
+.pk-db-cart-summary {
+    background: #faf8f3;
+    border: 1px solid #e6dfd3;
+    padding: 1.25rem;
+    position: sticky;
+    top: 1rem;
+}
+
+.pk-db-cart-summary-eyebrow {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.pk-db-cart-summary-title {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.35rem 0 1.25rem;
+}
+
+.pk-db-cart-summary-row {
+    color: #736d65;
+    display: flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.75rem;
+    justify-content: space-between;
+}
+
+.pk-db-cart-summary-divider {
+    border-top: 1px solid #e6dfd3;
+    margin: 1rem 0;
+}
+
+.pk-db-cart-summary-total {
+    align-items: center;
+    color: #2b2825;
+    display: flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    justify-content: space-between;
+}
+
+.pk-db-cart-summary-total strong {
+    color: #a8841a;
+    font-size: 1rem;
+}
+
+.pk-db-cart-checkout {
+    background: #121110;
+    border: 1px solid #121110;
+    color: #fff;
+    cursor: not-allowed;
+    display: block;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-top: 1.25rem;
+    opacity: 0.5;
+    padding: 0.8rem 1rem;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.pk-db-cart-checkout-note {
+    color: #8a837a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    line-height: 1.5;
+    margin: 0.65rem 0 0;
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   EMPTY CART
+   ========================================================================== */
+
+.pk-db-cart-empty {
+    align-items: center;
+    background: #faf8f3;
+    border: 1px solid #e6dfd3;
+    display: flex;
+    flex-direction: column;
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+}
+
+.pk-db-cart-empty-icon {
+    align-items: center;
+    border: 1px solid #d4af37;
+    border-radius: 50%;
+    color: #a8841a;
+    display: flex;
+    font-size: 1.6rem;
+    height: 58px;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    width: 58px;
+}
+
+.pk-db-cart-empty-title {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pk-db-cart-empty-text {
+    color: #736d65;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    margin: 0.65rem auto 1.5rem;
+    max-width: 430px;
+}
+
+.pk-db-cart-shop-button {
+    background: #121110;
+    color: #fff;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.pk-db-cart-shop-button:hover {
+    background: #a8841a;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 1050px) {
+    .pk-db-cart-layout {
+        grid-template-columns: minmax(0, 1fr) 240px;
+    }
+
+    .pk-db-cart-item {
+        grid-template-columns: minmax(180px, 1fr) auto auto;
+    }
+
+    .pk-db-cart-remove-form {
+        grid-column: 3;
+        grid-row: 1;
+    }
+}
+
+
+/* ==========================================================================
+   MOBILE / TABLET
+   ========================================================================== */
+
+@media (max-width: 800px) {
+    .pk-db-cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pk-db-cart-summary {
+        position: static;
+    }
+
+    .pk-db-cart-item {
+        align-items: start;
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .pk-db-cart-product {
+        grid-column: 1 / -1;
+    }
+
+    .pk-db-cart-quantity-form {
+        grid-column: 1;
+    }
+
+    .pk-db-cart-subtotal {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .pk-db-cart-remove-form {
+        grid-column: 2;
+        grid-row: 3;
+        justify-self: end;
+    }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 520px) {
+    .pk-db-cart-header {
+        align-items: center;
+    }
+
+    .pk-db-cart-eyebrow {
+        font-size: 0.55rem;
+    }
+
+    .pk-db-cart-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-db-cart-count {
+        font-size: 0.6rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .pk-db-cart-item {
+        padding: 0.7rem;
+    }
+
+    .pk-db-cart-image {
+        flex-basis: 62px;
+        height: 62px;
+    }
+
+    .pk-db-cart-product-name {
+        font-size: 0.85rem;
+        white-space: normal;
+    }
+
+    .pk-db-cart-product-price {
+        font-size: 0.7rem;
+    }
+
+    .pk-db-cart-view {
+        font-size: 0.55rem;
+    }
+
+    .pk-db-cart-quantity-label {
+        font-size: 0.55rem;
+    }
+
+    .pk-db-cart-quantity-input {
+        width: 48px;
+    }
+
+    .pk-db-cart-update {
+        font-size: 0.55rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .pk-db-cart-subtotal-label {
+        font-size: 0.55rem;
+    }
+
+    .pk-db-cart-subtotal strong {
+        font-size: 0.75rem;
+    }
+
+    .pk-db-cart-remove {
+        border: 0;
+        padding: 0.35rem;
+    }
+
+    .pk-db-cart-remove-text {
+        display: none;
+    }
+
+    .pk-db-cart-remove-icon {
+        font-size: 1.25rem;
+    }
+
+    .pk-db-cart-summary {
+        padding: 1rem;
+    }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .pk-db-cart-item,
+    .pk-db-cart-image img,
+    .pk-db-cart-update,
+    .pk-db-cart-remove,
+    .pk-db-cart-shop-button {
+        transition: none;
+    }
+}

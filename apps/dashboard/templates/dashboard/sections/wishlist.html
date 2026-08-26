@@ -1,25 +1,132 @@
-<h2 class="pk-db-card-title">My Wishlist: Total Items - {{ wishlist_items|length }}</h2>
+<section class="pk-db-wl-section">
 
-{% if wishlist_items %}
-    {% for item in wishlist_items %}
-        <div class="pk-db-wishlist-item">
-            <div>
-                <h3>{{ item.product.name }}</h3>
-                <p>{{ item.product.price }}</p>
+    <div class="pk-db-wl-header">
+        <div>
+            <p class="pk-db-wl-eyebrow">Your Collection</p>
+
+            <h2 class="pk-db-wl-title">
+                My Wishlist
+            </h2>
+        </div>
+
+        <span class="pk-db-wl-count">
+<span class="pk-db-wl-count">
+    {{ wishlist_count }} Items
+</span>
+        </span>
+    </div>
+
+
+    {% if wishlist_items %}
+
+        <div class="pk-db-wl-list">
+
+            {% for item in wishlist_items %}
+
+                <article class="pk-db-wl-item">
+
+                    <a
+                        href="{% url 'products:detail' item.product.slug %}"
+                        class="pk-db-wl-product"
+                    >
+
+                        <div class="pk-db-wl-image">
+                            {% if item.product.image %}
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}"
+                                    loading="lazy"
+                                >
+                            {% else %}
+                                <div class="pk-db-wl-image-placeholder">
+                                    No Image
+                                </div>
+                            {% endif %}
+                        </div>
+
+
+                        <div class="pk-db-wl-info">
+
+                            <h3 class="pk-db-wl-product-name">
+                                {{ item.product.name }}
+                            </h3>
+
+                            <p class="pk-db-wl-product-price">
+                                NPR {{ item.product.price }}
+                            </p>
+
+                            <span class="pk-db-wl-view">
+                                View Product
+                                <span aria-hidden="true">→</span>
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <form
+                        method="post"
+                        action="{% url 'dashboard:wishlist_remove' item.product.id %}"
+                        class="pk-db-wl-remove-form"
+                    >
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="pk-db-wl-remove"
+                            data-wishlist-remove
+                            data-product-name="{{ item.product.name }}"
+                            aria-label="Remove {{ item.product.name }} from wishlist"
+                        >
+                            <span class="pk-db-wl-remove-icon" aria-hidden="true">
+                                ×
+                            </span>
+
+                            <span class="pk-db-wl-remove-text">
+                                Remove
+                            </span>
+                        </button>
+                    </form>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="pk-db-wl-pagination">
+            {% include "includes/pagination.html" with page_obj=wishlist_page %}
+        </div>
+
+
+    {% else %}
+
+        <div class="pk-db-wl-empty">
+
+            <div class="pk-db-wl-empty-icon" aria-hidden="true">
+                ♡
             </div>
 
-            <form
-                method="post"
-                action="{% url 'dashboard:wishlist_remove' item.product.id %}"
+            <h3 class="pk-db-wl-empty-title">
+                Your Wishlist is Empty
+            </h3>
+
+            <p class="pk-db-wl-empty-text">
+                Save your favorite jewellery pieces here and
+                come back to them whenever you like.
+            </p>
+
+            <a
+                href="{% url 'products:list' %}"
+                class="pk-db-wl-shop-button"
             >
-                {% csrf_token %}
-                <button type="submit">Remove</button>
-            </form>
+                Explore Collections
+            </a>
+
         </div>
-    {% endfor %}
 
-    {% include "includes/pagination.html" with page_obj=wishlist_page %}
+    {% endif %}
 
-{% else %}
-    <p>Your wishlist is empty.</p>
-{% endif %}
+</section>

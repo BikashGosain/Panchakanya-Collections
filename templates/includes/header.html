@@ -103,11 +103,11 @@
                                 </a>
                                 <a href="{% url 'dashboard:wishlist' %}" class="pk-hdr-dropdown-item">
                                     <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z" /></svg>
-                                    Wishlist
+                                    Wishlist<span>({{ wishlist_count }})</span>
                                 </a>
                                 <a href="{% url 'dashboard:cart' %}" class="pk-hdr-dropdown-item">
                                     <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4h2l2.3 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.5L20 8H7" /><circle cx="10" cy="20" r="1" /><circle cx="17" cy="20" r="1" /></svg>
-                                    Cart
+                                    Cart<span>({{ cart_count }})</span>
                                 </a>
                                 <a href="{% url 'core:home' %}" class="pk-hdr-dropdown-item">
                                     <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" /><path d="M9 21v-6h6v6" /></svg>
@@ -137,13 +137,14 @@
                         <svg class="pk-hdr-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                             <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z" />
                         </svg>
+                        <span class="pk-hdr-cart-badge" id="pk-js-cart-count">({{ wishlist_count }})</span>
                     </a>
 
                     <a href="{% url 'dashboard:cart' %}" class="pk-hdr-action-btn" id="pk-js-cart-btn" title="Shopping Bag" aria-label="Shopping bag">
                         <svg class="pk-hdr-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                             <path d="M6 8h12l-1 13H7L6 8ZM9 8V6a3 3 0 0 1 6 0v2" />
                         </svg>
-                        <span class="pk-hdr-cart-badge" id="pk-js-cart-count">{% if cart_items %}{{ cart_items|length }}{% else %}0{% endif %}</span>
+                        <span class="pk-hdr-cart-badge" id="pk-js-cart-count">({{ cart_count }})</span>
                     </a>
                 </div>
             </div>

@@ -1,0 +1,453 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Wishlist Section
+
+   Namespace:
+   pk-db-wl-
+
+   This stylesheet is intentionally isolated from:
+   - Header
+   - Dashboard sidebar
+   - Cart
+   - Product listing
+   ========================================================================== */
+
+
+/* ==========================================================================
+   SECTION
+   ========================================================================== */
+
+.pk-db-wl-section {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.pk-db-wl-header {
+    align-items: flex-end;
+    border-bottom: 1px solid #e6dfd3;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-wl-eyebrow {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-wl-title {
+    color: #121110;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-wl-count {
+    align-items: center;
+    background: #f7f3e9;
+    border: 1px solid #e6dfd3;
+    border-radius: 999px;
+    color: #5f584f;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    gap: 0.3rem;
+    letter-spacing: 0.08em;
+    padding: 0.45rem 0.75rem;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   WISHLIST LIST
+   ========================================================================== */
+
+.pk-db-wl-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+
+/* ==========================================================================
+   WISHLIST ITEM
+   ========================================================================== */
+
+.pk-db-wl-item {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e6dfd3;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 0.85rem;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+.pk-db-wl-item:hover {
+    border-color: #d4af37;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   PRODUCT LINK
+   ========================================================================== */
+
+.pk-db-wl-product {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    flex: 1 1 auto;
+    gap: 1rem;
+    min-width: 0;
+    text-decoration: none;
+}
+
+
+/* ==========================================================================
+   PRODUCT IMAGE
+   ========================================================================== */
+
+.pk-db-wl-image {
+    background: #f7f4ee;
+    flex: 0 0 76px;
+    height: 76px;
+    overflow: hidden;
+    position: relative;
+}
+
+.pk-db-wl-image img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+    width: 100%;
+}
+
+.pk-db-wl-item:hover .pk-db-wl-image img {
+    transform: scale(1.04);
+}
+
+.pk-db-wl-image-placeholder {
+    align-items: center;
+    color: #9a9389;
+    display: flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    height: 100%;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   PRODUCT INFO
+   ========================================================================== */
+
+.pk-db-wl-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.pk-db-wl-product-name {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pk-db-wl-product-price {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0.3rem 0 0;
+}
+
+.pk-db-wl-view {
+    align-items: center;
+    color: #736d65;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 600;
+    gap: 0.35rem;
+    letter-spacing: 0.08em;
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+}
+
+.pk-db-wl-item:hover .pk-db-wl-view {
+    color: #a8841a;
+}
+
+
+/* ==========================================================================
+   REMOVE BUTTON
+   ========================================================================== */
+
+.pk-db-wl-remove-form {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.pk-db-wl-remove {
+    align-items: center;
+    background: transparent;
+    border: 1px solid #ded7ca;
+    color: #736d65;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    gap: 0.35rem;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 0.7rem;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease;
+}
+
+.pk-db-wl-remove:hover {
+    background: #fff7f5;
+    border-color: #b86b5c;
+    color: #a34d3e;
+}
+
+.pk-db-wl-remove:focus-visible {
+    outline: 2px solid #d4af37;
+    outline-offset: 3px;
+}
+
+.pk-db-wl-remove-icon {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.8;
+}
+
+.pk-db-wl-remove-text {
+    line-height: 1;
+}
+
+
+/* ==========================================================================
+   EMPTY STATE
+   ========================================================================== */
+
+.pk-db-wl-empty {
+    align-items: center;
+    background: #faf8f3;
+    border: 1px solid #e6dfd3;
+    display: flex;
+    flex-direction: column;
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+}
+
+.pk-db-wl-empty-icon {
+    align-items: center;
+    border: 1px solid #d4af37;
+    border-radius: 50%;
+    color: #a8841a;
+    display: flex;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    height: 58px;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    width: 58px;
+}
+
+.pk-db-wl-empty-title {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pk-db-wl-empty-text {
+    color: #736d65;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    margin: 0.65rem auto 1.5rem;
+    max-width: 430px;
+}
+
+.pk-db-wl-shop-button {
+    background: #121110;
+    color: #fff;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.pk-db-wl-shop-button:hover {
+    background: #a8841a;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.pk-db-wl-pagination {
+    margin-top: 1.5rem;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 700px) {
+    .pk-db-wl-header {
+        align-items: flex-start;
+    }
+
+    .pk-db-wl-item {
+        align-items: flex-start;
+    }
+
+    .pk-db-wl-product-name {
+        white-space: normal;
+    }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 520px) {
+    .pk-db-wl-header {
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .pk-db-wl-eyebrow {
+        font-size: 0.55rem;
+    }
+
+    .pk-db-wl-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-db-wl-count {
+        font-size: 0.6rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .pk-db-wl-item {
+        gap: 0.7rem;
+        padding: 0.7rem;
+    }
+
+    .pk-db-wl-product {
+        gap: 0.7rem;
+    }
+
+    .pk-db-wl-image {
+        flex-basis: 62px;
+        height: 62px;
+    }
+
+    .pk-db-wl-product-name {
+        font-size: 0.85rem;
+    }
+
+    .pk-db-wl-product-price {
+        font-size: 0.7rem;
+    }
+
+    .pk-db-wl-view {
+        font-size: 0.55rem;
+    }
+
+    .pk-db-wl-remove {
+        border: 0;
+        padding: 0.35rem;
+    }
+
+    .pk-db-wl-remove-text {
+        display: none;
+    }
+
+    .pk-db-wl-remove-icon {
+        font-size: 1.25rem;
+    }
+}
+
+
+/* ==========================================================================
+   VERY SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 360px) {
+    .pk-db-wl-image {
+        flex-basis: 54px;
+        height: 54px;
+    }
+
+    .pk-db-wl-product-name {
+        font-size: 0.78rem;
+    }
+
+    .pk-db-wl-product-price {
+        font-size: 0.65rem;
+    }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .pk-db-wl-item,
+    .pk-db-wl-image img,
+    .pk-db-wl-remove,
+    .pk-db-wl-shop-button {
+        transition: none;
+    }
+}
