@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import Prefetch
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from apps.products.models import Category, Product, ProductImage
@@ -60,3 +61,7 @@ def custom_500(request):
 
 def test_400(request):
     return render(request, "400.html", status=400)
+
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})

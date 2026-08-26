@@ -5,6 +5,7 @@ from . import views
 app_name = "core"
 
 urlpatterns = [
+    path("health/", views.health_check, name="health"),
     path("", views.home_view, name="home"),
 ]
 handler404 = "apps.core.views.custom_404"
