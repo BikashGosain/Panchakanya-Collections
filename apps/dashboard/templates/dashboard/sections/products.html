@@ -1,160 +1,504 @@
-<div class="pk-products-management">
+{% load static %}
 
-    <div class="pk-products-management-header">
-        <div>
-            <h2 class="pk-db-card-title">Product Management</h2>
-            <p>Manage your store products.</p>
+<section class="pk-db-products">
+
+    <!-- Header -->
+    <div class="pk-db-products-header">
+        <div class="pk-db-products-heading">
+            <p class="pk-db-products-eyebrow">Store Administration</p>
+
+            <h2 class="pk-db-products-title">
+                Product Management
+            </h2>
+
+            <p class="pk-db-products-description">
+                Manage your store products, inventory, status and visibility.
+            </p>
         </div>
 
-        <a href="{% url 'dashboard:products_add' %}" class="pk-products-add-button">
+        <a
+            href="{% url 'dashboard:products_add' %}"
+            class="pk-db-products-add"
+        >
+            <span aria-hidden="true">+</span>
             Add Product
         </a>
     </div>
 
-<form method="get" class="pk-products-filters">
-    <input type="text" name="q" placeholder="Search by name or SKU..." value="{{ search_query }}">
+    <!-- Filters -->
+<div class="pk-db-products-filters-scroll">
+    <form
+        method="get"
+        class="pk-db-products-filters"
+    >
+        <div class="pk-db-products-search">
+            <label
+                for="pk-db-products-search-input"
+                class="pk-db-products-label"
+            >
+                Search
+            </label>
 
-    <select name="category">
-        <option value="">All Categories</option>
-        {% for category in all_categories %}
-            <option value="{{ category.slug }}" {% if category.slug == category_filter %}selected{% endif %}>
-                {{ category.name }}
-            </option>
-        {% endfor %}
-    </select>
-
-    <select name="status">
-        <option value="">All Statuses</option>
-        {% for value, label in status_choices %}
-            <option value="{{ value }}" {% if value == status_filter %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-    </select>
-
-    <select name="metal">
-        <option value="">All Metals</option>
-        {% for value, label in metal_choices %}
-            <option value="{{ value }}" {% if value == metal_filter %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-    </select>
-
-    <select name="featured">
-        <option value="">Featured: Any</option>
-        <option value="yes" {% if featured_filter == "yes" %}selected{% endif %}>Featured Only</option>
-        <option value="no" {% if featured_filter == "no" %}selected{% endif %}>Not Featured</option>
-    </select>
-
-    <select name="deleted">
-        <option value="">All Products</option>
-        <option value="active" {% if deleted_filter == "active" %}selected{% endif %}>Active Only</option>
-        <option value="deleted" {% if deleted_filter == "deleted" %}selected{% endif %}>Deleted Only</option>
-    </select>
-
-    <button type="submit">Filter/Search</button>
-    <a href="{% url 'dashboard:products' %}">Clear</a>
-</form>
-
-    {% if products %}
-
-        <div class="pk-products-table-wrapper">
-            <table class="pk-products-table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>SKU</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Stock</th>
-                        <th>Status</th>
-                        <th>Featured</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for product in products %}
-                        <tr>
-
-                            <td>
-                                <div class="pk-products-product">
-
-                                    {% if product.cover_images %}
-                                        <img src="{{ product.cover_images.0.image.url }}" alt="{{ product.name }}" class="pk-products-thumbnail">
-                                    {% else %}
-                                        <div class="pk-products-thumbnail-placeholder">
-                                        No image
-                                        </div>
-                                    {% endif %}
-
-                                    <div>
-                                        <strong>{{ product.name }}</strong>
-
-                                        {% if product.is_deleted %}
-                                            <span class="pk-products-deleted">
-                                                Deleted
-                                            </span>
-                                        {% endif %}
-                                    </div>
-
-                                </div>
-                            </td>
-
-                            <td>
-                                {{ product.sku }}
-                            </td>
-
-                            <td>
-                                {{ product.category.name }}
-                            </td>
-
-                            <td>
-                                NPR {{ product.price }}
-                            </td>
-
-                            <td>
-                                {{ product.stock }}
-                            </td>
-
-                            <td>
-                                {{ product.get_status_display }}
-                            </td>
-
-                            <td>
-                                {% if product.featured %}
-                                    Yes
-                                {% else %}
-                                    No
-                                {% endif %}
-                            </td>
-
-                            <td>
-                                <a href="{% url 'dashboard:products_edit' product.pk %}">Edit</a>
-
-                                {% if product.is_deleted %}
-                                <form method="post" action="{% url 'dashboard:restore_product' product.id %}" style="display:inline;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                                    <button type="submit">Restore</button>
-                                </form>
-                                {% else %}
-                                <form method="post" action="{% url 'dashboard:products_delete' product.pk %}" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit">Delete</button>
-                                </form>
-                                {% endif %}
-                            </td>
-
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <input
+                id="pk-db-products-search-input"
+                type="text"
+                name="q"
+                placeholder="Search by name or SKU..."
+                value="{{ search_query }}"
+                class="pk-db-products-input"
+            >
         </div>
 
-        {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query extra_params=request.GET.urlencode %}
+
+        <div class="pk-db-products-filter">
+            <label
+                for="pk-db-products-category"
+                class="pk-db-products-label"
+            >
+                Category
+            </label>
+
+            <select
+                id="pk-db-products-category"
+                name="category"
+                class="pk-db-products-select"
+            >
+                <option value="">All Categories</option>
+
+                {% for category in all_categories %}
+                    <option
+                        value="{{ category.slug }}"
+                        {% if category.slug == category_filter %}selected{% endif %}
+                    >
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="pk-db-products-filter">
+            <label
+                for="pk-db-products-status"
+                class="pk-db-products-label"
+            >
+                Status
+            </label>
+
+            <select
+                id="pk-db-products-status"
+                name="status"
+                class="pk-db-products-select"
+            >
+                <option value="">All Status</option>
+
+                {% for value, label in status_choices %}
+                    <option
+                        value="{{ value }}"
+                        {% if value == status_filter %}selected{% endif %}
+                    >
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="pk-db-products-filter">
+            <label
+                for="pk-db-products-metal"
+                class="pk-db-products-label"
+            >
+                Metal
+            </label>
+
+            <select
+                id="pk-db-products-metal"
+                name="metal"
+                class="pk-db-products-select"
+            >
+                <option value="">All Metals</option>
+
+                {% for value, label in metal_choices %}
+                    <option
+                        value="{{ value }}"
+                        {% if value == metal_filter %}selected{% endif %}
+                    >
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="pk-db-products-filter">
+            <label
+                for="pk-db-products-featured"
+                class="pk-db-products-label"
+            >
+                Featured
+            </label>
+
+            <select
+                id="pk-db-products-featured"
+                name="featured"
+                class="pk-db-products-select"
+            >
+                <option value="">Featured: Any</option>
+
+                <option
+                    value="yes"
+                    {% if featured_filter == "yes" %}selected{% endif %}
+                >
+                    Featured Only
+                </option>
+
+                <option
+                    value="no"
+                    {% if featured_filter == "no" %}selected{% endif %}
+                >
+                    Not Featured
+                </option>
+            </select>
+        </div>
+
+
+        <div class="pk-db-products-filter">
+            <label
+                for="pk-db-products-deleted"
+                class="pk-db-products-label"
+            >
+                Products
+            </label>
+
+            <select
+                id="pk-db-products-deleted"
+                name="deleted"
+                class="pk-db-products-select"
+            >
+                <option value="">All Products</option>
+
+                <option
+                    value="active"
+                    {% if deleted_filter == "active" %}selected{% endif %}
+                >
+                    Active Only
+                </option>
+
+                <option
+                    value="deleted"
+                    {% if deleted_filter == "deleted" %}selected{% endif %}
+                >
+                    Deleted Only
+                </option>
+            </select>
+        </div>
+
+
+        <div class="pk-db-products-filter-actions">
+            <button
+                type="submit"
+                class="pk-db-products-filter-button"
+            >
+                Apply Filters
+            </button>
+
+            <a
+                href="{% url 'dashboard:products' %}"
+                class="pk-db-products-clear-button"
+            >
+                Clear
+            </a>
+        </div>
+
+    </form>
+</div>
+
+    <!-- Products -->
+    {% if products %}
+
+        <div class="pk-db-products-table-card">
+
+            <div class="pk-db-products-table-header">
+                <div>
+                    <h3 class="pk-db-products-table-title">
+                        Products
+                    </h3>
+
+                    <p class="pk-db-products-table-subtitle">
+                        Manage your current product catalog.
+                    </p>
+                </div>
+
+                <span class="pk-db-products-result-count">
+                    {{ products|length }} shown
+                </span>
+            </div>
+
+
+            <div class="pk-db-products-table-wrapper">
+
+                <table class="pk-db-products-table">
+
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Featured</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for product in products %}
+
+                            <tr
+                                class="{% if product.is_deleted %}pk-db-products-row-deleted{% endif %}"
+                            >
+
+                                <!-- Product -->
+                                <td data-label="Product">
+
+                                    <div class="pk-db-products-product">
+
+                                        <div class="pk-db-products-thumbnail">
+
+                                            {% if product.cover_images %}
+
+                                                <img
+                                                    src="{{ product.cover_images.0.image.url }}"
+                                                    alt="{{ product.name }}"
+                                                    loading="lazy"
+                                                    onerror="this.onerror=null;this.src='{% static 'images/products/default.png' %}';"
+                                                >
+
+                                            {% else %}
+
+                                                <img
+                                                    src="{% static 'images/products/default.png' %}"
+                                                    alt="{{ product.name }}"
+                                                    loading="lazy"
+                                                >
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="pk-db-products-product-info">
+
+                                            <strong class="pk-db-products-product-name">
+                                                {{ product.name }}
+                                            </strong>
+
+                                            {% if product.is_deleted %}
+                                                <span class="pk-db-products-deleted">
+                                                    Deleted
+                                                </span>
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- SKU -->
+                                <td data-label="SKU">
+                                    <span class="pk-db-products-sku">
+                                        {{ product.sku }}
+                                    </span>
+                                </td>
+
+
+                                <!-- Category -->
+                                <td data-label="Category">
+                                    <span class="pk-db-products-category">
+                                        {{ product.category.name }}
+                                    </span>
+                                </td>
+
+
+                                <!-- Price -->
+                                <td data-label="Price">
+                                    <strong class="pk-db-products-price">
+                                        NPR {{ product.price }}
+                                    </strong>
+                                </td>
+
+
+                                <!-- Stock -->
+                                <td data-label="Stock">
+
+                                    {% if product.stock == 0 %}
+                                        <span class="pk-db-products-stock pk-db-products-stock--empty">
+                                            Out of Stock
+                                        </span>
+
+                                    {% elif product.stock <= 5 %}
+                                        <span class="pk-db-products-stock pk-db-products-stock--low">
+                                            {{ product.stock }} left
+                                        </span>
+
+                                    {% else %}
+                                        <span class="pk-db-products-stock pk-db-products-stock--available">
+                                            {{ product.stock }}
+                                        </span>
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- Status -->
+                                <td data-label="Status">
+
+                                    <span
+                                        class="
+                                            pk-db-products-status
+                                            pk-db-products-status--{{ product.status }}
+                                        "
+                                    >
+                                        {{ product.get_status_display }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Featured -->
+                                <td data-label="Featured">
+
+                                    {% if product.featured %}
+
+                                        <span class="pk-db-products-featured pk-db-products-featured--yes">
+                                            Yes
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="pk-db-products-featured">
+                                            No
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- Actions -->
+                                <td data-label="Actions">
+
+                                    <div class="pk-db-products-actions">
+
+                                        <a
+                                            href="{% url 'dashboard:products_edit' product.pk %}"
+                                            class="pk-db-products-edit"
+                                        >
+                                            Edit
+                                        </a>
+
+
+                                        {% if product.is_deleted %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'dashboard:restore_product' product.id %}"
+                                                class="pk-db-products-action-form"
+                                                data-product-action="restore"
+                                                data-product-name="{{ product.name }}"
+                                            >
+                                                {% csrf_token %}
+
+                                                <input
+                                                    type="hidden"
+                                                    name="next"
+                                                    value="{{ request.get_full_path }}"
+                                                >
+
+                                                <button
+                                                    type="submit"
+                                                    class="pk-db-products-restore"
+                                                >
+                                                    Restore
+                                                </button>
+                                            </form>
+
+                                        {% else %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'dashboard:products_delete' product.pk %}"
+                                                class="pk-db-products-action-form"
+                                                data-product-action="delete"
+                                                data-product-name="{{ product.name }}"
+                                            >
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="pk-db-products-delete"
+                                                >
+                                                    Delete
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="pk-db-products-pagination">
+            {% include "includes/pagination.html" with page_obj=page_obj search_query=search_query extra_params=request.GET.urlencode %}
+        </div>
+
 
     {% else %}
 
-        <p>No products found.</p>
+        <div class="pk-db-products-empty">
+
+            <div class="pk-db-products-empty-icon" aria-hidden="true">
+                □
+            </div>
+
+            <h3>
+                No Products Found
+            </h3>
+
+            <p>
+                No products match your current search or filter settings.
+            </p>
+
+            <a
+                href="{% url 'dashboard:products' %}"
+                class="pk-db-products-empty-button"
+            >
+                Clear Filters
+            </a>
+
+        </div>
 
     {% endif %}
 
-</div>
+</section>

@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Add Category Form
+
+   Namespace:
+   pk-db-category-form-
+
+   Fully isolated from:
+   - Product Management
+   - Category Management
+   - Dashboard Sidebar
+   - Header
+   - Public Pages
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT
+   ========================================================================== */
+
+.pk-db-category-form {
+    --pk-db-category-form-primary: #121110;
+    --pk-db-category-form-text: #2b2825;
+    --pk-db-category-form-muted: #736d65;
+    --pk-db-category-form-gold: #d4af37;
+    --pk-db-category-form-gold-dark: #a8841a;
+    --pk-db-category-form-border: #e6dfd3;
+    --pk-db-category-form-surface: #ffffff;
+    --pk-db-category-form-soft: #f8f6f1;
+    --pk-db-category-form-danger: #a34d3e;
+
+    box-sizing: border-box;
+    color: var(--pk-db-category-form-text);
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    min-width: 0;
+    width: 100%;
+}
+
+.pk-db-category-form *,
+.pk-db-category-form *::before,
+.pk-db-category-form *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.pk-db-category-form-header {
+    border-bottom: 1px solid var(--pk-db-category-form-border);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-category-form-eyebrow {
+    color: var(--pk-db-category-form-gold-dark);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-category-form-title {
+    color: var(--pk-db-category-form-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-category-form-description {
+    color: var(--pk-db-category-form-muted);
+    font-size: 0.78rem;
+    margin: 0.5rem 0 0;
+}
+
+
+/* ==========================================================================
+   FORM CARD
+   ========================================================================== */
+
+.pk-db-category-form-card {
+    background: var(--pk-db-category-form-surface);
+    border: 1px solid var(--pk-db-category-form-border);
+    max-width: 900px;
+    width: 100%;
+}
+
+.pk-db-category-form-content {
+    padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   ERRORS
+   ========================================================================== */
+
+.pk-db-category-form-errors {
+    background: #fff5f2;
+    border: 1px solid #e2c1b8;
+    color: var(--pk-db-category-form-danger);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    overflow-wrap: anywhere;
+    padding: 0.85rem 1rem;
+}
+
+.pk-db-category-form-errors strong {
+    display: block;
+    font-size: 0.68rem;
+    margin-bottom: 0.35rem;
+}
+
+.pk-db-category-form-errors ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.2rem;
+}
+
+
+/* ==========================================================================
+   FORM FIELDS
+   ========================================================================== */
+
+.pk-db-category-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pk-db-category-form-fields p {
+    margin: 0;
+}
+
+.pk-db-category-form-fields label {
+    color: var(--pk-db-category-form-muted);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+.pk-db-category-form-fields input[type="text"],
+.pk-db-category-form-fields input[type="url"],
+.pk-db-category-form-fields input[type="number"],
+.pk-db-category-form-fields input[type="email"],
+.pk-db-category-form-fields input[type="file"],
+.pk-db-category-form-fields select,
+.pk-db-category-form-fields textarea {
+    background: #fff;
+    border: 1px solid var(--pk-db-category-form-border);
+    border-radius: 0;
+    color: var(--pk-db-category-form-text);
+    display: block;
+    font-family: inherit;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    max-width: 100%;
+    min-width: 0;
+    outline: none;
+    padding: 0.7rem;
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
+    width: 100%;
+}
+
+.pk-db-category-form-fields input[type="text"],
+.pk-db-category-form-fields input[type="url"],
+.pk-db-category-form-fields input[type="number"],
+.pk-db-category-form-fields input[type="email"],
+.pk-db-category-form-fields select {
+    height: 40px;
+}
+
+.pk-db-category-form-fields textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.pk-db-category-form-fields input[type="file"] {
+    cursor: pointer;
+    min-height: 40px;
+    padding: 0.55rem;
+}
+
+.pk-db-category-form-fields input:focus,
+.pk-db-category-form-fields select:focus,
+.pk-db-category-form-fields textarea:focus {
+    border-color: var(--pk-db-category-form-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+}
+
+
+/* ==========================================================================
+   CHECKBOXES
+   ========================================================================== */
+
+.pk-db-category-form-fields input[type="checkbox"] {
+    accent-color: var(--pk-db-category-form-gold-dark);
+    height: 16px;
+    margin: 0 0.4rem 0 0;
+    width: 16px;
+}
+
+.pk-db-category-form-fields label:has(input[type="checkbox"]) {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+
+/* ==========================================================================
+   HELP TEXT
+   ========================================================================== */
+
+.pk-db-category-form-fields .helptext {
+    color: var(--pk-db-category-form-muted);
+    display: block;
+    font-size: 0.65rem;
+    line-height: 1.5;
+    margin-top: 0.35rem;
+}
+
+
+/* ==========================================================================
+   FIELD ERRORS
+   ========================================================================== */
+
+.pk-db-category-form-fields .errorlist {
+    color: var(--pk-db-category-form-danger);
+    font-size: 0.65rem;
+    line-height: 1.45;
+    list-style: none;
+    margin: 0 0 0.35rem;
+    padding: 0;
+}
+
+.pk-db-category-form-fields .errorlist + input,
+.pk-db-category-form-fields .errorlist + select,
+.pk-db-category-form-fields .errorlist + textarea {
+    border-color: var(--pk-db-category-form-danger);
+}
+
+
+/* ==========================================================================
+   REQUIRED FIELDS
+   ========================================================================== */
+
+.pk-db-category-form-fields label.required::after {
+    color: var(--pk-db-category-form-danger);
+    content: " *";
+}
+
+
+/* ==========================================================================
+   FORM ACTIONS
+   ========================================================================== */
+
+.pk-db-category-form-actions {
+    border-top: 1px solid var(--pk-db-category-form-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+}
+
+.pk-db-category-form-submit,
+.pk-db-category-form-cancel {
+    align-items: center;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+    height: 40px;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    padding: 0 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-db-category-form-submit {
+    background: var(--pk-db-category-form-primary);
+    border: 1px solid var(--pk-db-category-form-primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.pk-db-category-form-submit:hover {
+    background: var(--pk-db-category-form-gold-dark);
+    border-color: var(--pk-db-category-form-gold-dark);
+}
+
+.pk-db-category-form-cancel {
+    background: #fff;
+    border: 1px solid var(--pk-db-category-form-border);
+    color: var(--pk-db-category-form-muted);
+}
+
+.pk-db-category-form-cancel:hover {
+    border-color: var(--pk-db-category-form-gold);
+    color: var(--pk-db-category-form-gold-dark);
+}
+
+
+/* ==========================================================================
+   FOCUS
+   ========================================================================== */
+
+.pk-db-category-form-submit:focus-visible,
+.pk-db-category-form-cancel:focus-visible {
+    outline: 2px solid var(--pk-db-category-form-gold);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 760px) {
+
+    .pk-db-category-form-header {
+        margin-bottom: 1rem;
+    }
+
+    .pk-db-category-form-card {
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .pk-db-category-form-content {
+        padding: 1.1rem;
+    }
+
+    .pk-db-category-form-actions {
+        flex-direction: column;
+    }
+
+    .pk-db-category-form-submit,
+    .pk-db-category-form-cancel {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    .pk-db-category-form-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-db-category-form-description {
+        font-size: 0.7rem;
+    }
+
+    .pk-db-category-form-content {
+        padding: 0.9rem;
+    }
+
+    .pk-db-category-form-fields {
+        gap: 0.85rem;
+    }
+
+    .pk-db-category-form-fields input[type="text"],
+    .pk-db-category-form-fields input[type="url"],
+    .pk-db-category-form-fields input[type="number"],
+    .pk-db-category-form-fields input[type="email"],
+    .pk-db-category-form-fields select,
+    .pk-db-category-form-fields textarea {
+        font-size: 0.72rem;
+    }
+
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pk-db-category-form *,
+    .pk-db-category-form *::before,
+    .pk-db-category-form *::after {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms !important;
+    }
+
+}

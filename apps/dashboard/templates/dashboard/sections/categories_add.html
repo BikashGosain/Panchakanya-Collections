@@ -1,10 +1,74 @@
-<div class="pk-products-management">
-    <h2 class="pk-db-card-title">Add Category</h2>
-    <form method="post" enctype="multipart/form-data" class="pk-product-form">
-        {% csrf_token %}
-        {% if form.errors %}<div class="pk-form-errors">{{ form.errors }}</div>{% endif %}
-        {{ form.as_p }}
-        <button type="submit" class="pk-btn-primary">Create Category</button>
-        <a href="{% url 'dashboard:categories' %}" class="pk-btn-secondary">Cancel</a>
-    </form>
+<div class="pk-db-category-form">
+
+    <div class="pk-db-category-form-header">
+        <div>
+            <span class="pk-db-category-form-eyebrow">
+                Category Management
+            </span>
+
+            <h2 class="pk-db-category-form-title">
+                Add Category
+            </h2>
+
+            <p class="pk-db-category-form-description">
+                Create a new category for your store.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="pk-db-category-form-card">
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            class="pk-db-category-form-content"
+        >
+
+            {% csrf_token %}
+
+
+            {% if form.errors %}
+                <div
+                    class="pk-db-category-form-errors"
+                    role="alert"
+                >
+                    <strong>
+                        Please correct the following errors.
+                    </strong>
+
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+
+            <div class="pk-db-category-form-fields">
+
+                {{ form.as_p }}
+
+            </div>
+
+
+            <div class="pk-db-category-form-actions">
+
+                <button
+                    type="submit"
+                    class="pk-db-category-form-submit"
+                >
+                    Create Category
+                </button>
+
+                <a
+                    href="{% url 'dashboard:categories' %}"
+                    class="pk-db-category-form-cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>

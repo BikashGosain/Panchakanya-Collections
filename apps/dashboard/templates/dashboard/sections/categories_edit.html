@@ -1,10 +1,78 @@
-<div class="pk-products-management">
-    <h2 class="pk-db-card-title">Edit Category — {{ category.name }}</h2>
-    <form method="post" enctype="multipart/form-data" class="pk-product-form">
-        {% csrf_token %}
-        {% if form.errors %}<div class="pk-form-errors">{{ form.errors }}</div>{% endif %}
-        {{ form.as_p }}
-        <button type="submit" class="pk-btn-primary">Save Changes</button>
-        <a href="{% url 'dashboard:categories' %}" class="pk-btn-secondary">Cancel</a>
-    </form>
+<div class="pk-db-category-edit">
+
+    <!-- Header -->
+    <div class="pk-db-category-edit-header">
+        <div>
+            <span class="pk-db-category-edit-eyebrow">
+                Category Management
+            </span>
+
+            <h2 class="pk-db-category-edit-title">
+                Edit Category
+            </h2>
+
+            <p class="pk-db-category-edit-description">
+                Update the details and settings for
+                <strong>{{ category.name }}</strong>.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Form Card -->
+    <div class="pk-db-category-edit-card">
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            class="pk-db-category-edit-content"
+        >
+
+            {% csrf_token %}
+
+
+            {% if form.errors %}
+                <div
+                    class="pk-db-category-edit-errors"
+                    role="alert"
+                >
+                    <strong>
+                        Please correct the following errors.
+                    </strong>
+
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+
+            <div class="pk-db-category-edit-fields">
+
+                {{ form.as_p }}
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="pk-db-category-edit-actions">
+
+                <button
+                    type="submit"
+                    class="pk-db-category-edit-save"
+                >
+                    Save Changes
+                </button>
+
+                <a
+                    href="{% url 'dashboard:categories' %}"
+                    class="pk-db-category-edit-cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>

@@ -1,54 +1,191 @@
-<div class="pk-products-management">
-    <h2 class="pk-db-card-title">Edit Product — {{ product.name }}</h2>
+<div class="pk-db-product-edit">
 
-    <form method="post" enctype="multipart/form-data" class="pk-product-form">
-        {% csrf_token %}
-            {% if form.errors %}
-        <div class="pk-form-errors">
-            <strong>Product errors:</strong>
-            {{ form.errors }}
+    <!-- Header -->
+    <div class="pk-db-product-edit-header">
+        <div>
+            <span class="pk-db-product-edit-eyebrow">
+                Product Management
+            </span>
+
+            <h2 class="pk-db-product-edit-title">
+                Edit Product
+            </h2>
+
+            <p class="pk-db-product-edit-description">
+                Update the details, images, and settings for
+                <strong>{{ product.name }}</strong>.
+            </p>
         </div>
-    {% endif %}
-
-    {% if formset.errors %}
-        <div class="pk-form-errors">
-            <strong>Image errors:</strong>
-            {{ formset.errors }}
-        </div>
-    {% endif %}
-    {% if formset.non_form_errors %}
-        <div class="pk-form-errors">
-            {{ formset.non_form_errors }}
-        </div>
-    {% endif %}
-        {{ form.as_p }}
-
-<h3>Product Images</h3>
-{{ formset.management_form }}
-
-<div id="image-formset-container">
-    {% for image_form in formset %}
-        <div class="pk-image-form-row">
-            {{ image_form.id }}
-            {{ image_form.image.label_tag }} {{ image_form.image }}
-            {{ image_form.is_primary.label_tag }} {{ image_form.is_primary }}
-            {% if image_form.instance.pk %}
-                {{ image_form.DELETE.label_tag }} {{ image_form.DELETE }}
-            {% endif %}
-        </div>
-    {% endfor %}
-</div>
-
-<button type="button" id="add-image-form" class="pk-btn-secondary">Add another image</button>
-
-<template id="image-form-template">
-    <div class="pk-image-form-row">
-        {{ formset.empty_form.image.label_tag }} {{ formset.empty_form.image }}
-        {{ formset.empty_form.is_primary.label_tag }} {{ formset.empty_form.is_primary }}
     </div>
-</template>
 
-        <button type="submit" class="pk-btn-primary">Save Changes</button>
-        <a href="{% url 'dashboard:products' %}" class="pk-btn-secondary">Cancel</a>
-    </form>
+
+    <!-- Form Card -->
+    <div class="pk-db-product-edit-card">
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            class="pk-db-product-edit-form"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- Product Errors -->
+            {% if form.errors %}
+                <div
+                    class="pk-db-product-edit-errors"
+                    role="alert"
+                >
+                    <strong>Product errors:</strong>
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+
+            <!-- Image Errors -->
+            {% if formset.errors %}
+                <div
+                    class="pk-db-product-edit-errors"
+                    role="alert"
+                >
+                    <strong>Image errors:</strong>
+                    {{ formset.errors }}
+                </div>
+            {% endif %}
+
+
+            {% if formset.non_form_errors %}
+                <div
+                    class="pk-db-product-edit-errors"
+                    role="alert"
+                >
+                    <strong>Image formset errors:</strong>
+                    {{ formset.non_form_errors }}
+                </div>
+            {% endif %}
+
+
+            <!-- Product Information -->
+            <section class="pk-db-product-edit-section">
+
+                <div class="pk-db-product-edit-section-heading">
+                    <h3>Product Information</h3>
+
+                    <p>
+                        Update the basic information for this product.
+                    </p>
+                </div>
+
+                <div class="pk-db-product-edit-fields">
+                    {{ form.as_p }}
+                </div>
+
+            </section>
+
+
+            <!-- Product Images -->
+            <section class="pk-db-product-edit-section pk-db-product-edit-images-section">
+
+                <div class="pk-db-product-edit-section-heading">
+                    <h3>Product Images</h3>
+
+                    <p>
+                        Manage existing images or add new ones.
+                    </p>
+                </div>
+
+
+                {{ formset.management_form }}
+
+
+                <div
+                    id="pk-db-product-edit-image-container"
+                    class="pk-db-product-edit-image-container"
+                >
+
+                    {% for image_form in formset %}
+
+                        <div class="pk-db-product-edit-image-row">
+
+                            {{ image_form.id }}
+
+                            <div class="pk-db-product-edit-image-field">
+                                {{ image_form.image.label_tag }}
+                                {{ image_form.image }}
+                            </div>
+
+                            <div class="pk-db-product-edit-primary-field">
+                                {{ image_form.is_primary }}
+                                {{ image_form.is_primary.label_tag }}
+                            </div>
+
+                            {% if image_form.instance.pk %}
+                                <div class="pk-db-product-edit-delete-field">
+                                    {{ image_form.DELETE }}
+                                    {{ image_form.DELETE.label_tag }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Empty Form Template -->
+                <template id="pk-db-product-edit-image-template">
+
+                    <div class="pk-db-product-edit-image-row">
+
+                        <div class="pk-db-product-edit-image-field">
+                            {{ formset.empty_form.image.label_tag }}
+                            {{ formset.empty_form.image }}
+                        </div>
+
+                        <div class="pk-db-product-edit-primary-field">
+                            {{ formset.empty_form.is_primary }}
+                            {{ formset.empty_form.is_primary.label_tag }}
+                        </div>
+
+                    </div>
+
+                </template>
+
+
+                <button
+                    type="button"
+                    id="pk-db-product-edit-image-button"
+                    class="pk-db-product-edit-image-button"
+                >
+                    + Add Another Image
+                </button>
+
+            </section>
+
+
+            <!-- Actions -->
+            <div class="pk-db-product-edit-actions">
+
+                <button
+                    type="submit"
+                    class="pk-db-product-edit-submit"
+                >
+                    Save Changes
+                </button>
+
+                <a
+                    href="{% url 'dashboard:products' %}"
+                    class="pk-db-product-edit-cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>

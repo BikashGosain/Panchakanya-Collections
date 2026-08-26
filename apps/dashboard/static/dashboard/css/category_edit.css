@@ -1,0 +1,425 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Edit Category Form
+
+   Namespace:
+   pk-db-category-edit-
+
+   Fully isolated from:
+   - Add Category
+   - Category Management
+   - Product Management
+   - Dashboard Sidebar
+   - Header
+   - Public Pages
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT
+   ========================================================================== */
+
+.pk-db-category-edit {
+    --pk-db-category-edit-primary: #121110;
+    --pk-db-category-edit-text: #2b2825;
+    --pk-db-category-edit-muted: #736d65;
+    --pk-db-category-edit-gold: #d4af37;
+    --pk-db-category-edit-gold-dark: #a8841a;
+    --pk-db-category-edit-border: #e6dfd3;
+    --pk-db-category-edit-surface: #ffffff;
+    --pk-db-category-edit-danger: #a34d3e;
+
+    box-sizing: border-box;
+    color: var(--pk-db-category-edit-text);
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    min-width: 0;
+    width: 100%;
+}
+
+.pk-db-category-edit *,
+.pk-db-category-edit *::before,
+.pk-db-category-edit *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.pk-db-category-edit-header {
+    border-bottom: 1px solid var(--pk-db-category-edit-border);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-category-edit-eyebrow {
+    color: var(--pk-db-category-edit-gold-dark);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-category-edit-title {
+    color: var(--pk-db-category-edit-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-category-edit-description {
+    color: var(--pk-db-category-edit-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin: 0.5rem 0 0;
+}
+
+.pk-db-category-edit-description strong {
+    color: var(--pk-db-category-edit-text);
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   FORM CARD
+   ========================================================================== */
+
+.pk-db-category-edit-card {
+    background: var(--pk-db-category-edit-surface);
+    border: 1px solid var(--pk-db-category-edit-border);
+    max-width: 900px;
+    width: 100%;
+}
+
+.pk-db-category-edit-content {
+    padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   FORM ERRORS
+   ========================================================================== */
+
+.pk-db-category-edit-errors {
+    background: #fff5f2;
+    border: 1px solid #e2c1b8;
+    color: var(--pk-db-category-edit-danger);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    overflow-wrap: anywhere;
+    padding: 0.85rem 1rem;
+}
+
+.pk-db-category-edit-errors strong {
+    display: block;
+    font-size: 0.68rem;
+    margin-bottom: 0.35rem;
+}
+
+.pk-db-category-edit-errors ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.2rem;
+}
+
+
+/* ==========================================================================
+   FORM FIELDS
+   ========================================================================== */
+
+.pk-db-category-edit-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.pk-db-category-edit-fields p {
+    margin: 0;
+    min-width: 0;
+}
+
+.pk-db-category-edit-fields label {
+    color: var(--pk-db-category-edit-muted);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   INPUTS
+   ========================================================================== */
+
+.pk-db-category-edit-fields input[type="text"],
+.pk-db-category-edit-fields input[type="url"],
+.pk-db-category-edit-fields input[type="number"],
+.pk-db-category-edit-fields input[type="email"],
+.pk-db-category-edit-fields input[type="password"],
+.pk-db-category-edit-fields input[type="file"],
+.pk-db-category-edit-fields select,
+.pk-db-category-edit-fields textarea {
+    background: #fff;
+    border: 1px solid var(--pk-db-category-edit-border);
+    border-radius: 0;
+    color: var(--pk-db-category-edit-text);
+    display: block;
+    font-family: inherit;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    max-width: 100%;
+    min-width: 0;
+    outline: none;
+    padding: 0.7rem;
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
+    width: 100%;
+}
+
+.pk-db-category-edit-fields input[type="text"],
+.pk-db-category-edit-fields input[type="url"],
+.pk-db-category-edit-fields input[type="number"],
+.pk-db-category-edit-fields input[type="email"],
+.pk-db-category-edit-fields input[type="password"],
+.pk-db-category-edit-fields select {
+    height: 40px;
+}
+
+.pk-db-category-edit-fields textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.pk-db-category-edit-fields input[type="file"] {
+    cursor: pointer;
+    min-height: 40px;
+    padding: 0.55rem;
+}
+
+
+/* ==========================================================================
+   INPUT FOCUS
+   ========================================================================== */
+
+.pk-db-category-edit-fields input:focus,
+.pk-db-category-edit-fields select:focus,
+.pk-db-category-edit-fields textarea:focus {
+    border-color: var(--pk-db-category-edit-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+}
+
+
+/* ==========================================================================
+   CHECKBOXES
+   ========================================================================== */
+
+.pk-db-category-edit-fields input[type="checkbox"] {
+    accent-color: var(--pk-db-category-edit-gold-dark);
+    height: 16px;
+    margin: 0 0.4rem 0 0;
+    width: 16px;
+}
+
+.pk-db-category-edit-fields label:has(input[type="checkbox"]) {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+
+/* ==========================================================================
+   HELP TEXT
+   ========================================================================== */
+
+.pk-db-category-edit-fields .helptext {
+    color: var(--pk-db-category-edit-muted);
+    display: block;
+    font-size: 0.65rem;
+    line-height: 1.5;
+    margin-top: 0.35rem;
+}
+
+
+/* ==========================================================================
+   FIELD ERRORS
+   ========================================================================== */
+
+.pk-db-category-edit-fields .errorlist {
+    color: var(--pk-db-category-edit-danger);
+    font-size: 0.65rem;
+    line-height: 1.45;
+    list-style: none;
+    margin: 0 0 0.35rem;
+    padding: 0;
+}
+
+
+/* ==========================================================================
+   INVALID FIELDS
+   ========================================================================== */
+
+.pk-db-category-edit-fields .errorlist ~ input,
+.pk-db-category-edit-fields .errorlist ~ select,
+.pk-db-category-edit-fields .errorlist ~ textarea {
+    border-color: var(--pk-db-category-edit-danger);
+}
+
+
+/* ==========================================================================
+   FORM ACTIONS
+   ========================================================================== */
+
+.pk-db-category-edit-actions {
+    border-top: 1px solid var(--pk-db-category-edit-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+}
+
+.pk-db-category-edit-save,
+.pk-db-category-edit-cancel {
+    align-items: center;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+    height: 40px;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    padding: 0 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-db-category-edit-save {
+    background: var(--pk-db-category-edit-primary);
+    border: 1px solid var(--pk-db-category-edit-primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.pk-db-category-edit-save:hover {
+    background: var(--pk-db-category-edit-gold-dark);
+    border-color: var(--pk-db-category-edit-gold-dark);
+}
+
+.pk-db-category-edit-cancel {
+    background: #fff;
+    border: 1px solid var(--pk-db-category-edit-border);
+    color: var(--pk-db-category-edit-muted);
+}
+
+.pk-db-category-edit-cancel:hover {
+    border-color: var(--pk-db-category-edit-gold);
+    color: var(--pk-db-category-edit-gold-dark);
+}
+
+
+/* ==========================================================================
+   FOCUS
+   ========================================================================== */
+
+.pk-db-category-edit-save:focus-visible,
+.pk-db-category-edit-cancel:focus-visible {
+    outline: 2px solid var(--pk-db-category-edit-gold);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 760px) {
+
+    .pk-db-category-edit-header {
+        margin-bottom: 1rem;
+    }
+
+    .pk-db-category-edit-card {
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .pk-db-category-edit-content {
+        padding: 1.1rem;
+    }
+
+    .pk-db-category-edit-actions {
+        flex-direction: column;
+    }
+
+    .pk-db-category-edit-save,
+    .pk-db-category-edit-cancel {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    .pk-db-category-edit-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-db-category-edit-description {
+        font-size: 0.7rem;
+    }
+
+    .pk-db-category-edit-content {
+        padding: 0.9rem;
+    }
+
+    .pk-db-category-edit-fields {
+        gap: 0.85rem;
+    }
+
+    .pk-db-category-edit-fields input[type="text"],
+    .pk-db-category-edit-fields input[type="url"],
+    .pk-db-category-edit-fields input[type="number"],
+    .pk-db-category-edit-fields input[type="email"],
+    .pk-db-category-edit-fields input[type="password"],
+    .pk-db-category-edit-fields select,
+    .pk-db-category-edit-fields textarea {
+        font-size: 0.72rem;
+    }
+
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pk-db-category-edit *,
+    .pk-db-category-edit *::before,
+    .pk-db-category-edit *::after {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms !important;
+    }
+
+}

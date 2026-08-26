@@ -1,0 +1,308 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Global Django Messages
+
+   Namespace:
+   pk-msg-
+
+   Fully isolated from:
+   - Header
+   - Footer
+   - Dashboard
+   - Products
+   - Categories
+   - Cart
+   - Wishlist
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT CONTAINER
+   ========================================================================== */
+
+.pk-msg-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin: 0 auto 1rem;
+    max-width: 1200px;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.pk-msg-container *,
+.pk-msg-container *::before,
+.pk-msg-container *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   MESSAGE
+   ========================================================================== */
+
+.pk-msg {
+    align-items: stretch;
+    animation: pk-msg-slide-in 220ms ease-out;
+    background: #fff;
+    border: 1px solid #e6dfd3;
+    display: flex;
+    min-height: 46px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   MESSAGE CONTENT
+   ========================================================================== */
+
+.pk-msg-content {
+    align-items: center;
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+}
+
+.pk-msg-text {
+    color: #2b2825;
+    font-family: var(
+        --pk-font-sans,
+        system-ui,
+        sans-serif
+    );
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================================================
+   CLOSE BUTTON
+   ========================================================================== */
+
+.pk-msg-close {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: #736d65;
+    cursor: pointer;
+    display: flex;
+    flex: 0 0 42px;
+    font-family: inherit;
+    font-size: 1.25rem;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-msg-close:hover {
+    background: #f8f6f1;
+    color: #121110;
+}
+
+.pk-msg-close:focus-visible {
+    outline: 2px solid #d4af37;
+    outline-offset: -3px;
+}
+
+.pk-msg-close span {
+    display: block;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   SUCCESS
+   ========================================================================== */
+
+.pk-msg--success {
+    background: #f4f8f4;
+    border-color: #c9dccd;
+}
+
+.pk-msg--success::before {
+    background: #55745c;
+    content: "";
+    flex: 0 0 4px;
+}
+
+.pk-msg--success .pk-msg-text {
+    color: #405a46;
+}
+
+
+/* ==========================================================================
+   ERROR
+   ========================================================================== */
+
+.pk-msg--error,
+.pk-msg--danger {
+    background: #fff5f2;
+    border-color: #dfc1b9;
+}
+
+.pk-msg--error::before,
+.pk-msg--danger::before {
+    background: #a34d3e;
+    content: "";
+    flex: 0 0 4px;
+}
+
+.pk-msg--error .pk-msg-text,
+.pk-msg--danger .pk-msg-text {
+    color: #873f34;
+}
+
+
+/* ==========================================================================
+   WARNING
+   ========================================================================== */
+
+.pk-msg--warning {
+    background: #fcf8ef;
+    border-color: #e4d5ae;
+}
+
+.pk-msg--warning::before {
+    background: #9a6b24;
+    content: "";
+    flex: 0 0 4px;
+}
+
+.pk-msg--warning .pk-msg-text {
+    color: #79551d;
+}
+
+
+/* ==========================================================================
+   INFO
+   ========================================================================== */
+
+.pk-msg--info {
+    background: #f5f7f8;
+    border-color: #d5dde1;
+}
+
+.pk-msg--info::before {
+    background: #60737d;
+    content: "";
+    flex: 0 0 4px;
+}
+
+.pk-msg--info .pk-msg-text {
+    color: #4e6069;
+}
+
+
+/* ==========================================================================
+   DEBUG
+   ========================================================================== */
+
+.pk-msg--debug {
+    background: #f7f7f7;
+    border-color: #dddddd;
+}
+
+.pk-msg--debug::before {
+    background: #777;
+    content: "";
+    flex: 0 0 4px;
+}
+
+.pk-msg--debug .pk-msg-text {
+    color: #555;
+}
+
+
+/* ==========================================================================
+   EXIT ANIMATION
+   ========================================================================== */
+
+.pk-msg.pk-msg--closing {
+    animation: pk-msg-slide-out 180ms ease-in forwards;
+    pointer-events: none;
+}
+
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes pk-msg-slide-in {
+
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+@keyframes pk-msg-slide-out {
+
+    from {
+        max-height: 100px;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 600px) {
+
+    .pk-msg-container {
+        padding: 0 0.75rem;
+    }
+
+    .pk-msg-content {
+        padding: 0.7rem 0.75rem;
+    }
+
+    .pk-msg-text {
+        font-size: 0.68rem;
+    }
+
+    .pk-msg-close {
+        flex-basis: 38px;
+        font-size: 1.15rem;
+    }
+
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pk-msg,
+    .pk-msg.pk-msg--closing {
+        animation: none;
+    }
+
+}
