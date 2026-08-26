@@ -12,6 +12,7 @@ dependencies = [
     "django>=6.1",
     "django-allauth>=65.19.1",
     "django-cloudinary-storage>=0.3.0",
+    "gunicorn>=26.2.0",
     "pillow>=12.3.0",
     "psycopg[binary]>=3.3.4",
     "pyjwt>=2.13.0",
