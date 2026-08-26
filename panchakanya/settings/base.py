@@ -205,6 +205,7 @@ MAILERS = {
             "use_tls": True,
             "username": config("EMAIL_HOST_USER"),
             "password": config("EMAIL_HOST_PASSWORD"),
+            "timeout": 10,
         },
     },
 }
