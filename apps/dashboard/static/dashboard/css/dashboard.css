@@ -1,627 +1,573 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Layout
+
+   Namespace:
+   pk-db-
+
+   Scope:
+   - Dashboard shell
+   - Dashboard header
+   - Sidebar navigation
+   - Dashboard content/card
+   - Mobile sidebar
+   - Responsive layout
+
+   Intentionally isolated from:
+   - Public pages
+   - Header
+   - Footer
+   - Products section
+   - Categories section
+   - Wishlist
+   - Cart
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT
+   ========================================================================== */
+
 .pk-dashboard {
-    --db-border: #e5e5e5;
-    --db-border-light: #eeeeee;
-    --db-text: #333333;
-    --db-text-muted: #777777;
-    --db-bg: #ffffff;
-    --db-hover: #f7f7f7;
-    --db-active: #f1e5c8;
-    --db-active-text: #4b3a1f;
-    --db-accent: #9a7b3f;
+    --pk-db-primary: #121110;
+    --pk-db-primary-soft: #211f1c;
+    --pk-db-text: #2b2825;
+    --pk-db-muted: #736d65;
+    --pk-db-light-muted: #9a9389;
+    --pk-db-gold: #d4af37;
+    --pk-db-gold-dark: #a8841a;
+    --pk-db-border: #e6dfd3;
+    --pk-db-border-soft: #eee9df;
+    --pk-db-surface: #ffffff;
+    --pk-db-soft: #f8f6f1;
+    --pk-db-sidebar: #fbfaf7;
 
-    width: min(100% - 32px, 1280px);
+    box-sizing: border-box;
+    color: var(--pk-db-text);
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
     margin: 0 auto;
-    padding: 32px 0 60px;
+    max-width: 1500px;
+    min-width: 0;
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.pk-dashboard *,
+.pk-dashboard *::before,
+.pk-dashboard *::after {
+    box-sizing: border-box;
 }
 
 
-/* =========================================================
-   Header
-   ========================================================= */
+/* ==========================================================================
+   DASHBOARD HEADER
+   ========================================================================== */
 
-.pk-dashboard .pk-db-header {
-    position: sticky;
-    /* If your site has a fixed top navbar (e.g., 60px height), adjust this to top: 60px; */
-    top: 0;
-    z-index: 99;
-
+.pk-db-header {
+    align-items: flex-end;
+    border-bottom: 1px solid var(--pk-db-border);
     display: flex;
-    align-items: center;
+    gap: 1.5rem;
     justify-content: space-between;
-
-    gap: 24px;
-
-    margin-bottom: 28px;
-    padding: 18px 0;
-
-    /* Ensures content behind it doesn't bleed through when scrolling */
-    background-color: #ffffff !important;
-
-    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 1.5rem;
+    padding: 0 0 1.15rem;
 }
 
-.pk-dashboard .pk-db-title {
-    margin: 0;
+.pk-db-header > div {
+    min-width: 0;
+}
 
-    font-size: clamp(1.7rem, 2.5vw, 2.15rem);
-    line-height: 1.2;
-    font-weight: 700;
+.pk-db-title {
+    color: var(--pk-db-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.65rem, 3vw, 2.3rem);
+    font-weight: 600;
     letter-spacing: -0.02em;
-
-    color: var(--db-text);
+    line-height: 1.15;
+    margin: 0;
 }
 
-.pk-dashboard .pk-db-welcome-msg {
-    margin: 7px 0 0;
-
-    font-size: 0.95rem;
+.pk-db-welcome-msg {
+    color: var(--pk-db-muted);
+    font-size: 0.76rem;
     line-height: 1.5;
-
-    color: var(--db-text-muted);
+    margin: 0.45rem 0 0;
 }
 
-.pk-dashboard .pk-db-user-name {
+.pk-db-user-name {
+    color: var(--pk-db-text);
     font-weight: 600;
-    color: var(--db-text);
 }
 
 
-/* =========================================================
-   Logout
-   ========================================================= */
+/* ==========================================================================
+   LOGOUT
+   ========================================================================== */
 
-.pk-dashboard .pk-db-logout-btn {
-    display: inline-flex;
+.pk-db-header form {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.pk-db-logout-btn {
     align-items: center;
-    justify-content: center;
-
-    min-height: 42px;
-    padding: 0 18px;
-
-    border: 1px solid #dcdcdc;
-    border-radius: 9px;
-
-    background: #ffffff;
-    color: #333333;
-
-    font: inherit;
-    font-size: 0.9rem;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.15s ease;
-}
-
-.pk-dashboard .pk-db-logout-btn:hover {
-    background: #f7f7f7;
-    border-color: #cccccc;
-}
-
-.pk-dashboard .pk-db-logout-btn:active {
-    transform: translateY(1px);
-}
-
-
-/* =========================================================
-   Main Grid
-   ========================================================= */
-
-.pk-dashboard .pk-db-grid {
-    display: grid;
-
-    grid-template-columns: 245px minmax(0, 1fr);
-
-    gap: 24px;
-
-    align-items: start;
-}
-
-
-/* =========================================================
-   Sidebar
-   ========================================================= */
-
-
-.pk-dashboard .pk-db-sidebar {
-    position: sticky;
-    /* Increase top offset so sidebar sticks BELOW the sticky header height (~90px) */
-    top: 90px;
-
-    width: 100%;
-    min-width: 0;
-
-    padding: 12px;
-
-    border: 1px solid var(--db-border);
-    border-radius: 14px;
-
-    background: var(--db-bg);
-
-    box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.03),
-        0 8px 24px rgba(0, 0, 0, 0.04);
-
-    /* Recalculate max-height so overflow scrolling still works properly */
-    max-height: calc(100vh - 110px);
-    overflow-y: auto;
-
-    scrollbar-width: thin;
-}
-
-/* Sidebar scrollbar */
-
-.pk-dashboard .pk-db-sidebar::-webkit-scrollbar {
-    width: 5px;
-}
-
-.pk-dashboard .pk-db-sidebar::-webkit-scrollbar-track {
     background: transparent;
-}
-
-.pk-dashboard .pk-db-sidebar::-webkit-scrollbar-thumb {
-    background: #d5d5d5;
-    border-radius: 10px;
-}
-
-
-/* =========================================================
-   Navigation Sections
-   ========================================================= */
-
-.pk-dashboard .pk-db-nav-section {
-    width: 100%;
-}
-
-.pk-dashboard .pk-db-nav-section + .pk-db-nav-section {
-    margin-top: 20px;
-    padding-top: 18px;
-
-    border-top: 1px solid var(--db-border-light);
-}
-
-
-/* =========================================================
-   Navigation Heading
-   ========================================================= */
-
-.pk-dashboard .pk-db-nav-heading {
-    margin: 0 0 7px;
-    padding: 0 10px;
-
-    font-size: 0.7rem;
-    line-height: 1.4;
-    font-weight: 700;
-
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-
-    color: #888888;
-}
-
-
-/* =========================================================
-   Navigation Links
-   ========================================================= */
-
-.pk-dashboard .pk-db-nav-item {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    width: 100%;
-    min-height: 44px;
-
-    gap: 11px;
-    padding: 10px 11px;
-
-    border-radius: 9px;
-
-    color: #444444;
-    text-decoration: none;
-
-    font-size: 0.92rem;
-    font-weight: 500;
-
-    box-sizing: border-box;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.15s ease;
-}
-
-
-/* Lucide icons */
-
-.pk-dashboard .pk-db-nav-item svg {
-    width: 18px;
-    height: 18px;
-
-    flex: 0 0 18px;
-
-    stroke-width: 1.9;
-}
-
-
-/* Hover */
-
-.pk-dashboard .pk-db-nav-item:hover {
-    background: var(--db-hover);
-    color: #222222;
-}
-
-
-/* Click */
-
-.pk-dashboard .pk-db-nav-item:active {
-    transform: scale(0.99);
-}
-
-
-/* =========================================================
-   Active Navigation
-   ========================================================= */
-
-.pk-dashboard .pk-db-nav-item.pk-db-active {
-    background: var(--db-active);
-    color: var(--db-active-text);
-
-    font-weight: 650;
-}
-
-.pk-dashboard .pk-db-nav-item.pk-db-active svg {
-    stroke-width: 2.2;
-}
-
-
-/* Active indicator */
-
-.pk-dashboard .pk-db-nav-item.pk-db-active::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 9px;
-    bottom: 9px;
-
-    width: 3px;
-
-    border-radius: 0 4px 4px 0;
-
-    background: var(--db-accent);
-}
-
-
-/* =========================================================
-   Main Content
-   ========================================================= */
-
-.pk-dashboard .pk-db-content {
-    min-width: 0;
-    width: 100%;
-}
-
-
-/* =========================================================
-   Main Dashboard Card
-   ========================================================= */
-
-.pk-dashboard .pk-db-card {
-    min-width: 0;
-
-    padding: clamp(20px, 3vw, 30px);
-
-    border: 1px solid var(--db-border);
-    border-radius: 14px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.025),
-        0 8px 24px rgba(0, 0, 0, 0.035);
-
-    box-sizing: border-box;
-}
-
-
-/* =========================================================
-   Card Title
-   ========================================================= */
-
-.pk-dashboard .pk-db-card-title {
-    margin: 0 0 20px;
-
-    font-size: 1.35rem;
-    line-height: 1.3;
-    font-weight: 700;
-
-    color: var(--db-text);
-}
-
-
-/* =========================================================
-   Order Card
-   ========================================================= */
-
-.pk-dashboard .pk-db-order-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 18px;
-
-    padding: 18px 0;
-
-    border-top: 1px solid var(--db-border-light);
-}
-
-.pk-dashboard .pk-db-order-thumb {
-    width: 64px;
-    height: 64px;
-
-    flex: 0 0 64px;
-
-    object-fit: cover;
-
-    border-radius: 9px;
-}
-
-.pk-dashboard .pk-db-order-code {
-    display: block;
-
-    margin-bottom: 4px;
-
-    font-size: 0.75rem;
-
-    color: #888888;
-}
-
-.pk-dashboard .pk-db-order-name {
-    margin: 0 0 6px;
-
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-
-.pk-dashboard .pk-db-status-tag {
+    border: 1px solid var(--pk-db-border);
+    color: var(--pk-db-text);
+    cursor: pointer;
     display: inline-flex;
-    align-items: center;
-
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.pk-dashboard .pk-db-order-price {
+    font-family: inherit;
+    font-size: 0.62rem;
     font-weight: 700;
-    white-space: nowrap;
+    height: 38px;
+    justify-content: center;
+    letter-spacing: 0.09em;
+    padding: 0 1rem;
+    text-transform: uppercase;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.pk-db-logout-btn:hover {
+    background: var(--pk-db-primary);
+    border-color: var(--pk-db-primary);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.pk-db-logout-btn:focus-visible {
+    outline: 2px solid var(--pk-db-gold);
+    outline-offset: 3px;
 }
 
 
-/* =========================================================
-   Large Desktop
-   ========================================================= */
+/* ==========================================================================
+   MAIN GRID
+   ========================================================================== */
 
-@media (min-width: 1200px) {
-
-    .pk-dashboard {
-        padding-top: 40px;
-    }
-
-    .pk-dashboard .pk-db-grid {
-        grid-template-columns: 255px minmax(0, 1fr);
-        gap: 28px;
-    }
+.pk-db-grid {
+    align-items: start;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 235px minmax(0, 1fr);
+    min-width: 0;
 }
 
 
-/* =========================================================
-   Tablet
-   ========================================================= */
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
 
-@media (max-width: 900px) {
+.pk-db-sidebar {
+    background: var(--pk-db-sidebar);
+    border: 1px solid var(--pk-db-border);
+    min-width: 0;
+    padding: 0.7rem;
+    position: sticky;
+    top: 1rem;
+    z-index: 5;
+}
+
+.pk-db-nav-section + .pk-db-nav-section {
+    border-top: 1px solid var(--pk-db-border);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+}
+
+
+/* ==========================================================================
+   NAVIGATION HEADING
+   ========================================================================== */
+
+.pk-db-nav-heading {
+    color: var(--pk-db-light-muted);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    margin: 0;
+    padding: 0.45rem 0.65rem 0.5rem;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   NAVIGATION ITEM
+   ========================================================================== */
+
+.pk-db-nav-item {
+    align-items: center;
+    border-left: 2px solid transparent;
+    color: var(--pk-db-muted);
+    display: flex;
+    font-size: 0.72rem;
+    font-weight: 600;
+    gap: 0.7rem;
+    min-height: 42px;
+    padding: 0.6rem 0.7rem;
+    position: relative;
+    text-decoration: none;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-db-nav-item + .pk-db-nav-item {
+    margin-top: 0.15rem;
+}
+
+.pk-db-nav-item svg {
+    flex: 0 0 17px;
+    height: 17px;
+    stroke-width: 1.7;
+    width: 17px;
+}
+
+.pk-db-nav-item span {
+    color: var(--pk-db-light-muted);
+    font-size: 0.62rem;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.pk-db-nav-item:hover {
+    background: var(--pk-db-soft);
+    color: var(--pk-db-text);
+}
+
+.pk-db-nav-item:hover svg {
+    color: var(--pk-db-gold-dark);
+}
+
+
+/* ==========================================================================
+   ACTIVE NAVIGATION
+   ========================================================================== */
+
+.pk-db-nav-item.pk-db-active {
+    background: #f4f0e7;
+    border-left-color: var(--pk-db-gold);
+    color: var(--pk-db-primary);
+}
+
+.pk-db-nav-item.pk-db-active svg {
+    color: var(--pk-db-gold-dark);
+}
+
+.pk-db-nav-item.pk-db-active span {
+    color: var(--pk-db-gold-dark);
+}
+
+
+/* ==========================================================================
+   CONTENT
+   ========================================================================== */
+
+.pk-db-content {
+    min-width: 0;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   MAIN CARD
+   ========================================================================== */
+
+.pk-db-card {
+    background: var(--pk-db-surface);
+    border: 1px solid var(--pk-db-border);
+    min-width: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   GENERIC CARD TITLE
+   ========================================================================== */
+
+.pk-db-card-title {
+    color: var(--pk-db-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.pk-db-card > p {
+    color: var(--pk-db-muted);
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   DASHBOARD CONTENT SAFETY
+   ========================================================================== */
+
+/*
+ * Prevent long content from forcing the entire dashboard wider.
+ */
+
+.pk-db-content img {
+    max-width: 100%;
+}
+
+.pk-db-content table {
+    max-width: 100%;
+}
+
+.pk-db-content input,
+.pk-db-content select,
+.pk-db-content textarea,
+.pk-db-content button {
+    max-width: 100%;
+}
+
+.pk-db-content pre,
+.pk-db-content code {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+
+/* ==========================================================================
+   SCROLL CONTAINERS
+   ========================================================================== */
+
+.pk-db-content .pk-products-table-wrapper,
+.pk-db-content .pk-db-products-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 1100px) {
 
     .pk-dashboard {
-        width: min(100% - 28px, 100%);
-        padding-top: 26px;
+        padding: 1.25rem;
     }
 
-    .pk-dashboard .pk-db-grid {
+    .pk-db-grid {
         grid-template-columns: 210px minmax(0, 1fr);
-        gap: 18px;
     }
 
-    .pk-dashboard .pk-db-sidebar {
-        top: 18px;
+    .pk-db-nav-item {
+        gap: 0.55rem;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
     }
 
-    .pk-dashboard .pk-db-nav-item {
-        padding: 9px 10px;
-    }
 }
 
 
-/* =========================================================
-   Mobile
-   ========================================================= */
+/* ==========================================================================
+   SMALL TABLET
+   ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
 
     .pk-dashboard {
-        width: min(100% - 24px, 100%);
-        padding: 22px 0 40px;
+        padding: 1rem;
     }
 
+    .pk-db-grid {
+        grid-template-columns: 185px minmax(0, 1fr);
+        gap: 0.9rem;
+    }
+
+    .pk-db-sidebar {
+        padding: 0.5rem;
+    }
+
+    .pk-db-nav-item {
+        font-size: 0.68rem;
+        min-height: 40px;
+    }
+
+    .pk-db-nav-item svg {
+        height: 16px;
+        width: 16px;
+    }
+
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+    .pk-dashboard {
+        padding: 0.85rem;
+    }
 
     /* Header */
 
-    .pk-dashboard .pk-db-header {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 28px;
-        padding: 18px 0;
-        background: #ffffff !important; /* Prevents underlying content from bleeding through */
-        border-bottom: 1px solid #eeeeee;
+    .pk-db-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-bottom: 0.9rem;
+        padding-bottom: 0.9rem;
     }
 
-
-    /* Logout */
-
-    .pk-dashboard .pk-db-header form {
+    .pk-db-header form {
         width: 100%;
-        margin: 0;
     }
 
-    .pk-dashboard .pk-db-logout-btn {
+    .pk-db-logout-btn {
         width: 100%;
     }
 
 
-    /* Grid */
+    /* Single column dashboard */
 
-    .pk-dashboard .pk-db-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
+    .pk-db-grid {
+        display: block;
+    }
+
+
+    /* Sidebar becomes normal mobile navigation */
+
+    .pk-db-sidebar {
+        margin-bottom: 0.85rem;
+        position: relative;
+        top: auto;
+        width: 100%;
+    }
+
+
+    .pk-db-nav-section {
+        min-width: 0;
     }
 
 
     /*
-     * Disable sticky on mobile.
-     *
-     * The sidebar becomes part of the normal page flow.
-     * This prevents awkward scrolling and cramped layouts.
+     * Horizontal navigation on mobile.
+     * This keeps many dashboard links from making the page too tall.
      */
 
-    .pk-dashboard .pk-db-sidebar {
-        position: static;
+    .pk-db-nav-section {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
 
-        max-height: none;
-        overflow: visible;
+    .pk-db-nav-heading {
+        padding-left: 0.55rem;
+    }
 
-        padding: 10px;
+    .pk-db-nav-section > .pk-db-nav-item {
+        display: inline-flex;
+        margin: 0 0.2rem 0.2rem 0;
+        min-height: 38px;
+        white-space: nowrap;
+        width: auto;
+    }
 
-        border-radius: 12px;
+    .pk-db-nav-section + .pk-db-nav-section {
+        margin-top: 0.5rem;
+        padding-top: 0.55rem;
     }
 
 
-    /* Sections */
+    /* Content */
 
-    .pk-dashboard .pk-db-nav-section + .pk-db-nav-section {
-        margin-top: 12px;
-        padding-top: 12px;
+    .pk-db-card {
+        border-left: 1px solid var(--pk-db-border);
+        border-right: 1px solid var(--pk-db-border);
     }
 
-
-    /* Navigation */
-
-    .pk-dashboard .pk-db-nav-item {
-        min-height: 43px;
-    }
-
-
-    /* Card */
-
-    .pk-dashboard .pk-db-card {
-        padding: 20px 16px;
-        border-radius: 12px;
-    }
-
-    .pk-dashboard .pk-db-card-title {
-        font-size: 1.2rem;
-        margin-bottom: 16px;
-    }
-
-
-    /* Orders */
-
-    .pk-dashboard .pk-db-order-card {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .pk-dashboard .pk-db-order-price {
-        align-self: flex-end;
-    }
 }
 
 
-/* =========================================================
-   Small Mobile
-   ========================================================= */
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
 
 @media (max-width: 480px) {
 
     .pk-dashboard {
-        width: min(100% - 20px, 100%);
-        padding-top: 18px;
+        padding: 0.65rem;
     }
 
-    .pk-dashboard .pk-db-title {
-        font-size: 1.55rem;
+    .pk-db-title {
+        font-size: 1.45rem;
     }
 
-    .pk-dashboard .pk-db-welcome-msg {
-        font-size: 0.88rem;
+    .pk-db-welcome-msg {
+        font-size: 0.7rem;
     }
 
-    .pk-dashboard .pk-db-sidebar {
-        padding: 8px;
+    .pk-db-sidebar {
+        padding: 0.4rem;
     }
 
-    .pk-dashboard .pk-db-nav-heading {
-        padding-left: 8px;
+    .pk-db-nav-heading {
+        font-size: 0.52rem;
     }
 
-    .pk-dashboard .pk-db-nav-item {
-        min-height: 42px;
-        padding: 9px;
-        font-size: 0.88rem;
+    .pk-db-nav-item {
+        font-size: 0.64rem;
+        gap: 0.45rem;
+        padding: 0.55rem 0.6rem;
     }
 
-    .pk-dashboard .pk-db-card {
-        padding: 18px 14px;
+    .pk-db-nav-item svg {
+        height: 15px;
+        width: 15px;
     }
+
+    .pk-db-card-title {
+        font-size: 1.15rem;
+    }
+
 }
 
 
-/* =========================================================
-   Very Small Screens
-   ========================================================= */
+/* ==========================================================================
+   VERY SMALL MOBILE
+   ========================================================================== */
 
 @media (max-width: 360px) {
 
-    .pk-dashboard .pk-db-nav-item {
-        gap: 8px;
-        font-size: 0.84rem;
+    .pk-dashboard {
+        padding: 0.5rem;
     }
 
-    .pk-dashboard .pk-db-nav-item svg {
-        width: 17px;
-        height: 17px;
-        flex-basis: 17px;
+    .pk-db-title {
+        font-size: 1.3rem;
     }
+
+    .pk-db-nav-item {
+        font-size: 0.6rem;
+    }
+
 }
 
 
-/* =========================================================
-   Accessibility
-   ========================================================= */
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
-    .pk-dashboard .pk-db-nav-item,
-    .pk-dashboard .pk-db-logout-btn {
-        transition: none;
+    .pk-dashboard *,
+    .pk-dashboard *::before,
+    .pk-dashboard *::after {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms !important;
     }
+
 }
