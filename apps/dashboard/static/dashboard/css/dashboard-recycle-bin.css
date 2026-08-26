@@ -1,0 +1,425 @@
+/* =========================================================
+   RECYCLE BIN
+   ========================================================= */
+
+.pk-recycle-bin {
+    width: 100%;
+}
+
+
+/* Header */
+
+.pk-recycle-bin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.pk-recycle-bin-header p {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.pk-recycle-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+}
+
+.pk-recycle-tabs a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: 0.2s ease;
+}
+
+.pk-recycle-tabs a:hover {
+    color: #111827;
+}
+
+.pk-recycle-tabs a.active {
+    color: #111827;
+    border-bottom-color: #111827;
+}
+
+.pk-recycle-tabs a span {
+    min-width: 22px;
+    padding: 2px 7px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.pk-recycle-section {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pk-recycle-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.pk-recycle-section-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.pk-recycle-section-header p {
+    margin: 5px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BULK ACTION BAR
+   ========================================================= */
+
+.pk-recycle-bulk-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 24px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.pk-recycle-select-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.pk-recycle-select-all input,
+.pk-recycle-checkbox input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.pk-recycle-bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =========================================================
+   LIST
+   ========================================================= */
+
+.pk-recycle-list {
+    width: 100%;
+}
+
+.pk-recycle-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.pk-recycle-item:last-child {
+    border-bottom: none;
+}
+
+.pk-recycle-checkbox {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ITEM INFORMATION
+   ========================================================= */
+
+.pk-recycle-item-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.pk-recycle-image {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.pk-recycle-image-placeholder {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #9ca3af;
+    font-size: 11px;
+    text-align: center;
+}
+
+.pk-recycle-item-details {
+    min-width: 0;
+}
+
+.pk-recycle-item-details h4 {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pk-recycle-item-details p {
+    margin: 3px 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.pk-recycle-item-details small {
+    display: block;
+    margin-top: 6px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.pk-recycle-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.pk-recycle-item-actions form {
+    margin: 0;
+}
+
+.pk-recycle-item-actions button,
+.pk-recycle-bulk-actions button {
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+
+/* Restore */
+
+.pk-recycle-restore-button {
+    background: #ffffff;
+    border-color: #d1d5db !important;
+    color: #374151;
+}
+
+.pk-recycle-restore-button:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af !important;
+}
+
+
+/* Delete */
+
+.pk-recycle-delete-button {
+    background: #ffffff;
+    border-color: #fecaca !important;
+    color: #dc2626;
+}
+
+.pk-recycle-delete-button:hover {
+    background: #fef2f2;
+    border-color: #fca5a5 !important;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.pk-recycle-empty {
+    padding: 60px 24px;
+    text-align: center;
+}
+
+.pk-recycle-empty h4 {
+    margin: 0 0 6px;
+    color: #374151;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pk-recycle-empty p {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.pk-recycle-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.pk-recycle-pagination a,
+.pk-recycle-pagination span {
+    min-width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 9px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.pk-recycle-pagination a {
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.pk-recycle-pagination a:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.pk-recycle-pagination span.active {
+    background: #111827;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .pk-recycle-bulk-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pk-recycle-bulk-actions {
+        width: 100%;
+    }
+
+    .pk-recycle-bulk-actions button {
+        flex: 1;
+    }
+
+    .pk-recycle-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 16px;
+    }
+
+    .pk-recycle-item-info {
+        width: calc(100% - 32px);
+    }
+
+    .pk-recycle-item-actions {
+        width: 100%;
+        margin-left: 32px;
+    }
+
+    .pk-recycle-item-actions button {
+        flex: 1;
+    }
+
+    .pk-recycle-pagination {
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .pk-recycle-tabs a {
+        flex: 1;
+        justify-content: center;
+        padding: 11px 12px;
+    }
+
+    .pk-recycle-image,
+    .pk-recycle-image-placeholder {
+        width: 50px;
+        height: 50px;
+    }
+
+    .pk-recycle-item-info {
+        gap: 11px;
+    }
+
+    .pk-recycle-item-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pk-recycle-item-actions form {
+        width: 100%;
+    }
+
+    .pk-recycle-item-actions button {
+        width: 100%;
+    }
+
+}

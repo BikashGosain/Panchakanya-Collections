@@ -1,0 +1,877 @@
+<div class="pk-recycle-bin">
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="pk-recycle-bin-header">
+
+        <div>
+            <h2 class="pk-db-card-title">
+                Recycle Bin
+            </h2>
+
+            <p>
+                Restore deleted products and categories or permanently remove them.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- TABS -->
+    <!-- ================================================= -->
+
+    <div class="pk-recycle-tabs">
+
+        <a
+            href="{% url 'dashboard:recycle_bin' %}?tab=products"
+            class="{% if request.GET.tab != 'categories' %}active{% endif %}"
+        >
+            Products
+            <span>{{ product_page.paginator.count }}</span>
+        </a>
+
+
+        <a
+            href="{% url 'dashboard:recycle_bin' %}?tab=categories"
+            class="{% if request.GET.tab == 'categories' %}active{% endif %}"
+        >
+            Categories
+            <span>{{ category_page.paginator.count }}</span>
+        </a>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- PRODUCTS -->
+    <!-- ================================================= -->
+
+    {% if request.GET.tab != "categories" %}
+
+        <section class="pk-recycle-section">
+
+            <!-- Section Header -->
+
+            <div class="pk-recycle-section-header">
+
+                <div>
+
+                    <h3>
+                        Deleted Products
+                    </h3>
+
+                    <p>
+                        Products currently in the recycle bin.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if product_page.object_list %}
+
+
+                <!-- ================================================= -->
+                <!-- PRODUCT BULK FORM -->
+                <!-- ================================================= -->
+
+                <form
+                    method="post"
+                    action="{% url 'dashboard:bulk_restore_products' %}"
+                    id="bulk-products-form"
+                >
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.get_full_path }}"
+                    >
+
+
+                    <div class="pk-recycle-bulk-bar">
+
+                        <!-- Select All -->
+
+                        <label class="pk-recycle-select-all">
+
+                            <input
+                                type="checkbox"
+                                id="select-all-products"
+                            >
+
+                            <span>
+                                Select All
+                            </span>
+
+                        </label>
+
+
+                        <!-- Bulk Actions -->
+
+                        <div class="pk-recycle-bulk-actions">
+
+                            <button
+                                type="submit"
+                                class="pk-recycle-restore-button"
+                            >
+                                Restore Selected
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                formaction="{% url 'dashboard:bulk_permanently_delete_products' %}"
+                                class="pk-recycle-delete-button"
+                                onclick="return confirm('Permanently delete the selected products? This action cannot be undone.');"
+                            >
+                                Delete Selected Permanently
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+                <!-- ================================================= -->
+                <!-- PRODUCT LIST -->
+                <!-- ================================================= -->
+
+                <div class="pk-recycle-list">
+
+                    {% for product in product_page %}
+
+                        <div class="pk-recycle-item">
+
+
+                            <!-- Checkbox -->
+
+                            <div class="pk-recycle-checkbox">
+
+                                <input
+                                    type="checkbox"
+                                    name="product_ids"
+                                    value="{{ product.id }}"
+                                    class="product-checkbox"
+                                    form="bulk-products-form"
+                                >
+
+                            </div>
+
+
+                            <!-- Product Information -->
+
+                            <div class="pk-recycle-item-info">
+
+                                {% with primary_image=product.images.all|first %}
+
+                                    {% if primary_image %}
+
+                                        <img
+                                            src="{{ primary_image.image.url }}"
+                                            alt="{{ product.name }}"
+                                            class="pk-recycle-image"
+                                        >
+
+                                    {% else %}
+
+                                        <div class="pk-recycle-image-placeholder">
+                                            No image
+                                        </div>
+
+                                    {% endif %}
+
+                                {% endwith %}
+
+
+                                <div class="pk-recycle-item-details">
+
+                                    <h4>
+                                        {{ product.name }}
+                                    </h4>
+
+
+                                    <p>
+                                        <strong>SKU:</strong>
+                                        {{ product.sku }}
+                                    </p>
+
+
+                                    <p>
+                                        <strong>Category:</strong>
+                                        {{ product.category.name }}
+                                    </p>
+
+
+                                    {% if product.deleted_at %}
+
+                                        <small>
+                                            Deleted:
+                                            {{ product.deleted_at|date:"M d, Y H:i" }}
+                                        </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Individual Actions -->
+
+                            <div class="pk-recycle-item-actions">
+
+
+                                <!-- Individual Restore -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'dashboard:restore_product' product.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <input
+                                        type="hidden"
+                                        name="next"
+                                        value="{{ request.get_full_path }}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="pk-recycle-restore-button"
+                                        onclick="return confirm('Restore this product?');"
+                                    >
+                                        Restore
+                                    </button>
+
+                                </form>
+
+
+                                <!-- Individual Permanent Delete -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'dashboard:permanently_delete_product' product.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <input
+                                        type="hidden"
+                                        name="next"
+                                        value="{{ request.get_full_path }}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="pk-recycle-delete-button"
+                                        onclick="return confirm('Permanently delete {{ product.name }}? This cannot be undone.');"
+                                    >
+                                        Delete Permanently
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- PRODUCT PAGINATION -->
+                <!-- ================================================= -->
+
+                {% if product_page.has_other_pages %}
+
+                    <div class="pk-recycle-pagination">
+
+                        {% if product_page.has_previous %}
+
+                            <a
+                                href="?tab=products&product_page={{ product_page.previous_page_number }}"
+                            >
+                                Previous
+                            </a>
+
+                        {% endif %}
+
+
+                        {% for num in product_page.paginator.page_range %}
+
+                            {% if num == product_page.number %}
+
+                                <span class="active">
+                                    {{ num }}
+                                </span>
+
+                            {% else %}
+
+                                <a
+                                    href="?tab=products&product_page={{ num }}"
+                                >
+                                    {{ num }}
+                                </a>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        {% if product_page.has_next %}
+
+                            <a
+                                href="?tab=products&product_page={{ product_page.next_page_number }}"
+                            >
+                                Next
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+
+            {% else %}
+
+
+                <!-- Empty Products -->
+
+                <div class="pk-recycle-empty">
+
+                    <h4>
+                        No deleted products
+                    </h4>
+
+                    <p>
+                        Products you delete will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    {% endif %}
+
+
+
+    <!-- ================================================= -->
+    <!-- CATEGORIES -->
+    <!-- ================================================= -->
+
+    {% if request.GET.tab == "categories" %}
+
+        <section class="pk-recycle-section">
+
+
+            <!-- Section Header -->
+
+            <div class="pk-recycle-section-header">
+
+                <div>
+
+                    <h3>
+                        Deleted Categories
+                    </h3>
+
+                    <p>
+                        Categories currently in the recycle bin.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if category_page.object_list %}
+
+
+                <!-- ================================================= -->
+                <!-- CATEGORY BULK FORM -->
+                <!-- ================================================= -->
+
+                <form
+                    method="post"
+                    action="{% url 'dashboard:bulk_restore_categories' %}"
+                    id="bulk-categories-form"
+                >
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.get_full_path }}"
+                    >
+
+
+                    <div class="pk-recycle-bulk-bar">
+
+
+                        <!-- Select All -->
+
+                        <label class="pk-recycle-select-all">
+
+                            <input
+                                type="checkbox"
+                                id="select-all-categories"
+                            >
+
+                            <span>
+                                Select All
+                            </span>
+
+                        </label>
+
+
+                        <!-- Bulk Actions -->
+
+                        <div class="pk-recycle-bulk-actions">
+
+                            <button
+                                type="submit"
+                                class="pk-recycle-restore-button"
+                            >
+                                Restore Selected
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                formaction="{% url 'dashboard:bulk_permanently_delete_categories' %}"
+                                class="pk-recycle-delete-button"
+                                onclick="return confirm('Permanently delete the selected categories? This action cannot be undone.');"
+                            >
+                                Delete Selected Permanently
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+                <!-- ================================================= -->
+                <!-- CATEGORY LIST -->
+                <!-- ================================================= -->
+
+                <div class="pk-recycle-list">
+
+                    {% for category in category_page %}
+
+                        <div class="pk-recycle-item">
+
+
+                            <!-- Checkbox -->
+
+                            <div class="pk-recycle-checkbox">
+
+                                <input
+                                    type="checkbox"
+                                    name="category_ids"
+                                    value="{{ category.id }}"
+                                    class="category-checkbox"
+                                    form="bulk-categories-form"
+                                >
+
+                            </div>
+
+
+                            <!-- Category Information -->
+
+                            <div class="pk-recycle-item-info">
+
+                                {% if category.image %}
+
+                                    <img
+                                        src="{{ category.image.url }}"
+                                        alt="{{ category.name }}"
+                                        class="pk-recycle-image"
+                                    >
+
+                                {% else %}
+
+                                    <div class="pk-recycle-image-placeholder">
+                                        No image
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="pk-recycle-item-details">
+
+                                    <h4>
+                                        {{ category.name }}
+                                    </h4>
+
+
+                                    {% if category.parent %}
+
+                                        <p>
+                                            <strong>Parent:</strong>
+                                            {{ category.parent.name }}
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    {% if category.deleted_at %}
+
+                                        <small>
+                                            Deleted:
+                                            {{ category.deleted_at|date:"M d, Y H:i" }}
+                                        </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Individual Actions -->
+
+                            <div class="pk-recycle-item-actions">
+
+
+                                <!-- Individual Restore -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'dashboard:restore_category' category.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <input
+                                        type="hidden"
+                                        name="next"
+                                        value="{{ request.get_full_path }}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="pk-recycle-restore-button"
+                                        onclick="return confirm('Restore this category?');"
+                                    >
+                                        Restore
+                                    </button>
+
+                                </form>
+
+
+                                <!-- Individual Permanent Delete -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'dashboard:permanently_delete_category' category.id %}"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <input
+                                        type="hidden"
+                                        name="next"
+                                        value="{{ request.get_full_path }}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="pk-recycle-delete-button"
+                                        onclick="return confirm('Permanently delete {{ category.name }}? This cannot be undone.');"
+                                    >
+                                        Delete Permanently
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- CATEGORY PAGINATION -->
+                <!-- ================================================= -->
+
+                {% if category_page.has_other_pages %}
+
+                    <div class="pk-recycle-pagination">
+
+                        {% if category_page.has_previous %}
+
+                            <a
+                                href="?tab=categories&category_page={{ category_page.previous_page_number }}"
+                            >
+                                Previous
+                            </a>
+
+                        {% endif %}
+
+
+                        {% for num in category_page.paginator.page_range %}
+
+                            {% if num == category_page.number %}
+
+                                <span class="active">
+                                    {{ num }}
+                                </span>
+
+                            {% else %}
+
+                                <a
+                                    href="?tab=categories&category_page={{ num }}"
+                                >
+                                    {{ num }}
+                                </a>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        {% if category_page.has_next %}
+
+                            <a
+                                href="?tab=categories&category_page={{ category_page.next_page_number }}"
+                            >
+                                Next
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+
+            {% else %}
+
+
+                <!-- Empty Categories -->
+
+                <div class="pk-recycle-empty">
+
+                    <h4>
+                        No deleted categories
+                    </h4>
+
+                    <p>
+                        Categories you delete will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /*
+     * ==========================================
+     * PRODUCTS
+     * ==========================================
+     */
+
+    const selectAllProducts =
+        document.getElementById("select-all-products");
+
+    const productCheckboxes =
+        document.querySelectorAll(".product-checkbox");
+
+
+    if (selectAllProducts) {
+
+        selectAllProducts.addEventListener("change", function () {
+
+            productCheckboxes.forEach(function (checkbox) {
+
+                checkbox.checked = selectAllProducts.checked;
+
+            });
+
+        });
+
+    }
+
+
+    /*
+     * Keep Select All in sync
+     */
+
+    productCheckboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener("change", function () {
+
+            if (!selectAllProducts) {
+                return;
+            }
+
+            const checkedProducts =
+                document.querySelectorAll(
+                    ".product-checkbox:checked"
+                );
+
+            selectAllProducts.checked =
+                checkedProducts.length === productCheckboxes.length;
+
+        });
+
+    });
+
+
+    /*
+     * ==========================================
+     * CATEGORIES
+     * ==========================================
+     */
+
+    const selectAllCategories =
+        document.getElementById("select-all-categories");
+
+    const categoryCheckboxes =
+        document.querySelectorAll(".category-checkbox");
+
+
+    if (selectAllCategories) {
+
+        selectAllCategories.addEventListener("change", function () {
+
+            categoryCheckboxes.forEach(function (checkbox) {
+
+                checkbox.checked =
+                    selectAllCategories.checked;
+
+            });
+
+        });
+
+    }
+
+
+    /*
+     * Keep Select All in sync
+     */
+
+    categoryCheckboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener("change", function () {
+
+            if (!selectAllCategories) {
+                return;
+            }
+
+            const checkedCategories =
+                document.querySelectorAll(
+                    ".category-checkbox:checked"
+                );
+
+            selectAllCategories.checked =
+                checkedCategories.length === categoryCheckboxes.length;
+
+        });
+
+    });
+
+
+    /*
+     * ==========================================
+     * BULK PRODUCT ACTIONS
+     * ==========================================
+     */
+
+    const productsForm =
+        document.getElementById("bulk-products-form");
+
+
+    if (productsForm) {
+
+        productsForm.addEventListener("submit", function (event) {
+
+            const selectedProducts =
+                document.querySelectorAll(
+                    ".product-checkbox:checked"
+                );
+
+
+            if (selectedProducts.length === 0) {
+
+                event.preventDefault();
+
+                alert("Please select at least one product.");
+
+                return;
+
+            }
+
+        });
+
+    }
+
+
+    /*
+     * ==========================================
+     * BULK CATEGORY ACTIONS
+     * ==========================================
+     */
+
+    const categoriesForm =
+        document.getElementById("bulk-categories-form");
+
+
+    if (categoriesForm) {
+
+        categoriesForm.addEventListener("submit", function (event) {
+
+            const selectedCategories =
+                document.querySelectorAll(
+                    ".category-checkbox:checked"
+                );
+
+
+            if (selectedCategories.length === 0) {
+
+                event.preventDefault();
+
+                alert("Please select at least one category.");
+
+                return;
+
+            }
+
+        });
+
+    }
+
+});
+</script>

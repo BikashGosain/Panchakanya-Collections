@@ -1,0 +1,669 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Reviews
+
+   Namespace:
+   pk-db-rv-
+
+   Completely isolated from:
+   - Dashboard sidebar
+   - Header
+   - Wishlist
+   - Cart
+   - Product pages
+   ========================================================================== */
+
+
+/* ==========================================================================
+   MAIN SECTION
+   ========================================================================== */
+
+.pk-db-rv-section {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   PAGE HEADER
+   ========================================================================== */
+
+.pk-db-rv-header {
+    border-bottom: 1px solid #e6dfd3;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-rv-eyebrow {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-rv-title {
+    color: #121110;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-rv-subtitle {
+    color: #736d65;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin: 0.5rem 0 0;
+}
+
+
+/* ==========================================================================
+   SEARCH
+   ========================================================================== */
+
+.pk-db-rv-search {
+    align-items: center;
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.pk-db-rv-search-field {
+    flex: 1 1 auto;
+    position: relative;
+}
+
+.pk-db-rv-search-field input {
+    background: #faf8f3;
+    border: 1px solid #e1dacd;
+    border-radius: 2px;
+    color: #2b2825;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    min-height: 42px;
+    padding: 0.65rem 0.85rem 0.65rem 2.35rem;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        box-shadow 180ms ease;
+    width: 100%;
+}
+
+.pk-db-rv-search-field input::placeholder {
+    color: #999188;
+}
+
+.pk-db-rv-search-field input:focus {
+    background: #fff;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+    outline: none;
+}
+
+.pk-db-rv-search-icon {
+    color: #736d65;
+    height: 15px;
+    left: 0.8rem;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+}
+
+.pk-db-rv-search-icon circle,
+.pk-db-rv-search-icon path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+}
+
+.pk-db-rv-search-button {
+    background: #121110;
+    border: 1px solid #121110;
+    color: #fff;
+    cursor: pointer;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    min-height: 42px;
+    padding: 0.65rem 1rem;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease;
+}
+
+.pk-db-rv-search-button:hover {
+    background: #a8841a;
+    border-color: #a8841a;
+}
+
+.pk-db-rv-search-button:focus-visible,
+.pk-db-rv-clear:focus-visible,
+.pk-db-rv-view:focus-visible,
+.pk-db-rv-delete:focus-visible {
+    outline: 2px solid #d4af37;
+    outline-offset: 3px;
+}
+
+.pk-db-rv-clear {
+    color: #736d65;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 180ms ease;
+}
+
+.pk-db-rv-clear:hover {
+    color: #a8841a;
+}
+
+
+/* ==========================================================================
+   REVIEW GROUP
+   ========================================================================== */
+
+.pk-db-rv-group {
+    margin-bottom: 2.5rem;
+}
+
+.pk-db-rv-group--staff {
+    border-top: 1px solid #e6dfd3;
+    padding-top: 2rem;
+}
+
+.pk-db-rv-group-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.pk-db-rv-group-eyebrow {
+    color: #a8841a;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    margin: 0 0 0.2rem;
+    text-transform: uppercase;
+}
+
+.pk-db-rv-group-title {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pk-db-rv-staff-note {
+    color: #8b8379;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    margin: 0.25rem 0 0;
+}
+
+.pk-db-rv-count {
+    align-items: center;
+    background: #f7f3e9;
+    border: 1px solid #e6dfd3;
+    border-radius: 999px;
+    color: #665f56;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 30px;
+    min-width: 30px;
+    padding: 0 0.55rem;
+}
+
+
+/* ==========================================================================
+   REVIEW LIST
+   ========================================================================== */
+
+.pk-db-rv-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+
+/* ==========================================================================
+   REVIEW CARD
+   ========================================================================== */
+
+.pk-db-rv-card {
+    background: #fff;
+    border: 1px solid #e6dfd3;
+    padding: 1rem;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.pk-db-rv-card:hover {
+    border-color: #d4af37;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.055);
+}
+
+
+/* ==========================================================================
+   PRODUCT
+   ========================================================================== */
+
+.pk-db-rv-product {
+    align-items: center;
+    display: flex;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.pk-db-rv-product-image {
+    align-items: center;
+    background: #f7f4ee;
+    display: flex;
+    flex: 0 0 68px;
+    height: 68px;
+    justify-content: center;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.pk-db-rv-product-image img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 250ms ease;
+    width: 100%;
+}
+
+.pk-db-rv-product-image:hover img {
+    transform: scale(1.04);
+}
+
+.pk-db-rv-no-image {
+    color: #938b80;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.pk-db-rv-product-info {
+    min-width: 0;
+}
+
+.pk-db-rv-product-name {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   RATING
+   ========================================================================== */
+
+.pk-db-rv-rating {
+    display: flex;
+    gap: 0.08rem;
+    margin-top: 0.35rem;
+}
+
+.pk-db-rv-star {
+    color: #c9c1b4;
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.pk-db-rv-star--filled {
+    color: #c19a2e;
+}
+
+
+/* ==========================================================================
+   USER
+   ========================================================================== */
+
+.pk-db-rv-user {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    margin-top: 0.85rem;
+}
+
+.pk-db-rv-user-label {
+    color: #999188;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.pk-db-rv-user strong {
+    color: #3c3732;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.75rem;
+}
+
+.pk-db-rv-user > span:last-child {
+    color: #8b8379;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.68rem;
+}
+
+
+/* ==========================================================================
+   COMMENT
+   ========================================================================== */
+
+.pk-db-rv-comment {
+    color: #4d4842;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    margin: 0.9rem 0 0;
+    overflow-wrap: anywhere;
+}
+
+.pk-db-rv-comment--empty {
+    color: #999188;
+    font-style: italic;
+}
+
+
+/* ==========================================================================
+   META
+   ========================================================================== */
+
+.pk-db-rv-meta {
+    align-items: center;
+    border-top: 1px solid #eee9e1;
+    color: #8b8379;
+    display: flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+    padding-top: 0.65rem;
+}
+
+
+/* ==========================================================================
+   ACTIONS
+   ========================================================================== */
+
+.pk-db-rv-actions {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+}
+
+.pk-db-rv-view {
+    align-items: center;
+    color: #736d65;
+    display: inline-flex;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    gap: 0.35rem;
+    letter-spacing: 0.07em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+}
+
+.pk-db-rv-view:hover {
+    color: #a8841a;
+}
+
+.pk-db-rv-delete-form {
+    margin: 0;
+}
+
+.pk-db-rv-delete {
+    background: transparent;
+    border: 0;
+    color: #9a6257;
+    cursor: pointer;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    padding: 0.25rem 0;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+}
+
+.pk-db-rv-delete:hover {
+    color: #a33f2d;
+}
+
+
+/* ==========================================================================
+   EMPTY STATE
+   ========================================================================== */
+
+.pk-db-rv-empty {
+    align-items: center;
+    background: #faf8f3;
+    border: 1px solid #e6dfd3;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.pk-db-rv-empty-icon {
+    align-items: center;
+    border: 1px solid #d4af37;
+    border-radius: 50%;
+    color: #b18d27;
+    display: flex;
+    font-family: Georgia, serif;
+    font-size: 1.8rem;
+    height: 54px;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 54px;
+}
+
+.pk-db-rv-empty h3 {
+    color: #2b2825;
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pk-db-rv-empty p {
+    color: #736d65;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin: 0.55rem 0 1.2rem;
+}
+
+.pk-db-rv-empty-button {
+    background: #121110;
+    color: #fff;
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 180ms ease;
+}
+
+.pk-db-rv-empty-button:hover {
+    background: #a8841a;
+}
+
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.pk-db-rv-pagination {
+    margin-top: 1.25rem;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 700px) {
+    .pk-db-rv-search {
+        flex-wrap: wrap;
+    }
+
+    .pk-db-rv-search-field {
+        flex-basis: 100%;
+    }
+
+    .pk-db-rv-search-button {
+        flex: 0 0 auto;
+    }
+
+    .pk-db-rv-clear {
+        margin-left: 0.25rem;
+    }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 520px) {
+    .pk-db-rv-header {
+        margin-bottom: 1rem;
+    }
+
+    .pk-db-rv-title {
+        font-size: 1.4rem;
+    }
+
+    .pk-db-rv-subtitle {
+        font-size: 0.72rem;
+    }
+
+    .pk-db-rv-search {
+        gap: 0.45rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pk-db-rv-search-button {
+        flex: 1;
+    }
+
+    .pk-db-rv-group {
+        margin-bottom: 2rem;
+    }
+
+    .pk-db-rv-group-header {
+        margin-bottom: 0.8rem;
+    }
+
+    .pk-db-rv-group-title {
+        font-size: 1.1rem;
+    }
+
+    .pk-db-rv-card {
+        padding: 0.8rem;
+    }
+
+    .pk-db-rv-product-image {
+        flex-basis: 58px;
+        height: 58px;
+    }
+
+    .pk-db-rv-product-name {
+        font-size: 0.85rem;
+        white-space: normal;
+    }
+
+    .pk-db-rv-star {
+        font-size: 0.8rem;
+    }
+
+    .pk-db-rv-comment {
+        font-size: 0.75rem;
+    }
+
+    .pk-db-rv-actions {
+        margin-top: 0.7rem;
+    }
+
+    .pk-db-rv-view,
+    .pk-db-rv-delete {
+        font-size: 0.58rem;
+    }
+}
+
+
+/* ==========================================================================
+   VERY SMALL SCREENS
+   ========================================================================== */
+
+@media (max-width: 360px) {
+    .pk-db-rv-search-button {
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+    }
+
+    .pk-db-rv-product-image {
+        flex-basis: 52px;
+        height: 52px;
+    }
+
+    .pk-db-rv-product-name {
+        font-size: 0.8rem;
+    }
+
+    .pk-db-rv-meta {
+        font-size: 0.58rem;
+    }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .pk-db-rv-card,
+    .pk-db-rv-product-image img,
+    .pk-db-rv-search-button,
+    .pk-db-rv-clear,
+    .pk-db-rv-view,
+    .pk-db-rv-delete {
+        transition: none;
+    }
+}

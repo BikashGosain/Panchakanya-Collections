@@ -1,0 +1,480 @@
+<div class="pk-db-rv-section">
+
+    <!-- ================================================================
+         PAGE HEADER
+         ================================================================ -->
+
+    <div class="pk-db-rv-header">
+        <div>
+            <p class="pk-db-rv-eyebrow">Customer Feedback</p>
+
+            <h2 class="pk-db-rv-title">
+                Reviews
+            </h2>
+
+            <p class="pk-db-rv-subtitle">
+                Manage your product reviews.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ================================================================
+         SEARCH
+         ================================================================ -->
+
+    <form method="get" class="pk-db-rv-search">
+
+        <div class="pk-db-rv-search-field">
+
+            <svg
+                class="pk-db-rv-search-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <circle cx="11" cy="11" r="6"></circle>
+                <path d="m16 16 4 4"></path>
+            </svg>
+
+            <input
+                type="search"
+                name="q"
+                value="{{ search_query }}"
+                placeholder="Search reviews..."
+                aria-label="Search reviews"
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            class="pk-db-rv-search-button"
+        >
+            Search
+        </button>
+
+        {% if search_query %}
+            <a
+                href="{% url 'dashboard:reviews' %}"
+                class="pk-db-rv-clear"
+            >
+                Clear
+            </a>
+        {% endif %}
+
+    </form>
+
+
+    <!-- ================================================================
+         MY REVIEWS
+         ================================================================ -->
+
+    <section class="pk-db-rv-group">
+
+        <div class="pk-db-rv-group-header">
+
+            <div>
+                <p class="pk-db-rv-group-eyebrow">
+                    Your Feedback
+                </p>
+
+                <h3 class="pk-db-rv-group-title">
+                    My Reviews
+                </h3>
+            </div>
+
+            <span class="pk-db-rv-count">
+                {{ my_reviews.paginator.count }}
+            </span>
+
+        </div>
+
+
+        {% if my_reviews %}
+
+            <div class="pk-db-rv-list">
+
+                {% for review in my_reviews %}
+
+                    <article class="pk-db-rv-card">
+
+                        <!-- Product -->
+                        <div class="pk-db-rv-product">
+
+                            <a
+                                href="{% url 'products:detail' review.product.slug %}"
+                                class="pk-db-rv-product-image"
+                                aria-label="View {{ review.product.name }}"
+                            >
+                                {% with cover=review.product.images.first %}
+                                    {% if cover %}
+                                        <img
+                                            src="{{ cover.image.url }}"
+                                            alt="{{ review.product.name }}"
+                                            loading="lazy"
+                                        >
+                                    {% else %}
+                                        <span class="pk-db-rv-no-image">
+                                            No Image
+                                        </span>
+                                    {% endif %}
+                                {% endwith %}
+                            </a>
+
+
+                            <div class="pk-db-rv-product-info">
+
+                                <h4 class="pk-db-rv-product-name">
+                                    {{ review.product.name }}
+                                </h4>
+
+                                <div
+                                    class="pk-db-rv-rating"
+                                    aria-label="{{ review.rating }} out of 5 stars"
+                                >
+                                    {% for star in "12345" %}
+                                        {% if forloop.counter <= review.rating %}
+                                            <span class="pk-db-rv-star pk-db-rv-star--filled">★</span>
+                                        {% else %}
+                                            <span class="pk-db-rv-star">☆</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Comment -->
+                        {% if review.comment %}
+
+                            <p class="pk-db-rv-comment">
+                                {{ review.comment }}
+                            </p>
+
+                        {% else %}
+
+                            <p class="pk-db-rv-comment pk-db-rv-comment--empty">
+                                No comment provided.
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Meta -->
+                        <div class="pk-db-rv-meta">
+
+                            <span>
+                                {{ review.created_at|date:"M d, Y" }}
+                            </span>
+
+                            <span>
+                                {{ review.like_count }} likes
+                            </span>
+
+                        </div>
+
+
+                        <!-- Actions -->
+                        <div class="pk-db-rv-actions">
+
+                            <a
+                                href="{% url 'products:detail' review.product.slug %}"
+                                class="pk-db-rv-view"
+                            >
+                                View Product
+                                <span aria-hidden="true">→</span>
+                            </a>
+
+                            <form
+                                method="post"
+                                action="{% url 'reviews:delete' review.id %}"
+                                class="pk-db-rv-delete-form"
+                                data-review-delete
+                                data-product-name="{{ review.product.name }}"
+                            >
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="next"
+                                    value="{% url 'dashboard:reviews' %}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="pk-db-rv-delete"
+                                >
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div class="pk-db-rv-pagination">
+                {% include "includes/pagination.html" with page_obj=my_reviews page_param="my_page" %}
+            </div>
+
+
+        {% else %}
+
+            <div class="pk-db-rv-empty">
+
+                <div class="pk-db-rv-empty-icon">
+                    ☆
+                </div>
+
+                <h3>
+                    No reviews found
+                </h3>
+
+                {% if search_query %}
+                    <p>
+                        No reviews match "{{ search_query }}".
+                    </p>
+                {% else %}
+                    <p>
+                        You haven't reviewed any products yet.
+                    </p>
+                {% endif %}
+
+                {% if not search_query %}
+                    <a
+                        href="{% url 'products:list' %}"
+                        class="pk-db-rv-empty-button"
+                    >
+                        Explore Collections
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ================================================================
+         ALL REVIEWS
+         STAFF ONLY
+         ================================================================ -->
+
+    {% if user.is_staff %}
+
+        <section class="pk-db-rv-group pk-db-rv-group--staff">
+
+            <div class="pk-db-rv-group-header">
+
+                <div>
+                    <p class="pk-db-rv-group-eyebrow">
+                        Staff Area
+                    </p>
+
+                    <h3 class="pk-db-rv-group-title">
+                        All Reviews
+                    </h3>
+
+                    <p class="pk-db-rv-staff-note">
+                        Admin / Staff Only
+                    </p>
+                </div>
+
+                <span class="pk-db-rv-count">
+                    {{ all_reviews.paginator.count }}
+                </span>
+
+            </div>
+
+
+            {% if all_reviews %}
+
+                <div class="pk-db-rv-list">
+
+                    {% for review in all_reviews %}
+
+                        <article class="pk-db-rv-card">
+
+                            <!-- Product -->
+                            <div class="pk-db-rv-product">
+
+                                <a
+                                    href="{% url 'products:detail' review.product.slug %}"
+                                    class="pk-db-rv-product-image"
+                                    aria-label="View {{ review.product.name }}"
+                                >
+                                    {% with cover=review.product.images.first %}
+                                        {% if cover %}
+                                            <img
+                                                src="{{ cover.image.url }}"
+                                                alt="{{ review.product.name }}"
+                                                loading="lazy"
+                                            >
+                                        {% else %}
+                                            <span class="pk-db-rv-no-image">
+                                                No Image
+                                            </span>
+                                        {% endif %}
+                                    {% endwith %}
+                                </a>
+
+
+                                <div class="pk-db-rv-product-info">
+
+                                    <h4 class="pk-db-rv-product-name">
+                                        {{ review.product.name }}
+                                    </h4>
+
+                                    <div
+                                        class="pk-db-rv-rating"
+                                        aria-label="{{ review.rating }} out of 5 stars"
+                                    >
+                                        {% for star in "12345" %}
+                                            {% if forloop.counter <= review.rating %}
+                                                <span class="pk-db-rv-star pk-db-rv-star--filled">★</span>
+                                            {% else %}
+                                                <span class="pk-db-rv-star">☆</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Reviewer -->
+                            <div class="pk-db-rv-user">
+
+                                <span class="pk-db-rv-user-label">
+                                    Reviewed by
+                                </span>
+
+                                <strong>
+                                    {{ review.user.get_full_name|default:review.user.username }}
+                                </strong>
+
+                                <span>
+                                    @{{ review.user.username }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Comment -->
+                            {% if review.comment %}
+
+                                <p class="pk-db-rv-comment">
+                                    {{ review.comment }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="pk-db-rv-comment pk-db-rv-comment--empty">
+                                    No comment provided.
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- Meta -->
+                            <div class="pk-db-rv-meta">
+
+                                <span>
+                                    {{ review.created_at|date:"M d, Y" }}
+                                </span>
+
+                                <span>
+                                    {{ review.like_count }} likes
+                                </span>
+
+                            </div>
+
+
+                            <!-- Actions -->
+                            <div class="pk-db-rv-actions">
+
+                                <a
+                                    href="{% url 'products:detail' review.product.slug %}"
+                                    class="pk-db-rv-view"
+                                >
+                                    View Product
+                                    <span aria-hidden="true">→</span>
+                                </a>
+
+                                <form
+                                    method="post"
+                                    action="{% url 'reviews:delete' review.id %}"
+                                    class="pk-db-rv-delete-form"
+                                    data-review-delete
+                                    data-product-name="{{ review.product.name }}"
+                                >
+                                    {% csrf_token %}
+
+                                    <input
+                                        type="hidden"
+                                        name="next"
+                                        value="{% url 'dashboard:reviews' %}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="pk-db-rv-delete"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="pk-db-rv-pagination">
+                    {% include "includes/pagination.html" with page_obj=all_reviews page_param="all_page" %}
+                </div>
+
+
+            {% else %}
+
+                <div class="pk-db-rv-empty">
+
+                    <div class="pk-db-rv-empty-icon">
+                        ☆
+                    </div>
+
+                    <h3>
+                        No reviews found
+                    </h3>
+
+                    {% if search_query %}
+                        <p>
+                            No reviews match "{{ search_query }}".
+                        </p>
+                    {% else %}
+                        <p>
+                            There are currently no reviews.
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    {% endif %}
+
+</div>

@@ -1,0 +1,732 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Category Management
+
+   Namespace:
+   pk-db-categories-
+
+   Fully isolated from:
+   - Product Management
+   - Dashboard Sidebar
+   - Header
+   - Public Category Pages
+   - Cart
+   - Wishlist
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT
+   ========================================================================== */
+
+.pk-db-categories {
+    --pk-db-categories-primary: #121110;
+    --pk-db-categories-text: #2b2825;
+    --pk-db-categories-muted: #736d65;
+    --pk-db-categories-gold: #d4af37;
+    --pk-db-categories-gold-dark: #a8841a;
+    --pk-db-categories-border: #e6dfd3;
+    --pk-db-categories-surface: #ffffff;
+    --pk-db-categories-soft: #f8f6f1;
+    --pk-db-categories-danger: #a34d3e;
+    --pk-db-categories-success: #55745c;
+
+    box-sizing: border-box;
+    color: var(--pk-db-categories-text);
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    min-width: 0;
+    width: 100%;
+}
+
+.pk-db-categories *,
+.pk-db-categories *::before,
+.pk-db-categories *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.pk-db-categories-header {
+    align-items: flex-end;
+    border-bottom: 1px solid var(--pk-db-categories-border);
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-categories-heading {
+    min-width: 0;
+}
+
+.pk-db-categories-title {
+    color: var(--pk-db-categories-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-categories-description {
+    color: var(--pk-db-categories-muted);
+    font-size: 0.78rem;
+    margin: 0.5rem 0 0;
+}
+
+
+/* ==========================================================================
+   ADD CATEGORY
+   ========================================================================== */
+
+.pk-db-categories-add {
+    align-items: center;
+    background: var(--pk-db-categories-primary);
+    color: #fff;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-size: 0.68rem;
+    font-weight: 700;
+    justify-content: center;
+    letter-spacing: 0.1em;
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.pk-db-categories-add:hover {
+    background: var(--pk-db-categories-gold-dark);
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   FILTER SCROLL CONTAINER
+   ========================================================================== */
+
+.pk-db-categories-filters-scroll {
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+
+/* ==========================================================================
+   FILTERS
+   ========================================================================== */
+
+.pk-db-categories-filters {
+    background: var(--pk-db-categories-soft);
+    border: 1px solid var(--pk-db-categories-border);
+    display: grid;
+    gap: 0.85rem;
+
+    grid-template-columns:
+        minmax(220px, 2fr)
+        repeat(3, minmax(150px, 1fr))
+        auto;
+
+    margin: 0;
+    min-width: 850px;
+    padding: 1rem;
+    width: max-content;
+}
+
+.pk-db-categories-filter-field {
+    min-width: 0;
+    width: 100%;
+}
+
+.pk-db-categories-label {
+    color: var(--pk-db-categories-muted);
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-categories-input,
+.pk-db-categories-select {
+    background: #fff;
+    border: 1px solid var(--pk-db-categories-border);
+    border-radius: 0;
+    color: var(--pk-db-categories-text);
+    font-family: inherit;
+    font-size: 0.72rem;
+    height: 38px;
+    min-width: 0;
+    outline: none;
+    padding: 0 0.7rem;
+    width: 100%;
+}
+
+.pk-db-categories-input:focus,
+.pk-db-categories-select:focus {
+    border-color: var(--pk-db-categories-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+}
+
+
+/* ==========================================================================
+   FILTER ACTIONS
+   ========================================================================== */
+
+.pk-db-categories-filter-actions {
+    align-items: flex-end;
+    display: flex;
+    gap: 0.5rem;
+    min-width: max-content;
+}
+
+.pk-db-categories-filter-button,
+.pk-db-categories-clear-button {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+    height: 38px;
+    justify-content: center;
+    letter-spacing: 0.06em;
+    padding: 0 0.75rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.pk-db-categories-filter-button {
+    background: var(--pk-db-categories-primary);
+    border: 1px solid var(--pk-db-categories-primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.pk-db-categories-filter-button:hover {
+    background: var(--pk-db-categories-gold-dark);
+    border-color: var(--pk-db-categories-gold-dark);
+}
+
+.pk-db-categories-clear-button {
+    background: #fff;
+    border: 1px solid var(--pk-db-categories-border);
+    color: var(--pk-db-categories-muted);
+}
+
+.pk-db-categories-clear-button:hover {
+    border-color: var(--pk-db-categories-gold);
+    color: var(--pk-db-categories-gold-dark);
+}
+
+
+/* ==========================================================================
+   TABLE CARD
+   ========================================================================== */
+
+.pk-db-categories-table-card {
+    background: var(--pk-db-categories-surface);
+    border: 1px solid var(--pk-db-categories-border);
+    min-width: 0;
+}
+
+.pk-db-categories-table-header {
+    align-items: center;
+    border-bottom: 1px solid var(--pk-db-categories-border);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem 1.1rem;
+}
+
+.pk-db-categories-table-title {
+    color: var(--pk-db-categories-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pk-db-categories-table-subtitle {
+    color: var(--pk-db-categories-muted);
+    font-size: 0.7rem;
+    margin: 0.25rem 0 0;
+}
+
+.pk-db-categories-count {
+    background: var(--pk-db-categories-soft);
+    border: 1px solid var(--pk-db-categories-border);
+    color: var(--pk-db-categories-muted);
+    flex: 0 0 auto;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.4rem 0.6rem;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   TABLE SCROLL
+   ========================================================================== */
+
+.pk-db-categories-table-scroll {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+
+/* ==========================================================================
+   TABLE
+   ========================================================================== */
+
+.pk-db-categories-table {
+    border-collapse: collapse;
+    min-width: 850px;
+    width: 100%;
+}
+
+.pk-db-categories-table th {
+    background: var(--pk-db-categories-soft);
+    border-bottom: 1px solid var(--pk-db-categories-border);
+    color: var(--pk-db-categories-muted);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.7rem 0.75rem;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.pk-db-categories-table td {
+    border-bottom: 1px solid #eee9df;
+    font-size: 0.72rem;
+    padding: 0.8rem 0.75rem;
+    vertical-align: middle;
+}
+
+.pk-db-categories-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.pk-db-categories-table tbody tr {
+    transition: background-color 150ms ease;
+}
+
+.pk-db-categories-table tbody tr:hover {
+    background: #fcfbf8;
+}
+
+.pk-db-categories-row-deleted {
+    background: #fcf9f8;
+}
+
+
+/* ==========================================================================
+   CATEGORY NAME
+   ========================================================================== */
+
+.pk-db-categories-name {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 150px;
+}
+
+.pk-db-categories-name-text {
+    color: var(--pk-db-categories-text);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.pk-db-categories-deleted {
+    align-self: flex-start;
+    background: #f9e9e5;
+    color: var(--pk-db-categories-danger);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.35rem;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   TABLE VALUES
+   ========================================================================== */
+
+.pk-db-categories-parent {
+    color: var(--pk-db-categories-text);
+    white-space: nowrap;
+}
+
+.pk-db-categories-product-count {
+    color: var(--pk-db-categories-muted);
+    font-weight: 700;
+}
+
+.pk-db-categories-home {
+    color: var(--pk-db-categories-muted);
+    font-size: 0.62rem;
+    font-weight: 600;
+}
+
+.pk-db-categories-home--yes {
+    color: var(--pk-db-categories-gold-dark);
+}
+
+
+/* ==========================================================================
+   STATUS
+   ========================================================================== */
+
+.pk-db-categories-status {
+    border: 1px solid var(--pk-db-categories-border);
+    display: inline-flex;
+    font-size: 0.56rem;
+    font-weight: 700;
+    padding: 0.3rem 0.45rem;
+    white-space: nowrap;
+}
+
+.pk-db-categories-status--active {
+    background: #f0f6f1;
+    border-color: #c9dccd;
+    color: var(--pk-db-categories-success);
+}
+
+.pk-db-categories-status--deleted {
+    background: #f9e9e5;
+    border-color: #e2c3bb;
+    color: var(--pk-db-categories-danger);
+}
+
+
+/* ==========================================================================
+   ACTIONS
+   ========================================================================== */
+
+.pk-db-categories-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    min-width: max-content;
+}
+
+.pk-db-categories-action-form {
+    margin: 0;
+}
+
+.pk-db-categories-edit,
+.pk-db-categories-delete,
+.pk-db-categories-restore {
+    background: transparent;
+    border: 1px solid var(--pk-db-categories-border);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 0.58rem;
+    font-weight: 700;
+    padding: 0.4rem 0.55rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-db-categories-edit {
+    color: var(--pk-db-categories-text);
+}
+
+.pk-db-categories-edit:hover {
+    background: var(--pk-db-categories-primary);
+    border-color: var(--pk-db-categories-primary);
+    color: #fff;
+}
+
+.pk-db-categories-delete {
+    color: var(--pk-db-categories-danger);
+}
+
+.pk-db-categories-delete:hover {
+    background: #fff4f1;
+    border-color: #d3a39a;
+}
+
+.pk-db-categories-restore {
+    color: var(--pk-db-categories-success);
+}
+
+.pk-db-categories-restore:hover {
+    background: #f1f7f2;
+    border-color: #a9c4ae;
+}
+
+.pk-db-categories-edit:focus-visible,
+.pk-db-categories-delete:focus-visible,
+.pk-db-categories-restore:focus-visible,
+.pk-db-categories-filter-button:focus-visible,
+.pk-db-categories-clear-button:focus-visible {
+    outline: 2px solid var(--pk-db-categories-gold);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   PAGINATION
+   ========================================================================== */
+
+.pk-db-categories-pagination {
+    margin-top: 1.25rem;
+}
+
+
+/* ==========================================================================
+   EMPTY STATE
+   ========================================================================== */
+
+.pk-db-categories-empty {
+    align-items: center;
+    background: var(--pk-db-categories-soft);
+    border: 1px solid var(--pk-db-categories-border);
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+
+.pk-db-categories-empty-icon {
+    align-items: center;
+    border: 1px solid var(--pk-db-categories-gold);
+    color: var(--pk-db-categories-gold-dark);
+    display: flex;
+    font-size: 1.5rem;
+    height: 52px;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 52px;
+}
+
+.pk-db-categories-empty h3 {
+    color: var(--pk-db-categories-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.pk-db-categories-empty p {
+    color: var(--pk-db-categories-muted);
+    font-size: 0.75rem;
+    margin: 0.5rem 0 1.25rem;
+}
+
+.pk-db-categories-empty-button {
+    background: var(--pk-db-categories-primary);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.pk-db-categories-empty-button:hover {
+    background: var(--pk-db-categories-gold-dark);
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 760px) {
+
+    .pk-db-categories-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pk-db-categories-add {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .pk-db-categories-filters-scroll {
+        overflow-x: visible;
+    }
+
+    .pk-db-categories-filters {
+        grid-template-columns: minmax(0, 1fr);
+        min-width: 0;
+        width: 100%;
+    }
+
+    .pk-db-categories-filter-actions {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .pk-db-categories-filter-button,
+    .pk-db-categories-clear-button {
+        flex: 1 1 0;
+    }
+
+    .pk-db-categories-table-card {
+        border: 0;
+    }
+
+    .pk-db-categories-table-header {
+        border: 1px solid var(--pk-db-categories-border);
+    }
+
+    .pk-db-categories-table-scroll {
+        overflow-x: visible;
+    }
+
+    .pk-db-categories-table {
+        min-width: 0;
+    }
+
+    .pk-db-categories-table thead {
+        display: none;
+    }
+
+    .pk-db-categories-table,
+    .pk-db-categories-table tbody,
+    .pk-db-categories-table tr,
+    .pk-db-categories-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .pk-db-categories-table tbody {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+
+    .pk-db-categories-table tbody tr {
+        background: #fff;
+        border: 1px solid var(--pk-db-categories-border);
+        padding: 0.75rem;
+    }
+
+    .pk-db-categories-table tbody tr:hover {
+        background: #fff;
+    }
+
+    .pk-db-categories-table td {
+        align-items: center;
+        border-bottom: 1px solid #eee9df;
+        display: flex;
+        font-size: 0.72rem;
+        gap: 1rem;
+        justify-content: space-between;
+        min-height: 38px;
+        padding: 0.5rem 0;
+        text-align: right;
+    }
+
+    .pk-db-categories-table td:first-child {
+        align-items: flex-start;
+        display: block;
+        padding-top: 0;
+    }
+
+    .pk-db-categories-table td:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .pk-db-categories-table td::before {
+        color: var(--pk-db-categories-muted);
+        content: attr(data-label);
+        flex: 0 0 auto;
+        font-size: 0.55rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .pk-db-categories-table td:first-child::before {
+        display: none;
+    }
+
+    .pk-db-categories-actions {
+        justify-content: flex-end;
+    }
+
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    .pk-db-categories-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-db-categories-description {
+        font-size: 0.7rem;
+    }
+
+    .pk-db-categories-table-header {
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .pk-db-categories-table-title {
+        font-size: 0.95rem;
+    }
+
+    .pk-db-categories-count {
+        font-size: 0.52rem;
+    }
+
+    .pk-db-categories-name-text {
+        font-size: 0.78rem;
+    }
+
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pk-db-categories *,
+    .pk-db-categories *::before,
+    .pk-db-categories *::after {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms !important;
+    }
+
+}

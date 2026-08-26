@@ -1,67 +1,245 @@
-<h2 class="pk-db-card-title">My Cart: Total Items - {{ cart_items|length }}</h2>
+{% load static %}
 
-{% if cart_items %}
+<section class="pk-db-cart-section">
 
-    {% for item in cart_items %}
+    <!-- Header -->
+    <div class="pk-db-cart-header">
+        <div>
+            <p class="pk-db-cart-eyebrow">Shopping Bag</p>
 
-        <div class="pk-db-cart-item">
+            <h2 class="pk-db-cart-title">
+                My Cart
+            </h2>
+        </div>
 
-            <div>
-                <h3>{{ item.product.name }}</h3>
+        <span class="pk-db-cart-count">
+            {{ cart_count }}
+            {% if cart_count == 1 %}
+                Item
+            {% else %}
+                Items
+            {% endif %}
+        </span>
+    </div>
 
-                <p>
-                    Price: NPR {{ item.product.price }}
-                </p>
 
-                <p>
-                    <p>Subtotal: {{ item.subtotal }}</p>
-                </p>
+    {% if cart_items %}
+
+        <div class="pk-db-cart-layout">
+
+            <!-- Cart Items -->
+            <div class="pk-db-cart-list">
+
+                {% for item in cart_items %}
+
+                    <article class="pk-db-cart-item">
+
+                        <!-- Product -->
+                        <a
+                            href="{% url 'products:detail' item.product.slug %}"
+                            class="pk-db-cart-product"
+                        >
+
+                            <div class="pk-db-cart-image">
+
+                                {% if item.product.image %}
+                                    <img
+                                        src="{{ item.product.image.url }}"
+                                        alt="{{ item.product.name }}"
+                                        loading="lazy"
+                                    >
+                                {% else %}
+                                    <div class="pk-db-cart-image-placeholder">
+                                        No Image
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="pk-db-cart-info">
+
+                                <h3 class="pk-db-cart-product-name">
+                                    {{ item.product.name }}
+                                </h3>
+
+                                <p class="pk-db-cart-product-price">
+                                    NPR {{ item.product.price }}
+                                </p>
+
+                                <span class="pk-db-cart-view">
+                                    View Product
+                                    <span aria-hidden="true">→</span>
+                                </span>
+
+                            </div>
+
+                        </a>
+
+
+                        <!-- Quantity -->
+                        <form
+                            method="post"
+                            action="{% url 'dashboard:cart_update' item.product.id %}"
+                            class="pk-db-cart-quantity-form"
+                        >
+                            {% csrf_token %}
+
+                            <label
+                                for="dashboard-quantity-{{ item.id }}"
+                                class="pk-db-cart-quantity-label"
+                            >
+                                Quantity
+                            </label>
+
+                            <div class="pk-db-cart-quantity-control">
+
+                                <input
+                                    type="number"
+                                    id="dashboard-quantity-{{ item.id }}"
+                                    name="quantity"
+                                    value="{{ item.quantity }}"
+                                    min="1"
+                                    inputmode="numeric"
+                                    class="pk-db-cart-quantity-input"
+                                    aria-label="Quantity for {{ item.product.name }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="pk-db-cart-update"
+                                >
+                                    Update
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        <!-- Subtotal -->
+                        <div class="pk-db-cart-subtotal">
+
+                            <span class="pk-db-cart-subtotal-label">
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                NPR {{ item.subtotal }}
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Remove -->
+                        <form
+                            method="post"
+                            action="{% url 'dashboard:cart_remove' item.product.id %}"
+                            class="pk-db-cart-remove-form"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="pk-db-cart-remove"
+                                data-cart-remove
+                                data-product-name="{{ item.product.name }}"
+                                aria-label="Remove {{ item.product.name }} from cart"
+                            >
+                                <span
+                                    class="pk-db-cart-remove-icon"
+                                    aria-hidden="true"
+                                >
+                                    ×
+                                </span>
+
+                                <span class="pk-db-cart-remove-text">
+                                    Remove
+                                </span>
+                            </button>
+
+                        </form>
+
+                    </article>
+
+                {% endfor %}
+
             </div>
 
-            <form
-                method="post"
-                action="{% url 'dashboard:cart_update' item.product.id %}"
-            >
-                {% csrf_token %}
 
-                <label for="dashboard-quantity-{{ item.id }}">
-                    Quantity:
-                </label>
+            <!-- Cart Summary -->
+            <aside class="pk-db-cart-summary">
 
-                <input
-                    type="number"
-                    id="dashboard-quantity-{{ item.id }}"
-                    name="quantity"
-                    value="{{ item.quantity }}"
-                    min="1"
+                <p class="pk-db-cart-summary-eyebrow">
+                    Order Summary
+                </p>
+
+                <h3 class="pk-db-cart-summary-title">
+                    Your Cart
+                </h3>
+
+                <div class="pk-db-cart-summary-row">
+                    <span>Items</span>
+                    <span>{{ cart_count }}</span>
+                </div>
+
+                <div class="pk-db-cart-summary-divider"></div>
+
+                <div class="pk-db-cart-summary-total">
+                    <span>Total</span>
+
+                    <strong>
+                        NPR {{ cart.total_price }}
+                    </strong>
+                </div>
+
+                <button
+                    type="button"
+                    class="pk-db-cart-checkout"
+                    disabled
+                    title="Checkout will be available soon"
                 >
-
-                <button type="submit">
-                    Update
+                    Proceed to Checkout
                 </button>
-            </form>
 
-            <form
-                method="post"
-                action="{% url 'dashboard:cart_remove' item.product.id %}"
-            >
-                {% csrf_token %}
+                <p class="pk-db-cart-checkout-note">
+                    Checkout will be available soon.
+                </p>
 
-                <button type="submit">
-                    Remove
-                </button>
-            </form>
+            </aside>
 
         </div>
 
-    {% endfor %}
+    {% else %}
 
-    <h2>
-        Total: NPR {{ cart.total_price }}
-    </h2>
+        <!-- Empty Cart -->
+        <div class="pk-db-cart-empty">
 
-{% else %}
+            <div
+                class="pk-db-cart-empty-icon"
+                aria-hidden="true"
+            >
+                🛒
+            </div>
 
-    <p>Your cart is empty.</p>
+            <h3 class="pk-db-cart-empty-title">
+                Your Cart is Empty
+            </h3>
 
-{% endif %}
+            <p class="pk-db-cart-empty-text">
+                Discover beautiful jewellery from our collections
+                and add your favorite pieces to your shopping bag.
+            </p>
+
+            <a
+                href="{% url 'products:list' %}"
+                class="pk-db-cart-shop-button"
+            >
+                Explore Collections
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>

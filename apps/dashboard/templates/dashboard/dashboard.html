@@ -4,20 +4,36 @@
 {% block title %}My Account | Panchakanya Collections{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-<link rel="stylesheet" href="{% static 'css/dashboard-profile.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/wishlist.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/cart.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/reviews.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/products.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/products_add.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/products_edit.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/categories.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/category_add.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/category_edit.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard-profile.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard-recycle-bin.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="pk-container pk-db-container">
+<div class="pk-dashboard">
     <div class="pk-db-header">
         <div>
             <h1 class="pk-db-title">My Account</h1>
             <p class="pk-db-welcome-msg">Welcome back, <span class="pk-db-user-name">{{ request.user.first_name|default:request.user.username }}</span></p>
         </div>
-       <form method="post" action="{% url 'accounts:logout' %}">
+<form method="post" action="{% url 'accounts:logout' %}">
     {% csrf_token %}
-    <button type="submit" onclick="return confirm('Are you sure you want to logout?');">Logout</button>
+    <button
+        type="submit"
+        class="pk-db-logout-btn"
+        onclick="return confirm('Are you sure you want to logout?');"
+    >
+        Logout
+    </button>
 </form>
     </div>
 
@@ -35,32 +51,43 @@
         <a href="{% url 'dashboard:wishlist' %}" class="pk-db-nav-item {% if dashboard_section == 'wishlist' %}pk-db-active{% endif %}">
             <i data-lucide="heart"></i>
             Wishlist
+<span>({{ wishlist_count }})</span>
+
         </a>
 
         <a href="{% url 'dashboard:cart' %}" class="pk-db-nav-item {% if dashboard_section == 'cart' %}pk-db-active{% endif %}">
             <i data-lucide="shopping-cart"></i>
             Cart
-        </a>
+<span>({{ cart_count }})</span>        </a>
+        <a href="{% url 'dashboard:reviews' %}"
+   class="pk-db-nav-item {% if dashboard_section == 'reviews' %}pk-db-active{% endif %}">
+    <i data-lucide="star"></i>
+    Reviews
+</a>
     </div>
 
     {% if user.is_staff %}
         <div class="pk-db-nav-section">
             <p class="pk-db-nav-heading">Admin / Staff</p>
 
-            <a href="{% url 'products:list' %}" class="pk-db-nav-item">
-            <i data-lucide="package"></i>
-            Products
-        </a>
-
-        <a href="{% url 'categories:list' %}" class="pk-db-nav-item">
-            <i data-lucide="folder"></i>
-            Categories
-        </a>
-
-        <a href="{% url 'reviews:list' %}" class="pk-db-nav-item">
-            <i data-lucide="star"></i>
-            Reviews
-        </a>
+<a
+    href="{% url 'dashboard:products' %}"
+    class="pk-db-nav-item {% if dashboard_section == 'products' %}pk-db-active{% endif %}"
+>
+    <i data-lucide="package"></i>
+    Products
+</a>
+<a href="{% url 'dashboard:categories' %}" class="pk-db-nav-item {% if dashboard_section == 'categories' %}pk-db-active{% endif %}">
+    <i data-lucide="layers"></i>
+    Categories
+</a>
+<a
+    href="{% url 'dashboard:recycle_bin' %}"
+    class="pk-db-nav-item {% if dashboard_section == 'recycle_bin' %}pk-db-active{% endif %}"
+>
+    <i data-lucide="trash-2"></i>
+    Recycle Bin
+</a>
             <!-- Users -->
         </div>
     {% endif %}
@@ -78,6 +105,24 @@
 
         {% elif dashboard_section == "cart" %}
             {% include "dashboard/sections/cart.html" %}
+        {% elif dashboard_section == "reviews" %}
+            {% include "dashboard/sections/reviews.html" %}
+            <!-- for admin/staff -->
+        {% elif dashboard_section == "products" %}
+            {% include "dashboard/sections/products.html" %}
+        {% elif dashboard_section == "products_add" %}
+        {% include "dashboard/sections/products_add.html" %}
+        {% elif dashboard_section == "products_edit" %}
+            {% include "dashboard/sections/products_edit.html" %}
+
+        {% elif dashboard_section == "categories" %}
+            {% include "dashboard/sections/categories.html" %}
+        {% elif dashboard_section == "categories_add" %}
+            {% include "dashboard/sections/categories_add.html" %}
+        {% elif dashboard_section == "categories_edit" %}
+            {% include "dashboard/sections/categories_edit.html" %}
+        {% elif dashboard_section == "recycle_bin" %}
+            {% include "dashboard/sections/recycle_bin.html" %}
 
         {% else %}
             <h2 class="pk-db-card-title">Dashboard</h2>
@@ -88,4 +133,14 @@
 </main>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'product/js/product_form.js' %}"></script>
+    <script src="{% static 'dashboard/js/wishlist.js' %}"></script>
+    <script src="{% static 'dashboard/js/cart.js' %}"></script>
+    <script src="{% static 'dashboard/js/reviews.js' %}"></script>
+    <script src="{% static 'dashboard/js/products.js' %}"></script>
+    <script src="{% static 'dashboard/js/products_add.js' %}"></script>
+    <script src="{% static 'dashboard/js/products_edit.js' %}"></script>
 {% endblock %}

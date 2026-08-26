@@ -1,0 +1,580 @@
+/* ==========================================================================
+   Panchakanya Collections
+   Dashboard Add Product
+
+   Namespace:
+   pk-db-product-add-
+
+   Fully isolated from:
+   - Product Management
+   - Category Management
+   - Category Forms
+   - Dashboard Sidebar
+   - Header
+   - Cart
+   - Wishlist
+   ========================================================================== */
+
+
+/* ==========================================================================
+   ROOT
+   ========================================================================== */
+
+.pk-db-product-add {
+    --pk-db-product-add-primary: #121110;
+    --pk-db-product-add-text: #2b2825;
+    --pk-db-product-add-muted: #736d65;
+    --pk-db-product-add-gold: #d4af37;
+    --pk-db-product-add-gold-dark: #a8841a;
+    --pk-db-product-add-border: #e6dfd3;
+    --pk-db-product-add-surface: #ffffff;
+    --pk-db-product-add-soft: #f8f6f1;
+    --pk-db-product-add-danger: #a34d3e;
+
+    box-sizing: border-box;
+    color: var(--pk-db-product-add-text);
+    font-family: var(--pk-font-sans, system-ui, sans-serif);
+    min-width: 0;
+    width: 100%;
+}
+
+.pk-db-product-add *,
+.pk-db-product-add *::before,
+.pk-db-product-add *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.pk-db-product-add-header {
+    border-bottom: 1px solid var(--pk-db-product-add-border);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.pk-db-product-add-eyebrow {
+    color: var(--pk-db-product-add-gold-dark);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-product-add-title {
+    color: var(--pk-db-product-add-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pk-db-product-add-description {
+    color: var(--pk-db-product-add-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin: 0.5rem 0 0;
+}
+
+
+/* ==========================================================================
+   CARD
+   ========================================================================== */
+
+.pk-db-product-add-card {
+    background: var(--pk-db-product-add-surface);
+    border: 1px solid var(--pk-db-product-add-border);
+    max-width: 1000px;
+    width: 100%;
+}
+
+.pk-db-product-add-form {
+    min-width: 0;
+    padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   ERRORS
+   ========================================================================== */
+
+.pk-db-product-add-errors {
+    background: #fff5f2;
+    border: 1px solid #e2c1b8;
+    color: var(--pk-db-product-add-danger);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    overflow-wrap: anywhere;
+    padding: 0.85rem 1rem;
+}
+
+.pk-db-product-add-errors strong {
+    display: block;
+    font-size: 0.68rem;
+    margin-bottom: 0.35rem;
+}
+
+.pk-db-product-add-errors ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.2rem;
+}
+
+
+/* ==========================================================================
+   SECTIONS
+   ========================================================================== */
+
+.pk-db-product-add-section {
+    min-width: 0;
+}
+
+.pk-db-product-add-images-section {
+    border-top: 1px solid var(--pk-db-product-add-border);
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+}
+
+.pk-db-product-add-section-heading {
+    margin-bottom: 1.15rem;
+}
+
+.pk-db-product-add-section-heading h3 {
+    color: var(--pk-db-product-add-primary);
+    font-family: var(--pk-font-serif, Georgia, serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.pk-db-product-add-section-heading p {
+    color: var(--pk-db-product-add-muted);
+    font-size: 0.7rem;
+    line-height: 1.5;
+    margin: 0.3rem 0 0;
+}
+
+
+/* ==========================================================================
+   PRODUCT FIELDS
+   ========================================================================== */
+
+.pk-db-product-add-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.pk-db-product-add-fields p {
+    margin: 0;
+    min-width: 0;
+}
+
+.pk-db-product-add-fields label {
+    color: var(--pk-db-product-add-muted);
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   INPUTS
+   ========================================================================== */
+
+.pk-db-product-add-fields input[type="text"],
+.pk-db-product-add-fields input[type="url"],
+.pk-db-product-add-fields input[type="number"],
+.pk-db-product-add-fields input[type="email"],
+.pk-db-product-add-fields input[type="password"],
+.pk-db-product-add-fields input[type="file"],
+.pk-db-product-add-fields select,
+.pk-db-product-add-fields textarea {
+    background: #fff;
+    border: 1px solid var(--pk-db-product-add-border);
+    border-radius: 0;
+    color: var(--pk-db-product-add-text);
+    display: block;
+    font-family: inherit;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    max-width: 100%;
+    min-width: 0;
+    outline: none;
+    padding: 0.7rem;
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
+    width: 100%;
+}
+
+.pk-db-product-add-fields input[type="text"],
+.pk-db-product-add-fields input[type="url"],
+.pk-db-product-add-fields input[type="number"],
+.pk-db-product-add-fields input[type="email"],
+.pk-db-product-add-fields input[type="password"],
+.pk-db-product-add-fields select {
+    height: 40px;
+}
+
+.pk-db-product-add-fields textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.pk-db-product-add-fields input[type="file"] {
+    cursor: pointer;
+    min-height: 40px;
+    padding: 0.55rem;
+}
+
+
+/* ==========================================================================
+   INPUT FOCUS
+   ========================================================================== */
+
+.pk-db-product-add-fields input:focus,
+.pk-db-product-add-fields select:focus,
+.pk-db-product-add-fields textarea:focus {
+    border-color: var(--pk-db-product-add-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+}
+
+
+/* ==========================================================================
+   CHECKBOXES
+   ========================================================================== */
+
+.pk-db-product-add-fields input[type="checkbox"] {
+    accent-color: var(--pk-db-product-add-gold-dark);
+    height: 16px;
+    margin: 0 0.4rem 0 0;
+    width: 16px;
+}
+
+.pk-db-product-add-fields label:has(input[type="checkbox"]) {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+
+/* ==========================================================================
+   HELP TEXT
+   ========================================================================== */
+
+.pk-db-product-add-fields .helptext {
+    color: var(--pk-db-product-add-muted);
+    display: block;
+    font-size: 0.65rem;
+    line-height: 1.5;
+    margin-top: 0.35rem;
+}
+
+
+/* ==========================================================================
+   FORM ERRORS
+   ========================================================================== */
+
+.pk-db-product-add-fields .errorlist {
+    color: var(--pk-db-product-add-danger);
+    font-size: 0.65rem;
+    line-height: 1.45;
+    list-style: none;
+    margin: 0 0 0.35rem;
+    padding: 0;
+}
+
+
+/* ==========================================================================
+   IMAGE FORMSET
+   ========================================================================== */
+
+.pk-db-product-add-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.pk-db-product-add-image-row {
+    background: var(--pk-db-product-add-soft);
+    border: 1px solid var(--pk-db-product-add-border);
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    padding: 0.9rem;
+    position: relative;
+}
+
+
+/* ==========================================================================
+   IMAGE FIELDS
+   ========================================================================== */
+
+.pk-db-product-add-image-field,
+.pk-db-product-add-primary-field,
+.pk-db-product-add-delete-field {
+    min-width: 0;
+}
+
+.pk-db-product-add-image-field label,
+.pk-db-product-add-primary-field label,
+.pk-db-product-add-delete-field label {
+    color: var(--pk-db-product-add-muted);
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.pk-db-product-add-image-field input[type="file"] {
+    background: #fff;
+    border: 1px solid var(--pk-db-product-add-border);
+    border-radius: 0;
+    color: var(--pk-db-product-add-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.68rem;
+    min-height: 38px;
+    max-width: 100%;
+    padding: 0.55rem;
+    width: 100%;
+}
+
+.pk-db-product-add-image-field input[type="file"]:focus {
+    border-color: var(--pk-db-product-add-gold);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+}
+
+
+/* ==========================================================================
+   PRIMARY / DELETE
+   ========================================================================== */
+
+.pk-db-product-add-primary-field,
+.pk-db-product-add-delete-field {
+    align-items: center;
+    display: flex;
+    gap: 0.4rem;
+    min-width: max-content;
+    padding-top: 1.25rem;
+}
+
+.pk-db-product-add-primary-field label,
+.pk-db-product-add-delete-field label {
+    cursor: pointer;
+    margin: 0;
+}
+
+.pk-db-product-add-primary-field input,
+.pk-db-product-add-delete-field input {
+    accent-color: var(--pk-db-product-add-gold-dark);
+    height: 16px;
+    width: 16px;
+}
+
+
+/* ==========================================================================
+   ADD IMAGE BUTTON
+   ========================================================================== */
+
+.pk-db-product-add-image-button {
+    background: #fff;
+    border: 1px solid var(--pk-db-product-add-border);
+    color: var(--pk-db-product-add-text);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    margin-top: 0.85rem;
+    padding: 0.65rem 0.85rem;
+    text-transform: uppercase;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-db-product-add-image-button:hover {
+    background: var(--pk-db-product-add-primary);
+    border-color: var(--pk-db-product-add-primary);
+    color: #fff;
+}
+
+.pk-db-product-add-image-button:focus-visible {
+    outline: 2px solid var(--pk-db-product-add-gold);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   FORM ACTIONS
+   ========================================================================== */
+
+.pk-db-product-add-actions {
+    border-top: 1px solid var(--pk-db-product-add-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+}
+
+.pk-db-product-add-submit,
+.pk-db-product-add-cancel {
+    align-items: center;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+    height: 40px;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    padding: 0 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        color 150ms ease;
+}
+
+.pk-db-product-add-submit {
+    background: var(--pk-db-product-add-primary);
+    border: 1px solid var(--pk-db-product-add-primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.pk-db-product-add-submit:hover {
+    background: var(--pk-db-product-add-gold-dark);
+    border-color: var(--pk-db-product-add-gold-dark);
+}
+
+.pk-db-product-add-cancel {
+    background: #fff;
+    border: 1px solid var(--pk-db-product-add-border);
+    color: var(--pk-db-product-add-muted);
+}
+
+.pk-db-product-add-cancel:hover {
+    border-color: var(--pk-db-product-add-gold);
+    color: var(--pk-db-product-add-gold-dark);
+}
+
+.pk-db-product-add-submit:focus-visible,
+.pk-db-product-add-cancel:focus-visible {
+    outline: 2px solid var(--pk-db-product-add-gold);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 760px) {
+
+    .pk-db-product-add-header {
+        margin-bottom: 1rem;
+    }
+
+    .pk-db-product-add-card {
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .pk-db-product-add-form {
+        padding: 1.1rem;
+    }
+
+    .pk-db-product-add-image-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pk-db-product-add-primary-field,
+    .pk-db-product-add-delete-field {
+        padding-top: 0;
+    }
+
+    .pk-db-product-add-actions {
+        flex-direction: column;
+    }
+
+    .pk-db-product-add-submit,
+    .pk-db-product-add-cancel {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    .pk-db-product-add-title {
+        font-size: 1.35rem;
+    }
+
+    .pk-db-product-add-description {
+        font-size: 0.7rem;
+    }
+
+    .pk-db-product-add-form {
+        padding: 0.9rem;
+    }
+
+    .pk-db-product-add-section-heading h3 {
+        font-size: 0.95rem;
+    }
+
+    .pk-db-product-add-fields {
+        gap: 0.85rem;
+    }
+
+    .pk-db-product-add-image-row {
+        padding: 0.75rem;
+    }
+
+    .pk-db-product-add-image-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pk-db-product-add *,
+    .pk-db-product-add *::before,
+    .pk-db-product-add *::after {
+        scroll-behavior: auto;
+        transition-duration: 0.01ms !important;
+    }
+
+}

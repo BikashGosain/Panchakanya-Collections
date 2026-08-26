@@ -1,0 +1,375 @@
+<div class="pk-db-categories">
+
+    <!-- Header -->
+    <div class="pk-db-categories-header">
+        <div class="pk-db-categories-heading">
+            <h2 class="pk-db-categories-title">
+                Category Management
+            </h2>
+
+            <p class="pk-db-categories-description">
+                Manage your store categories.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dashboard:categories_add' %}"
+            class="pk-db-categories-add"
+        >
+            Add Category
+        </a>
+    </div>
+
+
+    <!-- Filters -->
+    <div class="pk-db-categories-filters-scroll">
+        <form
+            method="get"
+            class="pk-db-categories-filters"
+        >
+
+            <div class="pk-db-categories-filter-field pk-db-categories-search">
+                <label
+                    for="pk-db-categories-search-input"
+                    class="pk-db-categories-label"
+                >
+                    Search
+                </label>
+
+                <input
+                    id="pk-db-categories-search-input"
+                    type="text"
+                    name="q"
+                    placeholder="Search by name..."
+                    value="{{ search_query }}"
+                    class="pk-db-categories-input"
+                >
+            </div>
+
+
+            <div class="pk-db-categories-filter-field">
+                <label
+                    for="pk-db-categories-parent"
+                    class="pk-db-categories-label"
+                >
+                    Category Type
+                </label>
+
+                <select
+                    id="pk-db-categories-parent"
+                    name="parent"
+                    class="pk-db-categories-select"
+                >
+                    <option value="">All Categories</option>
+
+                    <option
+                        value="root"
+                        {% if parent_filter == "root" %}selected{% endif %}
+                    >
+                        Top-Level Only
+                    </option>
+
+                    <option
+                        value="sub"
+                        {% if parent_filter == "sub" %}selected{% endif %}
+                    >
+                        Subcategories Only
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="pk-db-categories-filter-field">
+                <label
+                    for="pk-db-categories-home"
+                    class="pk-db-categories-label"
+                >
+                    Homepage
+                </label>
+
+                <select
+                    id="pk-db-categories-home"
+                    name="show_on_home"
+                    class="pk-db-categories-select"
+                >
+                    <option value="">Homepage: Any</option>
+
+                    <option
+                        value="yes"
+                        {% if show_on_home_filter == "yes" %}selected{% endif %}
+                    >
+                        Shown on Home
+                    </option>
+
+                    <option
+                        value="no"
+                        {% if show_on_home_filter == "no" %}selected{% endif %}
+                    >
+                        Not on Home
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="pk-db-categories-filter-field">
+                <label
+                    for="pk-db-categories-deleted"
+                    class="pk-db-categories-label"
+                >
+                    Status
+                </label>
+
+                <select
+                    id="pk-db-categories-deleted"
+                    name="deleted"
+                    class="pk-db-categories-select"
+                >
+                    <option value="">All Categories</option>
+
+                    <option
+                        value="active"
+                        {% if deleted_filter == "active" %}selected{% endif %}
+                    >
+                        Active Only
+                    </option>
+
+                    <option
+                        value="deleted"
+                        {% if deleted_filter == "deleted" %}selected{% endif %}
+                    >
+                        Deleted Only
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="pk-db-categories-filter-actions">
+                <button
+                    type="submit"
+                    class="pk-db-categories-filter-button"
+                >
+                    Filter
+                </button>
+
+                <a
+                    href="{% url 'dashboard:categories' %}"
+                    class="pk-db-categories-clear-button"
+                >
+                    Clear
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- Category Table -->
+    {% if categories %}
+
+        <div class="pk-db-categories-table-card">
+
+            <div class="pk-db-categories-table-header">
+                <div>
+                    <h3 class="pk-db-categories-table-title">
+                        Categories
+                    </h3>
+
+                    <p class="pk-db-categories-table-subtitle">
+                        Manage category hierarchy and visibility.
+                    </p>
+                </div>
+
+                <span class="pk-db-categories-count">
+                    {{ categories|length }} shown
+                </span>
+            </div>
+
+
+            <div class="pk-db-categories-table-scroll">
+
+                <table class="pk-db-categories-table">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Parent</th>
+                            <th>Products</th>
+                            <th>Show on Home</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for category in categories %}
+
+                            <tr
+                                {% if category.is_deleted %}
+                                    class="pk-db-categories-row-deleted"
+                                {% endif %}
+                            >
+
+                                <td data-label="Name">
+
+                                    <div class="pk-db-categories-name">
+                                        <span class="pk-db-categories-name-text">
+                                            {{ category.name }}
+                                        </span>
+
+                                        {% if category.is_deleted %}
+                                            <span class="pk-db-categories-deleted">
+                                                Deleted
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                </td>
+
+
+                                <td data-label="Parent">
+                                    <span class="pk-db-categories-parent">
+                                        {{ category.parent.name|default:"—" }}
+                                    </span>
+                                </td>
+
+
+                                <td data-label="Products">
+                                    <span class="pk-db-categories-product-count">
+                                        {{ category.product_count }}
+                                    </span>
+                                </td>
+
+
+                                <td data-label="Show on Home">
+
+                                    {% if category.show_on_home %}
+                                        <span class="pk-db-categories-home pk-db-categories-home--yes">
+                                            Yes
+                                        </span>
+                                    {% else %}
+                                        <span class="pk-db-categories-home">
+                                            No
+                                        </span>
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td data-label="Status">
+
+                                    {% if category.is_deleted %}
+                                        <span class="pk-db-categories-status pk-db-categories-status--deleted">
+                                            Deleted
+                                        </span>
+                                    {% else %}
+                                        <span class="pk-db-categories-status pk-db-categories-status--active">
+                                            Active
+                                        </span>
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td data-label="Actions">
+
+                                    <div class="pk-db-categories-actions">
+
+                                        <a
+                                            href="{% url 'dashboard:categories_edit' category.pk %}"
+                                            class="pk-db-categories-edit"
+                                        >
+                                            Edit
+                                        </a>
+
+
+                                        {% if category.is_deleted %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'dashboard:restore_category' category.id %}"
+                                                class="pk-db-categories-action-form"
+                                            >
+                                                {% csrf_token %}
+
+                                                <input
+                                                    type="hidden"
+                                                    name="next"
+                                                    value="{{ request.get_full_path }}"
+                                                >
+
+                                                <button
+                                                    type="submit"
+                                                    class="pk-db-categories-restore"
+                                                >
+                                                    Restore
+                                                </button>
+                                            </form>
+
+                                        {% else %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'dashboard:categories_delete' category.pk %}"
+                                                class="pk-db-categories-action-form"
+                                            >
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="pk-db-categories-delete"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="pk-db-categories-pagination">
+            {% include "includes/pagination.html" with page_obj=page_obj %}
+        </div>
+
+
+    {% else %}
+
+        <div class="pk-db-categories-empty">
+
+            <div class="pk-db-categories-empty-icon">
+                ⌁
+            </div>
+
+            <h3>No Categories Found</h3>
+
+            <p>
+                No categories match your current filters.
+            </p>
+
+            <a
+                href="{% url 'dashboard:categories' %}"
+                class="pk-db-categories-empty-button"
+            >
+                Clear Filters
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>

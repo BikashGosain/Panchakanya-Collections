@@ -1,56 +1,115 @@
 {% for category in categories %}
 
-    <li class="category-item">
+    <li class="pk-pl-category-item">
 
-        <div class="category-row">
+        <!-- ==========================================================
+             CATEGORY ROW
+             ========================================================== -->
 
-            <a
-                href="?category={{ category.slug }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}{% if selected_metal %}&metal={{ selected_metal }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}"
-                class="category-link {% if category.slug == selected_category %}selected{% endif %}"
-            >
-                {{ category.name }} ({{ category.product_count }})
-            </a>
+        <div class="pk-pl-category-row">
 
+            <!-- ======================================================
+                 TOGGLE BUTTON
+                 ====================================================== -->
 
             {% if category.has_children %}
 
                 <button
                     type="button"
-                    class="category-toggle"
-                    onclick="toggleCategory('category-{{ category.id }}')"
+                    class="pk-pl-category-toggle"
+                    onclick="pkToggleCategory(
+                        'pk-pl-category-{{ category.id }}',
+                        this
+                    )"
                     aria-label="Toggle {{ category.name }}"
+                    aria-expanded="
+                        {% if category.id in selected_category_open_ids %}
+                            true
+                        {% else %}
+                            false
+                        {% endif %}
+                    "
                 >
 
                     <span
-                        id="icon-category-{{ category.id }}"
+                        id="pk-pl-icon-category-{{ category.id }}"
+                        class="pk-pl-category-icon"
                     >
-                        {% if category.slug in expanded_category_slugs %}
+
+                        {% if category.id in selected_category_open_ids %}
+
                             ▼
+
                         {% else %}
+
                             ▶
+
                         {% endif %}
+
                     </span>
 
                 </button>
 
+            {% else %}
+
+                <span
+                    class="pk-pl-category-toggle-placeholder"
+                    aria-hidden="true"
+                ></span>
+
             {% endif %}
+
+
+            <!-- ======================================================
+                 CATEGORY LINK
+                 ====================================================== -->
+
+            <a
+                href="{% url 'products:list' %}?category={{ category.slug }}"
+                class="
+                    pk-pl-category-link
+                    {% if selected_category == category.slug %}
+                        pk-pl-selected
+                    {% endif %}
+                "
+            >
+
+                <span class="pk-pl-category-name">
+
+                    {{ category.name }}
+
+                </span>
+
+
+                {% if category.product_count %}
+
+                    <span class="pk-pl-category-count">
+
+                        {{ category.product_count }}
+
+                    </span>
+
+                {% endif %}
+
+            </a>
 
         </div>
 
 
+        <!-- ==========================================================
+             CHILDREN
+             ========================================================== -->
+
         {% if category.has_children %}
 
             <ul
-                id="category-{{ category.id }}"
-                class="subcategory-list"
-                style="
-                    display:
-                    {% if category.slug in expanded_category_slugs %}
-                        block
-                    {% else %}
-                        none
-                    {% endif %};
-                "
+                id="pk-pl-category-{{ category.id }}"
+                class="pk-pl-subcategory-list"
+                {% if category.id in selected_category_open_ids %}
+                    style="display: block;"
+                {% else %}
+                    style="display: none;"
+                {% endif %}
             >
 
                 {% include "products/category_tree.html" with categories=category.subcategories.all %}

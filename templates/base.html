@@ -12,6 +12,7 @@
 
     <!-- Custom Namespaced CSS Files -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/includes/messages.css' %}">
     <link rel="stylesheet" href="{% static 'css/includes/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/includes/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/includes/pagination.css' %}">
@@ -24,13 +25,30 @@
 
     <main class="pk-main-wrapper">
 
-        {% if messages %}
+{% if messages %}
+    <div class="pk-msg-container" aria-live="polite" aria-atomic="true">
         {% for message in messages %}
-        <div>
-            {{ message }}
-        </div>
+            <div
+                class="pk-msg pk-msg--{{ message.tags|default:'info' }}"
+                role="status"
+            >
+                <div class="pk-msg-content">
+                    <span class="pk-msg-text">
+                        {{ message }}
+                    </span>
+                </div>
+
+                <button
+                    type="button"
+                    class="pk-msg-close"
+                    aria-label="Close message"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         {% endfor %}
-        {% endif %}
+    </div>
+{% endif %}
 
         {% block content %}{% endblock %}
 
@@ -39,10 +57,13 @@
     {% include 'includes/footer.html' %}
 
     <script>
-        lucide.createIcons();
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
     </script>
 
-    <script src="{% static 'js/header.js' %}"></script>
+    <script src="{% static 'js/includes/header.js' %}"></script>
+    <script src="{% static 'js/includes/messages.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
