@@ -402,7 +402,7 @@
                      ================================================= -->
 
 <div class="product-purchase">
-
+{% if user.is_authenticated %}
     <div class="product-quantity">
 
         <button
@@ -437,7 +437,7 @@
         </button>
 
     </div>
-
+  {% endif %}
     {% if user.is_authenticated %}
         <form method="post" action="{% url 'cart:add' product.id %}">
             {% csrf_token %}
