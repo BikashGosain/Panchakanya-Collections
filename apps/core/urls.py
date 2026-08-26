@@ -7,3 +7,7 @@ app_name = "core"
 urlpatterns = [
     path("", views.home_view, name="home"),
 ]
+handler404 = "apps.core.views.custom_404"
+handler400 = "apps.core.views.custom_400"
+handler403 = "apps.core.views.custom_403"
+handler500 = "apps.core.views.custom_500"

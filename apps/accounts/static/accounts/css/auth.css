@@ -1,0 +1,235 @@
+/* ========================================
+   Shared Auth Styling (Login + Register)
+   Scoped under .pk-auth-root
+   ======================================== */
+
+.pk-auth-root {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 32px 28px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    font-family: inherit;
+}
+
+.pk-auth-title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #222;
+}
+
+.pk-auth-form p {
+    margin-bottom: 16px;
+}
+
+.pk-auth-form label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.pk-auth-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.pk-auth-form input:focus {
+    outline: none;
+    border-color: #b8860b;
+    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.12);
+}
+
+.pk-auth-form .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    color: #c0392b;
+    font-size: 0.82rem;
+}
+
+.pk-auth-form .helptext {
+    display: block;
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+.pk-auth-btn-primary {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 6px;
+    background: #b8860b;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.pk-auth-btn-primary:hover {
+    background: #9a6f09;
+}
+
+.pk-auth-btn-primary:active {
+    transform: scale(0.98);
+}
+
+.pk-auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #999;
+    font-size: 0.82rem;
+    margin: 20px 0;
+}
+
+.pk-auth-divider::before,
+.pk-auth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.pk-auth-divider:not(:empty)::before {
+    margin-right: 10px;
+}
+
+.pk-auth-divider:not(:empty)::after {
+    margin-left: 10px;
+}
+
+.pk-auth-btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.pk-auth-btn-google:hover {
+    background: #f7f7f7;
+    border-color: #ccc;
+}
+
+.pk-auth-btn-google svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.pk-auth-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.pk-auth-links p {
+    margin: 8px 0;
+}
+
+.pk-auth-links a {
+    color: #b8860b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pk-auth-links a:hover {
+    text-decoration: underline;
+}
+/* ========================================
+   Shared additions: subtext + error messages
+   ======================================== */
+
+.pk-auth-subtext {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.pk-auth-error {
+    background: #fdecea;
+    border: 1px solid #f5c6c0;
+    color: #c0392b;
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* ========================================
+   Shared additions: info messages, OTP input, secondary button
+   ======================================== */
+
+.pk-auth-info {
+    background: #eafaf1;
+    border: 1px solid #b7e4c7;
+    color: #1e7e34;
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.pk-auth-otp-input {
+    text-align: center;
+    letter-spacing: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.pk-auth-btn-secondary {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    color: #555;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.pk-auth-btn-secondary:hover {
+    background: #f7f7f7;
+    border-color: #ccc;
+}
+
+.pk-auth-btn-secondary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+@media (max-width: 480px) {
+    .pk-auth-root {
+        margin: 30px 16px;
+        padding: 26px 20px;
+    }
+}

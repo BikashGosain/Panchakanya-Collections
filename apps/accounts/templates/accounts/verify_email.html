@@ -1,22 +1,49 @@
-<h2>Verify Your Email</h2>
+{% extends "base.html" %}
+{% load static %}
 
-{% if error %}
-    <p style="color: red;">{{ error }}</p>
-{% endif %}
-{% if info %}
-    <p style="color: green;">{{ info }}</p>
-{% endif %}
+{% block title %}Verify Email | Panchakanya Collections{% endblock %}
 
-<form method="post" action="{% url 'accounts:verify_email' %}">
-    {% csrf_token %}
-    <label for="code">Enter the 6-digit code sent to your email:</label>
-    <input type="text" name="code" id="code" maxlength="6" required>
-    <button type="submit">Verify</button>
-</form>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/auth.css' %}">
+{% endblock %}
 
-<hr>
+{% block content %}
+<div class="pk-auth-root">
+    <h2 class="pk-auth-title">Verify Your Email</h2>
 
-<form method="post" action="{% url 'accounts:resend_otp' %}">
-    {% csrf_token %}
-    <button type="submit">Resend Code</button>
-</form>
+    {% if error %}
+        <p class="pk-auth-error">{{ error }}</p>
+    {% endif %}
+    {% if info %}
+        <p class="pk-auth-info">{{ info }}</p>
+    {% endif %}
+
+    <p class="pk-auth-subtext">
+        Enter the 6-digit code sent to your email address.
+    </p>
+
+    <form method="post" action="{% url 'accounts:verify_email' %}" class="pk-auth-form">
+        {% csrf_token %}
+        <p>
+            <label for="code">Verification Code</label>
+            <input type="text" name="code" id="code" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="pk-auth-otp-input" required autofocus>
+        </p>
+        <button type="submit" class="pk-auth-btn-primary" data-loading-text="Verifying...">
+            Verify
+        </button>
+    </form>
+
+    <div class="pk-auth-divider">or</div>
+
+    <form method="post" action="{% url 'accounts:resend_otp' %}">
+        {% csrf_token %}
+        <button type="submit" class="pk-auth-btn-secondary" data-loading-text="Resending...">
+            Resend Code
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'accounts/js/auth.js' %}"></script>
+{% endblock %}
