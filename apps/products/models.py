@@ -27,7 +27,7 @@ class Category(models.Model):
 
     parent = models.ForeignKey(
         "self",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
         related_name="subcategories",
@@ -68,13 +68,15 @@ class Category(models.Model):
 
     @property
     def has_children(self):
-        return self.subcategories.exists()
+        return self.subcategories.filter(
+            is_deleted=False,
+        ).exists()
 
     @property
     def product_count(self):
         """
         Return the number of active products belonging to this
-        category or any descendant category.
+        category or any active descendant category.
         """
 
         category_ids = [self.pk]
@@ -83,7 +85,11 @@ class Category(models.Model):
         while stack:
             current = stack.pop()
 
-            children = list(current.subcategories.all())
+            children = list(
+                current.subcategories.filter(
+                    is_deleted=False,
+                )
+            )
 
             category_ids.extend(child.pk for child in children)
 
@@ -91,6 +97,7 @@ class Category(models.Model):
 
         return Product.objects.filter(
             status="active",
+            is_deleted=False,
             category_id__in=category_ids,
         ).count()
 
@@ -146,6 +153,11 @@ class Category(models.Model):
         self.save()
 
     def restore(self):
+        if self.parent and self.parent.is_deleted:
+            raise ValidationError(
+                "Cannot restore this category because its parent category "
+                "is deleted. Restore the parent category first."
+            )
 
         self.is_deleted = False
         self.deleted_at = None
@@ -288,6 +300,11 @@ class Product(models.Model):
         self.save()
 
     def restore(self):
+        if self.category.is_deleted:
+            raise ValidationError(
+                "Cannot restore this product because its category "
+                "is deleted. Restore the category first."
+            )
 
         self.is_deleted = False
         self.deleted_at = None

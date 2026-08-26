@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.paginator import Paginator
-from django.db.models import Count, Prefetch, Q
+from django.db.models import Count, Prefetch, ProtectedError, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
@@ -366,9 +366,19 @@ def dashboard_delete_product(request, product_id):
     if not request.user.is_staff:
         raise PermissionDenied
 
-    product = get_object_or_404(Product.all_objects, pk=product_id)
+    product = get_object_or_404(
+        Product.all_objects,
+        pk=product_id,
+        is_deleted=False,
+    )
+
     product.soft_delete()
-    messages.success(request, f"{product.name} was deleted.")
+
+    messages.success(
+        request,
+        f"{product.name} was deleted.",
+    )
+
     return redirect("dashboard:products")
 
 
@@ -497,20 +507,47 @@ def dashboard_delete_category(request, category_id):
     if not request.user.is_staff:
         raise PermissionDenied
 
-    category = get_object_or_404(Category.all_objects, pk=category_id)
+    category = get_object_or_404(
+        Category.all_objects,
+        pk=category_id,
+        is_deleted=False,
+    )
 
+    # Prevent deleting a category that still has active children.
+    child_count = category.subcategories.filter(
+        is_deleted=False,
+    ).count()
+
+    if child_count > 0:
+        messages.error(
+            request,
+            f"Cannot delete {category.name} because it has "
+            f"{child_count} active subcategor"
+            f"{'y' if child_count == 1 else 'ies'}. "
+            "Delete or move the subcategories first.",
+        )
+        return redirect("dashboard:categories")
+
+    # Prevent deleting a category containing active products.
     total_product_count = category.product_count
+
     if total_product_count > 0:
         messages.error(
             request,
-            f"Cannot delete {category.name} — it (or its subcategories) still has "
-            f"{total_product_count} active product{'s' if total_product_count != 1 else ''}. "
+            f"Cannot delete {category.name} — it still has "
+            f"{total_product_count} active product"
+            f"{'s' if total_product_count != 1 else ''}. "
             "Move or delete those products first.",
         )
         return redirect("dashboard:categories")
 
     category.soft_delete()
-    messages.success(request, f"{category.name} was deleted.")
+
+    messages.success(
+        request,
+        f"{category.name} was deleted.",
+    )
+
     return redirect("dashboard:categories")
 
 
@@ -526,12 +563,20 @@ def dashboard_restore_category(request, category_id):
         is_deleted=True,
     )
 
-    category.restore()
+    try:
+        category.restore()
+    except ValidationError as exc:
+        messages.error(
+            request,
+            exc.message,
+        )
+        return redirect("dashboard:recycle_bin")
 
     messages.success(
         request,
         f"{category.name} was restored.",
     )
+
     next_url = request.POST.get("next")
 
     if next_url:
@@ -623,17 +668,33 @@ def dashboard_bulk_restore_categories(request):
     categories = Category.all_objects.filter(
         id__in=category_ids,
         is_deleted=True,
-    )
+    ).select_related("parent")
 
-    restored_count = categories.update(
-        is_deleted=False,
-        deleted_at=None,
-    )
+    restored_count = 0
+    skipped_count = 0
 
-    messages.success(
-        request,
-        f"{restored_count} categor(ies) restored successfully.",
-    )
+    for category in categories:
+        try:
+            category.restore()
+        except ValidationError:
+            skipped_count += 1
+        else:
+            restored_count += 1
+
+    if restored_count:
+        messages.success(
+            request,
+            f"{restored_count} categor"
+            f"{'y' if restored_count == 1 else 'ies'} restored successfully.",
+        )
+
+    if skipped_count:
+        messages.warning(
+            request,
+            f"{skipped_count} categor"
+            f"{'y' if skipped_count == 1 else 'ies'} could not be restored "
+            "because their parent category is deleted. Restore the parent first.",
+        )
 
     next_url = request.POST.get("next")
 
@@ -685,7 +746,15 @@ def permanently_delete_category(request, category_id):
 
     category_name = category.name
 
-    category.delete()
+    try:
+        category.delete()
+    except ProtectedError:
+        messages.error(
+            request,
+            f"Cannot permanently delete {category_name} because "
+            "it has subcategories. Permanently delete the subcategories first.",
+        )
+        return redirect("dashboard:recycle_bin")
 
     messages.success(
         request,
