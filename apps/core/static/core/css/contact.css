@@ -1,0 +1,466 @@
+/* ==========================================================================
+   Panchakanya Collections - Contact Page
+   ========================================================================== */
+
+.pk-contact-page {
+    background: #fff;
+}
+
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.pk-contact-hero {
+    padding: 80px 20px 70px;
+    background: #faf9f7;
+    border-bottom: 1px solid #eee;
+}
+
+.pk-contact-hero-content {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.pk-contact-eyebrow,
+.pk-contact-section-label,
+.pk-contact-form-label {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.pk-contact-eyebrow {
+    color: #9a7b35;
+}
+
+.pk-contact-title {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1.12;
+    color: #1c1c1c;
+}
+
+.pk-contact-intro {
+    max-width: 650px;
+    margin: 24px auto 0;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #666;
+}
+
+
+/* ==========================================================================
+   Main Contact Section
+   ========================================================================== */
+
+.pk-contact-section {
+    padding: 80px 20px 100px;
+}
+
+.pk-contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 80px;
+    align-items: start;
+}
+
+
+/* ==========================================================================
+   Contact Information
+   ========================================================================== */
+
+.pk-contact-info {
+    padding-top: 10px;
+}
+
+.pk-contact-section-label {
+    color: #9a7b35;
+}
+
+.pk-contact-heading {
+    margin: 0 0 20px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #1c1c1c;
+}
+
+.pk-contact-description {
+    max-width: 500px;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #666;
+}
+
+
+/* ==========================================================================
+   Contact Details
+   ========================================================================== */
+
+.pk-contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 42px;
+}
+
+.pk-contact-detail {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.pk-contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #ddd;
+    font-size: 17px;
+    color: #9a7b35;
+}
+
+.pk-contact-detail-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.pk-contact-detail-value {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pk-contact-detail-value:hover {
+    color: #9a7b35;
+}
+
+
+/* ==========================================================================
+   Note
+   ========================================================================== */
+
+.pk-contact-note {
+    max-width: 500px;
+    margin-top: 48px;
+    padding: 24px;
+    background: #faf9f7;
+    border-left: 2px solid #b99a54;
+}
+
+.pk-contact-note strong {
+    display: block;
+    margin-bottom: 8px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: #222;
+}
+
+.pk-contact-note p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #666;
+}
+
+
+/* ==========================================================================
+   Form Card
+   ========================================================================== */
+
+.pk-contact-form-card {
+    padding: 42px;
+    background: #fff;
+    border: 1px solid #e7e4df;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+}
+
+.pk-contact-form-header {
+    margin-bottom: 32px;
+}
+
+.pk-contact-form-label {
+    color: #9a7b35;
+}
+
+.pk-contact-form-header h2 {
+    margin: 0 0 10px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: #1c1c1c;
+}
+
+.pk-contact-form-header p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #777;
+}
+
+
+/* ==========================================================================
+   Form
+   ========================================================================== */
+
+.pk-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.pk-contact-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.pk-contact-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pk-contact-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    color: #333;
+}
+
+.pk-contact-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 15px;
+    border: 1px solid #dcd9d4;
+    border-radius: 0;
+    outline: none;
+    background: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #222;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.pk-contact-input::placeholder {
+    color: #aaa;
+}
+
+.pk-contact-input:focus {
+    border-color: #a88a47;
+    box-shadow: 0 0 0 2px rgba(168, 138, 71, 0.08);
+}
+
+.pk-contact-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+
+/* ==========================================================================
+   Errors
+   ========================================================================== */
+
+.pk-contact-errors,
+.pk-contact-field-error {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #a33;
+}
+
+.pk-contact-errors {
+    padding: 12px 14px;
+    background: #fff5f5;
+    border: 1px solid #eccaca;
+}
+
+.pk-contact-field-error ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+/* ==========================================================================
+   Submit Button
+   ========================================================================== */
+
+.pk-contact-submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4px;
+    padding: 16px 20px;
+    border: 1px solid #1c1c1c;
+    border-radius: 0;
+    background: #1c1c1c;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.pk-contact-submit:hover {
+    background: #9a7b35;
+    border-color: #9a7b35;
+}
+
+.pk-contact-submit span:last-child {
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.pk-contact-form-footnote {
+    margin: -5px 0 0;
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+    color: #999;
+}
+
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .pk-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 55px;
+    }
+
+    .pk-contact-info {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .pk-contact-form-card {
+        max-width: 700px;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .pk-contact-hero {
+        padding: 60px 18px 55px;
+    }
+
+    .pk-contact-title {
+        font-size: 40px;
+    }
+
+    .pk-contact-intro {
+        font-size: 14px;
+    }
+
+    .pk-contact-section {
+        padding: 55px 16px 70px;
+    }
+
+    .pk-contact-heading {
+        font-size: 32px;
+    }
+
+    .pk-contact-form-card {
+        padding: 28px 20px;
+    }
+
+    .pk-contact-form-row {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .pk-contact-details {
+        gap: 24px;
+    }
+
+    .pk-contact-note {
+        margin-top: 38px;
+    }
+}
+/* =========================================================
+   Contact Form Status Messages
+   ========================================================= */
+
+.pk-contact-status {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+}
+
+/* Success message */
+.pk-contact-status-success {
+    display: block;
+    color: #176b3a;
+    background: #eaf8f0;
+    border-color: #a9dfbf;
+}
+
+/* Error message */
+.pk-contact-status-error {
+    display: block;
+    color: #a52828;
+    background: #fff0f0;
+    border-color: #e4aaaa;
+}
+
+/* Optional: small icon-like indicator */
+.pk-contact-status-success::before {
+    content: "✓";
+    display: inline-block;
+    margin-right: 8px;
+    font-weight: 700;
+}
+
+.pk-contact-status-error::before {
+    content: "!";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: #a52828;
+}

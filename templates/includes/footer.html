@@ -1,52 +1,139 @@
 {% load static %}
+
 <footer class="pk-ftr-root">
     <div class="pk-container">
+
         <div class="pk-ftr-grid">
 
-            <div>
-                <h3 class="pk-ftr-brand-title">Panchakanya Collections</h3>
+            <!-- Brand -->
+            <div class="pk-ftr-brand">
+                <h3 class="pk-ftr-brand-title">
+                    Panchakanya Collections
+                </h3>
+
                 <p class="pk-ftr-about-text">
-                    Crafting Nepal's finest heritage jewelry with certified 24K gold, flawless diamonds, and unmatched traditional craftsmanship.
+                    Discover thoughtfully selected jewellery collections
+                    crafted for timeless elegance.
                 </p>
+
+                <a href="{% url 'core:contact' %}" class="pk-ftr-contact-link">
+                    Contact Us
+                    <span>→</span>
+                </a>
             </div>
 
+
+            <!-- Collections -->
             <div>
                 <h4 class="pk-ftr-col-heading">Collections</h4>
+
                 <ul class="pk-ftr-menu">
-                    <li><a href="#" class="pk-ftr-link">Royal Bridal Sets</a></li>
-                    <li><a href="#" class="pk-ftr-link">Solitaire Diamond Rings</a></li>
-                    <li><a href="#" class="pk-ftr-link">Traditional Gold Mangalsutra</a></li>
-                    <li><a href="#" class="pk-ftr-link">Custom Gold Coins</a></li>
+                    {% for category in header_categories %}
+                        <li>
+                            <a
+                                href="{% url 'products:category' category.slug %}"
+                                class="pk-ftr-link"
+                            >
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                    <li>
+                        <a
+                            href="{% url 'products:list' %}"
+                            class="pk-ftr-link"
+                        >
+                            View All Collections
+                        </a>
+                    </li>
                 </ul>
             </div>
 
+
+            <!-- Customer Care -->
             <div>
-                <h4 class="pk-ftr-col-heading">Client Care</h4>
+                <h4 class="pk-ftr-col-heading">Customer Care</h4>
+
                 <ul class="pk-ftr-menu">
-                    <li><a href="#" class="pk-ftr-link">Gold Purity Guarantee</a></li>
-                    <li><a href="#" class="pk-ftr-link">Bespoke Design Service</a></li>
-                    <li><a href="#" class="pk-ftr-link">Shipping & Returns</a></li>
-                    <li><a href="#" class="pk-ftr-link">Book Appointment</a></li>
+                    <li>
+                        <a
+                            href="{% url 'core:contact' %}"
+                            class="pk-ftr-link"
+                        >
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{% url 'dashboard:profile' %}"
+                            class="pk-ftr-link"
+                        >
+                            My Account
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{% url 'dashboard:wishlist' %}"
+                            class="pk-ftr-link"
+                        >
+                            Wishlist
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{% url 'dashboard:cart' %}"
+                            class="pk-ftr-link"
+                        >
+                            Cart
+                        </a>
+                    </li>
                 </ul>
             </div>
 
+
+            <!-- Contact -->
             <div>
-                <h4 class="pk-ftr-col-heading">Private Newsletter</h4>
-                <p class="pk-ftr-newsletter-desc">Subscribe to receive exclusive invitations and newly launched collections.</p>
-                <form class="pk-ftr-form" id="pk-js-newsletter-form">
-                    <input type="email" placeholder="Your email address" class="pk-ftr-input" required id="pk-js-newsletter-input">
-                    <button type="submit" class="pk-ftr-submit-btn">Join</button>
-                </form>
+                <h4 class="pk-ftr-col-heading">Get in Touch</h4>
+
+                <p class="pk-ftr-contact-text">
+                    Have a question about a product or want to place an order?
+                    We'd be happy to hear from you.
+                </p>
+
+                <a
+                    href="{% url 'core:contact' %}"
+                    class="pk-ftr-outline-button"
+                >
+                    Send an Enquiry
+                </a>
             </div>
 
         </div>
 
+
+        <!-- Bottom -->
         <div class="pk-ftr-bottom-bar">
-            <p>&copy; {% now "Y" %} Panchakanya Collections. All rights reserved.</p>
+
+            <p>
+                &copy; {% now "Y" %} Panchakanya Collections.
+                All rights reserved.
+            </p>
+
             <div class="pk-ftr-legal-links">
-                <a href="#" class="pk-ftr-legal-link">Privacy Policy</a>
-                <a href="#" class="pk-ftr-legal-link">Terms of Service</a>
+                <a href="#" class="pk-ftr-legal-link">
+                    Privacy Policy
+                </a>
+
+                <a href="#" class="pk-ftr-legal-link">
+                    Terms of Service
+                </a>
             </div>
+
         </div>
+
     </div>
 </footer>

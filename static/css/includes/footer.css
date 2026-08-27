@@ -1,149 +1,291 @@
-/* ==========================================================================
-   Panchakanya Collections - Footer Stylesheet (footer.css)
-   Namespace Prefix: pk-ftr-
+ /* ==========================================================================
+   Panchakanya Collections - Footer
    ========================================================================== */
 
 .pk-ftr-root {
-    background-color: var(--pk-color-primary);
-    color: #a39c93;
-    padding-top: 4.5rem;
-    padding-bottom: 2rem;
-    border-top: 2px solid var(--pk-color-gold-dark);
-    margin-top: auto;
+    margin-top: 0;
+    background: #171717;
+    color: #fff;
 }
+
+.pk-ftr-root .pk-container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+
+/* ==========================================================================
+   Main Footer
+   ========================================================================== */
 
 .pk-ftr-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-    gap: 3rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    grid-template-columns: 1.35fr 1fr 1fr 1.15fr;
+    gap: 55px;
+    padding: 70px 0 60px;
 }
 
+
+/* ==========================================================================
+   Brand
+   ========================================================================== */
+
 .pk-ftr-brand-title {
-    font-family: var(--pk-font-serif);
-    font-size: 1.35rem;
-    color: var(--pk-color-gold-base);
-    margin-bottom: 1rem;
-    letter-spacing: 0.05em;
+    margin: 0 0 18px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: 0.2px;
+    color: #fff;
 }
 
 .pk-ftr-about-text {
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    color: #8c857b;
+    max-width: 310px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #aaa;
 }
+
+.pk-ftr-contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #9a7b35;
+    color: #d0b16a;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        gap 0.2s ease;
+}
+
+.pk-ftr-contact-link span {
+    font-size: 17px;
+    line-height: 1;
+}
+
+.pk-ftr-contact-link:hover {
+    color: #fff;
+    gap: 14px;
+}
+
+
+/* ==========================================================================
+   Column Headings
+   ========================================================================== */
 
 .pk-ftr-col-heading {
-    font-size: 0.75rem;
-    font-weight: 700;
+    margin: 2px 0 22px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.7px;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--pk-color-gold-light);
-    margin-bottom: 1.25rem;
+    color: #d0b16a;
 }
 
+
+/* ==========================================================================
+   Footer Menu
+   ========================================================================== */
+
 .pk-ftr-menu {
-    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .pk-ftr-link {
-    font-size: 0.8125rem;
-    color: #a39c93;
+    display: inline-block;
+    width: fit-content;
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.5;
     text-decoration: none;
-    transition: var(--pk-transition-fast);
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .pk-ftr-link:hover {
-    color: var(--pk-color-gold-base);
-    padding-left: 4px;
+    color: #fff;
+    transform: translateX(3px);
 }
 
-.pk-ftr-newsletter-desc {
-    font-size: 0.8125rem;
-    margin-bottom: 1rem;
-    color: #8c857b;
+
+/* ==========================================================================
+   Contact Column
+   ========================================================================== */
+
+.pk-ftr-contact-text {
+    max-width: 290px;
+    margin: 0 0 23px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #aaa;
 }
 
-.pk-ftr-form {
-    display: flex;
-    border-radius: var(--pk-radius-sm);
-    overflow: hidden;
-}
-
-.pk-ftr-input {
-    width: 100%;
-    background-color: #1e1b18;
-    border: 1px solid #332f2a;
-    color: #ffffff;
-    padding: 0.65rem 0.85rem;
-    font-size: 0.8125rem;
-}
-
-.pk-ftr-input:focus {
-    outline: none;
-    border-color: var(--pk-color-gold-base);
-}
-
-.pk-ftr-submit-btn {
-    background-color: var(--pk-color-gold-base);
-    color: var(--pk-color-primary);
-    border: none;
-    padding: 0 1.25rem;
-    font-weight: 700;
-    font-size: 0.75rem;
+.pk-ftr-outline-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 19px;
+    border: 1px solid #555;
+    color: #eee;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: var(--pk-transition-fast);
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
-.pk-ftr-submit-btn:hover {
-    background-color: var(--pk-color-gold-dark);
-    color: #ffffff;
+.pk-ftr-outline-button:hover {
+    border-color: #d0b16a;
+    background: #d0b16a;
+    color: #171717;
 }
+
+
+/* ==========================================================================
+   Bottom Bar
+   ========================================================================== */
 
 .pk-ftr-bottom-bar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-top: 2rem;
-    font-size: 0.75rem;
-    color: #666057;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 22px 0;
+    border-top: 1px solid #333;
+}
+
+.pk-ftr-bottom-bar p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #777;
 }
 
 .pk-ftr-legal-links {
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 24px;
 }
 
 .pk-ftr-legal-link {
-    color: #666057;
+    color: #777;
+    font-size: 11px;
     text-decoration: none;
-    transition: var(--pk-transition-fast);
+    transition: color 0.2s ease;
 }
 
 .pk-ftr-legal-link:hover {
-    color: var(--pk-color-gold-light);
+    color: #d0b16a;
 }
 
-@media (max-width: 991px) {
+
+/* ==========================================================================
+   Tablet
+   ========================================================================== */
+
+@media (max-width: 1000px) {
+
+    .pk-ftr-grid {
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 40px;
+    }
+
+    .pk-ftr-brand {
+        grid-column: 1 / -1;
+        padding-bottom: 10px;
+    }
+
+}
+
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+
+@media (max-width: 650px) {
+
+    .pk-ftr-root .pk-container {
+        width: min(100% - 32px, 500px);
+    }
+
     .pk-ftr-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: 42px 28px;
+        padding: 52px 0 45px;
     }
-}
 
-@media (max-width: 576px) {
-    .pk-ftr-grid {
-        grid-template-columns: 1fr;
+    .pk-ftr-brand {
+        grid-column: 1 / -1;
     }
+
+    .pk-ftr-brand-title {
+        font-size: 25px;
+    }
+
+    .pk-ftr-about-text {
+        max-width: 360px;
+    }
+
+    .pk-ftr-contact-text {
+        max-width: 100%;
+    }
+
     .pk-ftr-bottom-bar {
         flex-direction: column;
-        gap: 1rem;
-        text-align: center;
+        align-items: flex-start;
+        gap: 14px;
     }
+
+    .pk-ftr-legal-links {
+        gap: 18px;
+    }
+
+}
+
+
+/* ==========================================================================
+   Small Mobile
+   ========================================================================== */
+
+@media (max-width: 420px) {
+
+    .pk-ftr-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .pk-ftr-brand {
+        grid-column: auto;
+    }
+
+    .pk-ftr-col-heading {
+        margin-bottom: 17px;
+    }
+
+    .pk-ftr-menu {
+        gap: 10px;
+    }
+
+    .pk-ftr-bottom-bar {
+        padding: 19px 0;
+    }
+
 }

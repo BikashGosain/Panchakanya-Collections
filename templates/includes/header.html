@@ -1,7 +1,7 @@
 {% load static %}
 <div class="pk-hdr-component" id="pk-js-header-component">
     <div class="pk-hdr-announcement">
-        Complimentary Insured Delivery Across Nepal on Orders Over NPR 50,000
+        Explore Our Collection • Contact Us to Place Your Order
     </div>
 
     <header class="pk-hdr-sticky-wrapper" id="pk-js-header">
@@ -153,6 +153,7 @@
                 <a href="{% url 'core:home' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'home' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'home' %} aria-current="page"{% endif %}>Home</a>
                 <a href="{% url 'products:category_overview' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category_overview' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category_overview' %} aria-current="page"{% endif %}>Categories</a>
                 <a href="{% url 'products:list' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'list' or request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'detail' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'list' or request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'detail' %} aria-current="page"{% endif %}>Collections</a>
+                <a href="{% url 'core:contact' %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'contact' %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'contact' %} aria-current="page"{% endif %}>Contacts</a>
 
                 {% for category in header_categories %}
                     <a href="{% url 'products:category' category.slug %}" class="pk-hdr-nav-link{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category' and request.resolver_match.kwargs.slug == category.slug %} pk-hdr-nav-link--active{% endif %}"{% if request.resolver_match.namespace == 'products' and request.resolver_match.url_name == 'category' and request.resolver_match.kwargs.slug == category.slug %} aria-current="page"{% endif %}>{{ category.name }}</a>
