@@ -414,7 +414,7 @@ def dashboard_categories(request):
     if not request.user.is_staff:
         raise PermissionDenied
 
-    categories = Category.all_objects.select_related("parent").order_by("name")
+    categories = Category.all_objects.select_related("parent").order_by("-id")
 
     search_query = request.GET.get("q", "")
     if search_query:

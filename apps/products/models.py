@@ -129,7 +129,6 @@ class Category(models.Model):
             ancestor = ancestor.parent
 
     def save(self, *args, **kwargs):
-
         self.full_clean()
 
         if not self.slug:
@@ -137,7 +136,7 @@ class Category(models.Model):
             slug = base_slug
             counter = 1
 
-            while Category.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+            while Category.all_objects.filter(slug=slug).exclude(pk=self.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
 
@@ -278,13 +277,12 @@ class Product(models.Model):
         return self.images.filter(is_primary=True).first()
 
     def save(self, *args, **kwargs):
-
         if not self.slug:
             base_slug = slugify(self.name)
             slug = base_slug
             counter = 1
 
-            while Product.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+            while Product.all_objects.filter(slug=slug).exclude(pk=self.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
 
