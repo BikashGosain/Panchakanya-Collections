@@ -93,10 +93,6 @@
                                     </span>
                                 </a>
                                 <hr class="pk-hdr-dropdown-divider">
-                                <a href="{% url 'dashboard:home' %}" class="pk-hdr-dropdown-item">
-                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
-                                    Dashboard
-                                </a>
                                 <a href="{% url 'dashboard:profile' %}" class="pk-hdr-dropdown-item">
                                     <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
                                     Profile
@@ -109,10 +105,39 @@
                                     <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4h2l2.3 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.5L20 8H7" /><circle cx="10" cy="20" r="1" /><circle cx="17" cy="20" r="1" /></svg>
                                     Cart<span>({{ cart_count }})</span>
                                 </a>
-                                <a href="{% url 'core:home' %}" class="pk-hdr-dropdown-item">
-                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" /><path d="M9 21v-6h6v6" /></svg>
-                                    Home
+                                <a href="{% url 'dashboard:reviews' %}" class="pk-hdr-dropdown-item">
+                                    <svg class="pk-hdr-dropdown-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                        <path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9L12 3.5z" />
+                                    </svg>
+                                    My Reviews
                                 </a>
+
+   {% if user.is_staff %}
+        <div class="pk-db-nav-section">
+            <p class="pk-db-nav-heading">Admin / Staff</p>
+
+<a
+    href="{% url 'dashboard:products' %}"
+    class="pk-db-nav-item {% if dashboard_section == 'products' %}pk-db-active{% endif %}"
+>
+    <i data-lucide="package"></i>
+    Products
+</a>
+<a href="{% url 'dashboard:categories' %}" class="pk-db-nav-item {% if dashboard_section == 'categories' %}pk-db-active{% endif %}">
+    <i data-lucide="layers"></i>
+    Categories
+</a>
+<a
+    href="{% url 'dashboard:recycle_bin' %}"
+    class="pk-db-nav-item {% if dashboard_section == 'recycle_bin' %}pk-db-active{% endif %}"
+>
+    <i data-lucide="trash-2"></i>
+    Recycle Bin
+</a>
+            <!-- Users -->
+        </div>
+    {% endif %}
+
                                 <hr class="pk-hdr-dropdown-divider">
                                 <form action="{% url 'accounts:logout' %}" method="post" class="pk-hdr-logout-form">
                                     {% csrf_token %}

@@ -39,10 +39,11 @@
             <span class="breadcrumb-separator">
                 /
             </span>
-
+            <a href="{% url 'products:category' product.category.slug %}">
             <span class="breadcrumb-current">
                 {{ product.category.name }}
             </span>
+            </a>
 
             <span class="breadcrumb-separator">
                 /
@@ -218,25 +219,31 @@
                 <div class="product-category">
                     {{ product.category.name }}
                 </div>
-{% if user.is_authenticated %}
-{% if is_wishlisted %}
-<form method="post" action="{% url 'wishlists:remove' product.id %}">
-    {% csrf_token %}
-    <button type="submit">
-        💔 Remove from Wishlist
-    </button>
-</form>
-{% else %}
-<form method="post" action="{% url 'wishlists:add' product.id %}">
-    {% csrf_token %}
-    <button type="submit">
-        ❤️ Add to Wishlist
-    </button>
-</form>
-{% endif %}
+<div class="pk-product-actions">
 
-{% endif %}
-                <a href="#reviews" class="review-quick-link">See {{ review_count }} reviews ★{{ average_rating|floatformat:1 }}</a>
+    {% if user.is_authenticated %}
+        {% if is_wishlisted %}
+            <form method="post" action="{% url 'wishlists:remove' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="pk-wishlist-btn pk-wishlist-remove">
+                    💔 Remove from Wishlist
+                </button>
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'wishlists:add' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="pk-wishlist-btn">
+                    ❤️ Add to Wishlist
+                </button>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <a href="#reviews" class="review-quick-link">
+        <strong>See {{ review_count }} reviews ★{{ average_rating|floatformat:1 }}</strong>
+    </a>
+
+</div>
 
 
                 <!-- =================================================

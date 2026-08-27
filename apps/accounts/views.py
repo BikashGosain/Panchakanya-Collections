@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
@@ -231,6 +232,16 @@ class CustomLogoutView(LogoutView):
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = "accounts/password_change.html"
     success_url = reverse_lazy("dashboard:profile")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        messages.success(
+            self.request,
+            "Your password has been changed successfully.",
+        )
+
+        return response
 
 
 def forgot_password_view(request):
