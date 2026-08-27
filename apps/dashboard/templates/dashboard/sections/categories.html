@@ -204,13 +204,19 @@
 
                         {% for category in categories %}
 
-                            <tr
-                                {% if category.is_deleted %}
-                                    class="pk-db-categories-row-deleted"
-                                {% endif %}
-                            >
+                        <tr {% if category.is_deleted %} class="pk-db-categories-row-deleted" {% endif %}>
 
-                                <td data-label="Name">
+                            <td data-label="Name">
+
+                                {% if category.image %}
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}" class="pk-recycle-image">
+
+                                {% else %}
+
+                                <div class="pk-recycle-image-placeholder">
+                                    No image
+                                </div>
+                                {% endif %}
 
                                     <div class="pk-db-categories-name">
                                         <span class="pk-db-categories-name-text">

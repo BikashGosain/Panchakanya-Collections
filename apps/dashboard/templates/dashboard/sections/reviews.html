@@ -1,3 +1,4 @@
+{% load static %}
 <div class="pk-db-rv-section">
 
     <!-- ================================================================
@@ -22,29 +23,30 @@
     <!-- ================================================================
          SEARCH
          ================================================================ -->
+<form method="get" class="pk-db-rv-search">
 
-    <form method="get" class="pk-db-rv-search">
+    <div class="pk-db-rv-search-field">
 
-        <div class="pk-db-rv-search-field">
+        <svg
+            class="pk-db-rv-search-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <circle cx="11" cy="11" r="6"></circle>
+            <path d="m16 16 4 4"></path>
+        </svg>
 
-            <svg
-                class="pk-db-rv-search-icon"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-            >
-                <circle cx="11" cy="11" r="6"></circle>
-                <path d="m16 16 4 4"></path>
-            </svg>
+        <input
+            type="search"
+            name="q"
+            value="{{ search_query }}"
+            placeholder="Search reviews..."
+            aria-label="Search reviews"
+        >
 
-            <input
-                type="search"
-                name="q"
-                value="{{ search_query }}"
-                placeholder="Search reviews..."
-                aria-label="Search reviews"
-            >
+    </div>
 
-        </div>
+    <div class="pk-db-rv-search-actions">
 
         <button
             type="submit"
@@ -62,7 +64,9 @@
             </a>
         {% endif %}
 
-    </form>
+    </div>
+
+</form>
 
 
     <!-- ================================================================
@@ -112,11 +116,14 @@
                                             src="{{ cover.image.url }}"
                                             alt="{{ review.product.name }}"
                                             loading="lazy"
+                                            onerror="this.onerror=null;this.src='{% static 'images/products/default.png' %}';"
                                         >
                                     {% else %}
-                                        <span class="pk-db-rv-no-image">
-                                            No Image
-                                        </span>
+                                        <img
+                                                    src="{% static 'images/products/default.png' %}"
+                                                    alt="{{ product.name }}"
+                                                    loading="lazy"
+                                                >
                                     {% endif %}
                                 {% endwith %}
                             </a>
@@ -316,11 +323,15 @@
                                                 src="{{ cover.image.url }}"
                                                 alt="{{ review.product.name }}"
                                                 loading="lazy"
+                                                onerror="this.onerror=null;this.src='{% static 'images/products/default.png' %}';"
                                             >
                                         {% else %}
-                                            <span class="pk-db-rv-no-image">
-                                                No Image
-                                            </span>
+                                            <img
+                                                    src="{% static 'images/products/default.png' %}"
+                                                    alt="{{ review.product.name }}"
+                                                    loading="lazy"
+                                                    onerror="this.onerror=null;this.src='{% static 'images/products/default.png' %}';"
+                                                >
                                         {% endif %}
                                     {% endwith %}
                                 </a>

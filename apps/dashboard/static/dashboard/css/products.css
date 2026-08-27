@@ -33,6 +33,8 @@
 
     color: var(--pk-db-products-text);
     font-family: var(--pk-font-sans, system-ui, sans-serif);
+    box-sizing: border-box;
+    padding: 1rem 1.25rem 2rem;
     width: 100%;
 }
 

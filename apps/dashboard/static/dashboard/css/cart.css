@@ -18,6 +18,8 @@
    ========================================================================== */
 
 .pk-db-cart-section {
+    box-sizing: border-box;
+    padding: 1rem 1.25rem 2rem;
     width: 100%;
 }
 

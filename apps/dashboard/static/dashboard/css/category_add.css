@@ -33,6 +33,8 @@
     color: var(--pk-db-category-form-text);
     font-family: var(--pk-font-sans, system-ui, sans-serif);
     min-width: 0;
+    box-sizing: border-box;
+    padding: 1rem 1.25rem 2rem;
     width: 100%;
 }
 
