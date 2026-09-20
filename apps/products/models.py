@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -262,6 +263,33 @@ class Product(models.Model):
     objects = SoftDeleteManager()
     all_objects = AllObjectsManager()
 
+    class Meta:
+        indexes = [
+            # Category pages and header counts.
+            models.Index(
+                fields=["category", "status"],
+                condition=Q(is_deleted=False),
+                name="idx_product_cat_status_live",
+            ),
+            # Product list filters: metal type and price range.
+            models.Index(
+                fields=["metal_type", "price"],
+                condition=Q(is_deleted=False, status="active"),
+                name="idx_product_metal_price_live",
+            ),
+            # Featured products on the home page.
+            models.Index(
+                fields=["featured"],
+                condition=Q(is_deleted=False, status="active"),
+                name="idx_product_featured_live",
+            ),
+            # Dashboard product list: newest first.
+            models.Index(
+                fields=["-created_at"],
+                name="idx_product_created_desc",
+            ),
+        ]
+
     @property
     def cover_image(self):
         """
@@ -349,3 +377,55 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"{self.product.name} image"
+
+
+class ProductPriceHistory(models.Model):
+    """
+    Temporal (valid-time) history of a product's price.
+
+    Each row means: this product cost `price` from `valid_from`
+    until `valid_to`. The price that is still in force has
+    valid_to = NULL.
+    """
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="price_history",
+    )
+
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+    )
+
+    valid_from = models.DateTimeField()
+
+    valid_to = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Empty means this is the current price.",
+    )
+
+    class Meta:
+        verbose_name_plural = "product price history"
+        ordering = ["-valid_from"]
+
+        constraints = [
+            # A product can have only ONE price that is currently in force.
+            models.UniqueConstraint(
+                fields=["product"],
+                condition=Q(valid_to__isnull=True),
+                name="one_open_price_row_per_product",
+            ),
+            # A price period can never end before it starts.
+            models.CheckConstraint(
+                condition=Q(valid_to__isnull=True)
+                | Q(valid_to__gte=models.F("valid_from")),
+                name="pricehist_valid_range",
+            ),
+        ]
+
+    def __str__(self):
+        end = self.valid_to or "now"
+        return f"{self.product_id}: {self.price} ({self.valid_from} -> {end})"

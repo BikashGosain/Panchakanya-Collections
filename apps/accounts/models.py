@@ -41,6 +41,16 @@ class EmailOTP(models.Model):
     is_used = models.BooleanField(default=False)
     is_invalidated = models.BooleanField(default=False)
 
+    class Meta:
+        indexes = [
+            # OTP verification and password reset:
+            # WHERE user_id = ? AND purpose = ? ORDER BY created_at DESC
+            models.Index(
+                fields=["user", "purpose", "-created_at"],
+                name="idx_otp_user_purpose_created",
+            ),
+        ]
+
     def is_expired(self):
         return timezone.now() > self.created_at + timedelta(minutes=5)
 
